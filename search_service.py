@@ -1,7 +1,7 @@
+import os
 import random
 import string
 import time
-import os
 
 from google.api_core.client_options import ClientOptions
 from google.protobuf.field_mask_pb2 import FieldMask
@@ -9,6 +9,7 @@ from google.protobuf.field_mask_pb2 import FieldMask
 from google.cloud.retail_v2 import SearchServiceClient, SearchRequest, Product, PriceInfo, ColorInfo, \
     ProductServiceClient, CreateProductRequest, DeleteProductRequest, CustomAttribute, Interval, FulfillmentInfo
 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/Tatiana/GRS/token.json"
 project_number = "1038874412926"
 endpoint = "retail.googleapis.com"
 isolation_filter_key = "INTEGRATION_FILTER_KEY"
@@ -265,7 +266,7 @@ def search_products_with_boost_spec(query: str, _condition: str, _boost_strength
 
 # [END search_product_with_boost_spec]
 
-# [START search_product_with_boost_spec]
+# [START search_product_with_query_expansion_spec]
 def search_products_with_query_expansion(query: str, _condition: SearchRequest.QueryExpansionSpec.Condition):
     query_expansion_spec = SearchRequest().QueryExpansionSpec()
     query_expansion_spec.condition = _condition
@@ -283,7 +284,7 @@ def search_products_with_query_expansion(query: str, _condition: SearchRequest.Q
     return get_search_service_client().search(search_request)
 
 
-# [END search_product_with_boost_spec]
+# [END search_product_with_query_expansion_spec]
 
 # [START search_product_with_order]
 def search_ordered_products(query: str, order: str, page_size=10):
@@ -448,7 +449,7 @@ def test_call_search_methods():
     print(search_response.results)
 
     search_response = search_products_with_query_expansion(title_query,
-                                                       SearchRequest.QueryExpansionSpec.Condition.AUTO)
+                                                           SearchRequest.QueryExpansionSpec.Condition.AUTO)
     print("QUERY EXPANSION SEARCH RESULTS")
     print(search_response.results)
 
@@ -468,7 +469,7 @@ def test_call_search_methods():
     print(search_response.results)
 
     search_response = search_products_textual_facet_excluded_filter_keys(title_query, "colorFamily", ["colorFamily"],
-                                                                     'colorFamily: ANY("black")')
+                                                                         'colorFamily: ANY("black")')
     print("COLORFAMILY EXCLUDED FILTER FACET")
     print(search_response.facets)
     print("EXCLUDED FILTER KEY FACET SEARCH RESULT")
@@ -486,3 +487,6 @@ def test_call_search_methods():
 
     # [END testing different searches]
     delete_products(products_to_search_for)
+
+
+test_call_search_methods()
