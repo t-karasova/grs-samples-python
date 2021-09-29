@@ -7,7 +7,6 @@ from google.api_core.client_options import ClientOptions
 
 from google.cloud.retail_v2 import SearchServiceClient, SearchRequest, Interval
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/Tatiana/GRS/token.json"
 project_number = "1038874412926"
 endpoint = "retail.googleapis.com"
 isolation_filter_key = "INTEGRATION_FILTER_KEY"
