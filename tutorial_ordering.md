@@ -8,4 +8,4 @@ view request
 run command
 analyse the result
 
-go back to review other [Search features](tutorial.md)
+go back to review other [Search features](tutorial.md#step-2)
