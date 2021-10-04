@@ -8,4 +8,6 @@ view request
 run command
 analyse the result
 
-go back to review other [Search features](tutorial.md#step-2)
+go back to review other <a  href="https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/t-karasova/grs-samples-python&tutorial=TUTORIAL_FILE.md#step-2">
+    <img alt="Search features list">
+</a>
