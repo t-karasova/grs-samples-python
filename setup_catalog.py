@@ -1,15 +1,14 @@
-import os
+import random
 import random
 import string
 import time
 
 from google.api_core.client_options import ClientOptions
+from google.cloud.retail_v2 import SearchServiceClient, Product, PriceInfo, ColorInfo, \
+    ProductServiceClient, CreateProductRequest, DeleteProductRequest, CustomAttribute, FulfillmentInfo
 from google.protobuf.field_mask_pb2 import FieldMask
 
-from google.cloud.retail_v2 import SearchServiceClient, SearchRequest, Product, PriceInfo, ColorInfo, \
-    ProductServiceClient, CreateProductRequest, DeleteProductRequest, CustomAttribute, Interval, FulfillmentInfo
-
-project_number = "1038874412926"
+project_number = "SET HERE VALID PROJECT NUMBER"
 endpoint = "retail.googleapis.com"
 isolation_filter_key = "INTEGRATION_FILTER_KEY"
 title_query = "Nest_Maxi"
@@ -18,7 +17,7 @@ test_id = ''.join(random.sample(string.ascii_lowercase, 1))
 
 # [START search_client]
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/0".format(project_number)
-default_search_placement = "projects/1038874412926/locations/global/catalogs/default_catalog/placements/default_search"
+default_search_placement = "projects" + project_number + "locations/global/catalogs/default_catalog/placements/default_search"
 created_products = []
 
 
