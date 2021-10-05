@@ -1,8 +1,9 @@
-## Step 1
-This is a tutorial to be opened when user wants to see how to order the items in search result
 
-view request
+# Filtering and Ordering results tutorial
 
+## Filtering search results
+
+Performing the search through the catalog you or your customers can apply different filters according to 
 ## Step 2 
 
 run command
