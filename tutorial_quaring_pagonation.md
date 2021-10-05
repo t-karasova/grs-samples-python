@@ -37,8 +37,11 @@ python search_simple_query.py
 
 ## Simple query. Response analyze
 Now in a field ```results[]``` you can see A list of matched items returned by Retail Search service.
+
 ```total_size``` it's the estimated total count of matched items.
+
 ```attribution_token``` it's a unique search token which enables accurate attribution of search model performance.
+
 ```next_page_token``` A token that points to the next page in the search response. By default the number of products per page is 100. If this field is omitted, there are no subsequent pages.
 
 ## Pagination
