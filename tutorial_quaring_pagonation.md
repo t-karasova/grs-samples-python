@@ -12,12 +12,18 @@ To run Python code samples from this tutorial you will need to setup your virtua
 Please use this commands in a terminal:
 ```
 pip install virtualenv
+```
+```
 virtualenv <your-env>
+```
+```
 source <your-env>/bin/activate
 ```
 Now install google packages:
 ```
 pip install google
+```
+```
 pip install google-cloud-retail
 ```
 
