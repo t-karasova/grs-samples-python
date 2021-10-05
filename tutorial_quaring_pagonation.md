@@ -58,7 +58,9 @@ The ```page_size``` request field allows you to limit the number of items in the
 Open **search_with_pagination_page_size.py** to view the request with ```page_size```.
 
 Run it in a terminal with a command:
-```python search_with_pagination_page_size.py```
+```
+python search_with_pagination_page_size.py
+```
 
 ## Page size. Response analyze
 Now you can see the ```results[]``` contains the number of products which you set as page size.
@@ -71,10 +73,16 @@ The ```next_page_token``` will be used in the next tutorial step.
 As you have received the response from previous step you can take the value of field ```next_page_token```,
 and if you send the **same** request but set a request parametr ```page_token``` with this value (next_page_token) you will get the result products with the next <page_size> relevance.
 
-Open the **search_with_pagination_next_page.py**, as you will run it whole independently, we placed there a sequence of requests - first with only the page size, you will get the next_page_token value from it's response, the other demonstrates the navigation to the next page using ```page_token``` and this value. 
+Open the **search_with_pagination_next_page.py**, 
+
+as you will run it whole independently, we placed there a sequence of requests:
+- first with only the page size, you will get the next_page_token value from it's response, 
+- the other demonstrates the navigation to the next page using ```page_token``` and this value. 
 
 Run it in a terminal with a command:
-```python search_with_pagination_next_page.py```
+```
+python search_with_pagination_next_page.py
+```
 
 ## Next page token. Response analyze
 In the response you see the next page of products which is the next <page_size> relevence.
@@ -89,7 +97,9 @@ For example, if you want the tenth page of the results when the page size is 5, 
 Open the **search_with_pagination_offset.py**, run it and check the result of ```page_size``` and the ```offset``` parameters combination.
 
 Run it in a terminal with a command:
-```python search_with_pagination_offset.py```
+```
+python search_with_pagination_offset.py
+```
 
 **We encourage you to test the pagination by yourself, right here in the CloudShell environment, using different combinations of values for pafination parameters**
 
