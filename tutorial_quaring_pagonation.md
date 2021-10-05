@@ -101,7 +101,9 @@ Run it in a terminal with a command:
 python search_with_pagination_offset.py
 ```
 
-**We encourage you to test the pagination by yourself, right here in the CloudShell environment, using different combinations of values for pafination parameters**
+## Success 
+
+You have complete the tutorial and now we **encourage** you to **test the pagination by yourself**, right here in the CloudShell environment, using different combinations of values for pafination parameters
 
 **Thank you for compleating this tutorial!**
 
