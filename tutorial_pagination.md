@@ -6,7 +6,10 @@ Using pagination is simple and easy way not only to view and navigate the search
 
 This tutorial will show you how to send request using parameters of pagination.
 
-There are three fields in the search request which gives you all the posibilities of navigation throug the search results: ```page_size```, ```next_page_token```, ```offset```.
+There are three fields in the search request which gives you all the posibilities of navigation throug the search results: 
+- **```page_size```**, 
+- **```next_page_token```**,
+- **```offset```**.
 
 Lets see how each of them works.
 
