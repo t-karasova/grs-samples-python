@@ -48,7 +48,9 @@ A simple expression applying to a textual field could be written like this:
 
 Function "ANY" returns true if the field contains any of the literals.
 
-The example of such expression is ```'(colorFamily: ANY("black"))'``` 
+The example of such expression is 
+
+```'(colorFamily: ANY("black"))'``` 
 
 To see the whole request with a filtering open **search_with_filtering.py**
 
@@ -56,23 +58,27 @@ Run it in a terminal with a command:
 ```bash
 python search_with_filtering.py
 ```
-To see the full list of textual field you can apply the filters to please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
-
-## Filtering by textual field. Response analyze
 
 Now you can see the ```results[]``` has only items satisfied the filtering expression.
 
 Feel free to test filtering by textual field by yourself, right here in CloudShell environment.
 
-Just find the comment "# [TRY DIFFERENT FILTER EXPRESSIONS HERE:]" and change the filtering expression for something like this:
+Just find the comment 
+
+"# [TRY DIFFERENT FILTER EXPRESSIONS HERE:]" 
+
+and change the filtering expression for something like this:
 
 ```
 filter = '(brands: ANY("Google"))'
 ```
+
 Or
 ```
 filter = '(sizes: ANY("M","L"))'
 ```
+
+To see the full list of textual fields you can apply the filters to please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
 
 ## Filtering by numerical field. IN range
 
@@ -95,6 +101,7 @@ python search_with_filtering.py
 
 Check the Search response, now it has only items with price in a range [$50, $100)
 
+To see the full list of numerical fields you can apply the filters to please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
 
 ## Filtering by numerical field. Comparison operators
 
