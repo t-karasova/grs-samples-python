@@ -42,8 +42,8 @@ def search_filtered_products(query: str, _filter: str, page_size=10):
 
 def search():
     setup_catalog.ingest_products(test_id)
-
-    #[TRY DIFFERENT FILTER EXPRESSIONS HERE:]
+    
+    # [TRY DIFFERENT FILTER EXPRESSIONS HERE:]
     filter = '(colorFamily: ANY("black"))'
     
     search_response = search_filtered_products(title_query, filter)
