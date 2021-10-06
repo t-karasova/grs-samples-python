@@ -26,6 +26,7 @@ virtualenv <your-env>
 ```bash
 source <your-env>/bin/activate
 ```
+
 Now install google packages:
 ```bash
 pip install google
@@ -50,16 +51,16 @@ python search_with_pagination_page_size.py
 
 ## Page size. Response analyze
 
-Now you can see the ```results[]``` contains the number of products which you set as page size.
+Now you can see the **```results[]```** contains the number of products which you set as page size.
 
-The ```total_size``` does not equal the page size, it's the number of matched items for this search query, so it will not change as you are changing the number of products per page.
+The **```total_size```** does not equal the page size, it's the number of matched items for this search query, so it will not change as you are changing the number of products per page.
 
-The ```next_page_token``` will be used in the next tutorial step.
+The **```next_page_token```** will be used in the next tutorial step.
 
 ## Next page token
 
 As you have received the response from previous step you can take the value of field ```next_page_token```,
-and if you send the **same** request but set a request parametr ```page_token``` with this value (next_page_token) you will get the result products with the next <page_size> relevance.
+and if you send the **same** request but set a request parametr **```page_token```** with this value (next_page_token) you will get the result products with the next <page_size> relevance.
 
 Open the **search_with_pagination_next_page.py**, 
 
@@ -76,7 +77,7 @@ python search_with_pagination_next_page.py
 
 In the response you see the next page of products which is the next <page_size> relevence.
 
-The field ```next_page_token``` now has value generated to point on the next page and can be used in furher results navigation.
+The field **```next_page_token```** now has value generated to point on the next page and can be used in furher results navigation.
 
 ## Offset
 
@@ -84,12 +85,19 @@ In some other cases, instead of navigating from page to page or getting results 
 
 For example, if you want the tenth page of the results when the page size is 5, then you could set the offset to be 45, which is calculated by (10 - 1) * 5.
 
-Open the **search_with_pagination_offset.py**, run it and check the result of ```page_size``` and the ```offset``` parameters combination.
+Open the **search_with_pagination_offset.py**, run it and check the result of **```page_size```** and the **```offset```** parameters combination.
 
 Run it in a terminal with a command:
 ```bash
 python search_with_pagination_offset.py
 ```
+
+## Offset. Response analyze
+
+In the response you see the requested page of products. 
+
+The field **```next_page_token```** now has value generated to point on the next page and can be used in furher results navigation.
+
 
 ## Success 
 
