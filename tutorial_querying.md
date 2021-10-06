@@ -41,7 +41,7 @@ There is a request ready to be run on a catalog full of different products, so y
 but first please open the **search_simple_query.py** to review the request.
 
 To send this request to the search service, open a terminal and run:
-```
+```bash
 python search_simple_query.py 
 ```
 
