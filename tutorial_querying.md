@@ -4,7 +4,7 @@
 
 This tutorial will show you how to send simple search query to the Retail Service and analyze the response
 
-**Time to complete**: About 3 minutes
+**Time to complete**: About 1 minute
 
 ## Before you begin
 
@@ -20,6 +20,7 @@ virtualenv <your-env>
 ```bash
 source <your-env>/bin/activate
 ```
+
 Now install google packages:
 ```bash
 pip install google
@@ -47,13 +48,13 @@ python search_simple_query.py
 
 ## Simple query. Response analyze
 
-Now in a field ```results[]``` you can see A list of matched items returned by Retail Search service.
+Now in a field **```results[]```** you can see A list of matched items returned by Retail Search service.
 
-```total_size``` it's the estimated total count of matched items.
+**```total_size```** it's the estimated total count of matched items.
 
-```attribution_token``` it's a unique search token which enables accurate attribution of search model performance.
+**```attribution_token```** it's a unique search token which enables accurate attribution of search model performance.
 
-```next_page_token``` A token that points to the next page in the search response. By default the number of products per page is 100. If this field is omitted, there are no subsequent pages.
+**```next_page_token```** A token that points to the next page in the search response. By default the number of products per page is 100. If this field is omitted, there are no subsequent pages.
 
 ## Success 
 
