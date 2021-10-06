@@ -1,33 +1,37 @@
-# **Querying and Pagination Tutorial**
+# **Querying Tutorial**
 
 ## Let's get started
 
-This tutorial first will show you how to send simple search query to the Retail Service and then how to send request using parameters of pagination to easily navigate search results
+This tutorial will show you how to send simple search query to the Retail Service and analyze the response
 
 **Time to complete**: About 3 minutes
 
 ## Before you begin
+
 To run Python code samples from this tutorial you will need to setup your virtual environment.
 
 Please use this commands in a terminal:
-```
+```bash
 pip install virtualenv
 ```
-```
+```bash
 virtualenv <your-env>
 ```
-```
+```bash
 source <your-env>/bin/activate
 ```
 Now install google packages:
-```
+```bash
 pip install google
 ```
-```
+```bash
 pip install google-cloud-retail
 ```
 
+**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal to run it.
+
 ## Simple query request
+
 The simple search request contains only required fields which are: 
   - ```placement``` - The resource name of the search engine placement
   - ```visitor_id``` - A unique identifier for tracking visitors
@@ -42,6 +46,7 @@ python search_simple_query.py
 ```
 
 ## Simple query. Response analyze
+
 Now in a field ```results[]``` you can see A list of matched items returned by Retail Search service.
 
 ```total_size``` it's the estimated total count of matched items.
