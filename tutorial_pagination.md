@@ -1,10 +1,16 @@
-# **Querying and Pagination Tutorial**
+# **Pagination Tutorial**
 
 ## Let's get started
 
-This tutorial first will show you how to send simple search query to the Retail Service and then how to send request using parameters of pagination to easily navigate search results
+Using pagination is simple and easy way not only to view and navigate the search results, but also to decrease the lookup time and the size of the responses.
 
-**Time to complete**: About 3 minutes
+This tutorial will show you how to send request using parameters of pagination.
+
+There are three fields in the search request which gives you all the posibilities of navigation throug the search results: ```page_size```, ```next_page_token```, ```offset```.
+
+Lets see how each of them works.
+
+**Time to complete**: About 2 minutes
 
 ## Before you begin
 To run Python code samples from this tutorial you will need to setup your virtual environment.
@@ -26,36 +32,6 @@ pip install google
 ```
 pip install google-cloud-retail
 ```
-
-## Simple query request
-The simple search request contains only required fields which are: 
-  - ```placement``` - The resource name of the search engine placement
-  - ```visitor_id``` - A unique identifier for tracking visitors
-  - ```query``` - Raw search query or search phrase
-
-There is a request ready to be run on a catalog full of different products, so you will see the results right away, 
-but first please open the **search_simple_query.py** to review the request.
-
-To send this request to the search service, open a terminal and run:
-```
-python search_simple_query.py 
-```
-
-## Simple query. Response analyze
-Now in a field ```results[]``` you can see A list of matched items returned by Retail Search service.
-
-```total_size``` it's the estimated total count of matched items.
-
-```attribution_token``` it's a unique search token which enables accurate attribution of search model performance.
-
-```next_page_token``` A token that points to the next page in the search response. By default the number of products per page is 100. If this field is omitted, there are no subsequent pages.
-
-## Pagination
-Using pagination is simple and easy way not only to view and navigate the search results, but also to decrease the lookup time and the size of the responses.
-
-There are three fields in the search request which gives you all the posibilities of navigation throug the search results: ```page_size```, ```next_page_token```, ```offset```.
-
-Lets see how each of them works.
 
 ## Page size
 
