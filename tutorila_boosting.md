@@ -63,7 +63,7 @@ python search_with_boosting.py
 
 Now you can check the ```results[]```, the poducts which corresponds the boost condition became reranked.
 
-Please note, that setting boost score to 1.0 gives the item a big promotion. However, it does not necessarily mean that the boosted item will be the top result at all times, nor that other items will be excluded. 
+Please note, that setting boost strength to 1.0 gives the item a big promotion. However, it does not necessarily mean that the boosted item will be the top result at all times, nor that other items will be excluded. 
 Results could still be shown even when none of them matches the condition. And results that are significantly more relevant to the search query can still trump your heavily favored but irrelevant items.
 
 You can combine up to 10 boost specifications in one search request. So that you may apply really sophisticated boosting rules to your search request.
