@@ -49,7 +49,10 @@ def search_ordered_products(query: str, order: str, page_size=10):
 def search():
     setup_catalog.ingest_products(test_id)
 
-    search_response = search_ordered_products(title_query, "price desc")
+    "# [TRY DIFFERENT ORDERING EXPRESSIONS HERE:]" 
+    order = 'price desc'
+    
+    search_response = search_ordered_products(title_query, order)
     print("---ordered search results---")
     print(search_response)
 
