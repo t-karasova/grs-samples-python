@@ -45,14 +45,14 @@ First let's order the search results by price, the more expensive should appear 
 ```order = 'price desc'```
  
 
-To see the whole request with an ordering open **search_with_ordering.py**
+To see the whole request with ordering open **search_with_ordering.py**
 
-Run it in a terminal with a command:
+Run the sample in a terminal with a command:
 ```bash
 python search_with_ordering.py
 ```
 
-Now you can see the ```results[]``` are ordered descending.
+Now you can see the ```results[]``` are ordered by price descending.
 
 Next let's change the ordering direction to show the cheapest products first
 
