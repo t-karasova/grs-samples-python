@@ -2,7 +2,7 @@
 
 ## Let's get started
 
-This tutorial will show you how to order the items in a search response. 
+This tutorial will show you how to order items in a search response. 
 
 The ordering can be applied to the most of the product fields, the full list of the fields you can find in [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#order)
 
