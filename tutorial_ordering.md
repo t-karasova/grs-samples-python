@@ -42,7 +42,7 @@ To use the ordering feature you need to specify the field and the ordering direc
 
 First let's order the search results by price, the more expensive should appear on the top, in such case the ordering expression should be set as 
 
-**```price desc```**
+```order = 'price desc'```
  
 
 To see the whole request with an ordering open **search_with_ordering.py**
