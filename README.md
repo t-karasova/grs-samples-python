@@ -9,7 +9,7 @@ In order to authenticate and authorize the client place a JSON file with authori
 export GOOGLE_APPLICATION_CREDENTIALS="/home/<use_name>/cloudshell_open/grs-samples-python/token.json"
 ```
 ### Setup your virtual environment
-Use terminal to install Google packages with commannds:
+Use terminal to install Google packages with commands:
 ```
 pip install virtualenv
 virtualenv <your-env>
@@ -18,7 +18,7 @@ pip install google
 pip install google-cloud-retail
 ```
 ### Run code samples
-To run the chosen code sample open a terminal and execute command:
+To run a chosen code sample open a terminal window and execute the command like the following:
 ```
 cd cloudshell_open/grs-samples-python
 python search_with_boost_spec.py 
