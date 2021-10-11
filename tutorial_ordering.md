@@ -4,10 +4,10 @@
 
 This tutorial will show you how to order items in a search response. 
 
-The ordering can be applied to the most of the product fields, the full list of the fields you can find in [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#order)
+The ordering can be applied to the most of the product fields. 
+The full list of the fields you can find in the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#order)
 
-
-Lets see how the ordering works.
+Let's see how the ordering works.
 
 **Time to complete**: About 2 minutes
 
@@ -15,7 +15,7 @@ Lets see how the ordering works.
 
 To run Python code samples from this tutorial you will need to setup your virtual environment.
 
-Please use this commands in a terminal:
+Please use these commands in a terminal:
 ```bash
 pip install virtualenv
 ```
@@ -40,12 +40,14 @@ pip install google-cloud-retail
 
 To use the ordering feature you need to specify the field and the ordering direction. You can order by textual as well as by numerical fields.
 
-First let's order the search results by price, the more expensive should appear on the top, in such case the ordering expression should be set as 
+First let's order the search results by price. The most expensive items should appear on the top. 
+In such case the ordering expression should be set as:
 
-```order = 'price desc'```
- 
+```
+order = 'price desc'
+```
 
-To see the whole request with ordering open **search_with_ordering.py**
+To see the full request with ordering open **search_with_ordering.py**
 
 Run the sample in a terminal with a command:
 ```bash
@@ -57,8 +59,9 @@ Now you can see the ```results[]``` are ordered by price descending.
 Next let's change the ordering direction to show the cheapest products first
 
 Just find the comment 
-
-"# [TRY DIFFERENT ORDERING EXPRESSIONS HERE:]" 
+```
+# [TRY DIFFERENT ORDERING EXPRESSIONS HERE:]
+```
 
 and change the ordering expresion to: 
 ```order = 'price asc'``` or just ```order = 'price'``` - that's an equal expressions
@@ -79,7 +82,7 @@ The lower priority fields will be used to order items with equal values for high
 
 For example, **```rating desc, price```** would order items by their rating first, then the products with the same rating will be ordered by price.
 
-To try that, please change the ordering expression to:
+To try that please change the ordering expression to:
 ```
 order = 'rating desc, price'
 ```
