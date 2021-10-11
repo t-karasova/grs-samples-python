@@ -143,9 +143,9 @@ python search_with_filtering.py
 
 ## Success 
 
-You have complete the tutorial and now we **encourage** you to **test the filtering by yourself**, try different combinations of different filter expressions.
+You have completed the tutorial and now we **encourage** you to **test the filtering by yourself**, try different combinations of different filter expressions.
 
-**Thank you for compleating this tutorial!**
+**Thank you for completing this tutorial!**
 
 
 
