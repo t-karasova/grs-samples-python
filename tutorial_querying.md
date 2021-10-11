@@ -21,7 +21,7 @@ virtualenv <your-env>
 source <your-env>/bin/activate
 ```
 
-Now install google packages:
+Now install Google packages:
 ```bash
 pip install google
 ```
@@ -58,9 +58,9 @@ Now in a field **```results[]```** you can see A list of matched items returned 
 
 ## Success 
 
-You have complete the tutorial and now we **encourage** you to **test the search by yourself**, right here in the CloudShell environment, using different search queries.
+You have completed the tutorial and now we **encourage** you to **test the search by yourself**, right here in the CloudShell environment, using different search queries.
 
-**Thank you for compleating this tutorial!**
+**Thank you for completing this tutorial!**
 
 
 

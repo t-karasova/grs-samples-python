@@ -9,7 +9,7 @@ In order to authenticate and authorize the client place a JSON file with authori
 export GOOGLE_APPLICATION_CREDENTIALS="/home/<use_name>/cloudshell_open/grs-samples-python/token.json"
 ```
 ### Setup your virtual environment
-Use terminal to install google packages with commannds:
+Use terminal to install Google packages with commannds:
 ```
 pip install virtualenv
 virtualenv <your-env>

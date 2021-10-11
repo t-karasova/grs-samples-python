@@ -2,7 +2,7 @@
 
 ## Let's get started
 
-This tutorial will show you how to enable the query expansion feature, which allows you to increases the recall for query terms with few results,
+This tutorial will show you how to enable the query expansion feature, which allows you to increase the recall for query terms with multiple results,
 especially long tail queries.
 
 If the query expansion disabled, only the exact search query is used, even if total size of search result is zero.
@@ -30,7 +30,7 @@ virtualenv <your-env>
 ```bash
 source <your-env>/bin/activate
 ```
-Now install google packages:
+Now install Google packages:
 ```bash
 pip install google
 ```
@@ -46,7 +46,7 @@ pip install google-cloud-retail
 Open **search_with_query_expansion_spec.py**, take a look at the search request, here you see the query expansion condition set with value "AUTO",
 that means the query expansion feature is turned on and the search results will be expanded.
 
-Run the sample in a terminal with a command:
+Run the sample in a terminal with the command:
 ```bash
 python search_with_query_expansion_spec.py
 ```
@@ -62,7 +62,7 @@ Just find the comment
 and change the condition to: 
 ```condition = SearchRequest.QueryExpansionSpec.Condition.DISABLED```
 
-Run the sample in a terminal with a command:
+Run the sample in a terminal with the command:
 ```bash
 python search_with_ordering.py
 ```
@@ -90,6 +90,6 @@ python search_with_ordering.py
 
 ## Success 
 
-You have complete the tutorial and now we **encourage** you to **test the query expansion by yourself**, try different search phrases with and without query expansion
+You have completed the tutorial and now we **encourage** you to **test the query expansion by yourself**, try different search phrases with and without query expansion
 
-**Thank you for compleating this tutorial!**
+**Thank you for completing this tutorial!**

@@ -26,7 +26,7 @@ virtualenv <your-env>
 ```bash
 source <your-env>/bin/activate
 ```
-Now install google packages:
+Now install Google packages:
 ```bash
 pip install google
 ```
@@ -56,7 +56,7 @@ The field **```boost```** defines the strength of the condition boost, which sho
 
 To see the whole request with a product boosting open **search_with_boosting.py**
 
-Run it in a terminal with a command:
+Run it in a terminal with the command:
 ```bash
 python search_with_boosting.py
 ```
@@ -70,6 +70,6 @@ You can combine up to 10 boost specifications in one search request. So that you
 
 ## Success 
 
-You have complete the tutorial and now we **encourage** you to **test the filtering by yourself**, try different combinations of different filter expressions.
+You have completed the tutorial and now we **encourage** you to **test the filtering by yourself**, try different combinations of different filter expressions.
 
-**Thank you for compleating this tutorial!**
+**Thank you for completing this tutorial!**
