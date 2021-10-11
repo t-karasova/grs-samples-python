@@ -2,16 +2,16 @@
 
 ## Let's get started
 
-The filtering in Retail Service is a powerful and convenient search feature, it serves you to fine tune the search request according to your or your customer's needs.
+The filtering in Retail Service is a powerful and convenient search feature. It serves you to fine tune the search request according to your or your customer's needs.
 
 - You can filter by single or multiple fields.
-- You can filter by textual or numerical fields, or both 
-- You can use expression language for constructing a predicate for each field
-- You can combine different expressions with logical operators
+- You can filter by textual or numerical fields or both.
+- You can use expression language for constructing a predicate for each field.
+- You can combine different expressions with logical operators.
 
-See, the posibilities are impresive.
+See, the posibilities are impressive.
 
-Lets try them.
+Let's try them.
 
 **Time to complete**: About 4 minutes
 
@@ -19,7 +19,7 @@ Lets try them.
 
 To run Python code samples from this tutorial you will need to setup your virtual environment.
 
-Please use this commands in a terminal:
+Please use these commands in a terminal:
 ```bash
 pip install virtualenv
 ```
@@ -61,11 +61,12 @@ python search_with_filtering.py
 
 Now you can see the ```results[]``` has only items satisfied the filtering expression.
 
-Feel free to test filtering by textual field by yourself, right here in CloudShell environment.
+Feel free to test filtering by textual field by yourself, right here in Cloud Shell environment.
 
 Just find the comment 
-
-"# [TRY DIFFERENT FILTER EXPRESSIONS HERE:]" 
+```
+# [TRY DIFFERENT FILTER EXPRESSIONS HERE:]
+```
 
 and change the filtering expression for something like this:
 
@@ -83,10 +84,10 @@ To see the full list of textual fields you can apply the filters to please check
 ## Filtering by numerical field. IN range
 
 If you want to filter by a numerical field you can write the filtering expression in two ways:
-- To check wether the field value is within the range, then the function **"IN"** can be applied
-- Campare the field value with a double value, then for the comparison you can use operators **<=**,  **<**,  **>=**, **>**, **=**.
+- To check whether the field value is within the range, then the function **"IN"** can be applied
+- Compare the field value with a double value, then for the comparison you can use operators **<=**,  **<**,  **>=**, **>**, **=**.
 
-Let's try to use the function "IN" to search for products with price more then $50 and less then $100
+Let's try to use the function **"IN"** to search for products with price more then $50 and less then $100
 
 Please use the same request as in a step before,  open **search_with_filtering.py** if you have it closed and change the filter expression to:
 
@@ -99,7 +100,7 @@ Run the code sample in a terminal using command:
 python search_with_filtering.py
 ```
 
-Check the Search response, now it has only items with price in a range [$50, $100)
+Check that search response has only items with price in a range of $50 to $100.
 
 To see the full list of numerical fields you can apply the filters to please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
 
@@ -118,13 +119,15 @@ Run the code sample in a terminal using command:
 python search_with_filtering.py
 ```
 
-Check the Search response, now it has only items with price in a range [$50, $100)
+Check that search response has only items with price in a range of $50 to $100.
 
 ## Filtering by multiple fields
 
 You can filter the search results by multiple fields joining the expressions with **"AND"** or **"OR"** operators.
 
-**```filter = expression, { " AND " | "OR", expression };```**
+```
+filter = expression, { " AND " | "OR", expression };
+```
 
 The same as in previous step, use **search_with_filtering.py** to modify the filter expression.
 
