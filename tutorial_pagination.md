@@ -85,7 +85,7 @@ The field **```next_page_token```** now has the value generated to point to the 
 
 In some other cases, instead of navigating from page to page or getting results with top relevance, you could directly jump to a particular position with offset.
 
-For example, if you want the tenth page of the results when the page size is 5, then you could set the offset to 45, calculated as (10 - 1) * 5.
+For example, if you want the tenth page of the results when the page size is **5**, then you could set the offset to **45**, calculated as **(10 - 1) * 5**.
 
 Open the **search_with_pagination_offset.py**, run it and check the result of **```page_size```** and the **```offset```** parameters combination.
 
@@ -103,7 +103,7 @@ The field **```next_page_token```** now has the value generated to point to the 
 
 ## Success 
 
-You have completed the tutorial and now we **encourage** you to **test the pagination by yourself**, right here in the CloudShell environment, using different combinations of values for pagination parameters.
+You have completed the tutorial and now we **encourage** you to **test the pagination by yourself**, right here in the Cloud Shell environment, using different combinations of values for pagination parameters.
 
 **Thank you for completing this tutorial!**
 

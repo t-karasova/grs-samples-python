@@ -43,8 +43,7 @@ pip install google-cloud-retail
 
 ## Query expansion
 
-Open **search_with_query_expansion_spec.py**, take a look at the search request, here you see the query expansion condition set with value "AUTO",
-which means the query expansion feature is turned on and the search results will be expanded.
+Open **search_with_query_expansion_spec.py**, take a look at the search request, here you see the query expansion condition set with value "AUTO". The setting means that the query expansion feature is turned on and the search results will be expanded.
 
 Run the sample in a terminal with the command:
 ```bash
