@@ -61,7 +61,7 @@ python search_with_filtering.py
 
 Now you can see ```results[]``` has only items satisfied the filtering expression.
 
-Feel free to test filtering by textual field yourself, right here in CloudShell environment.
+Feel free to test filtering by textual field yourself, right here in Cloud Shell environment.
 
 Just find the comment 
 
@@ -83,7 +83,7 @@ To see the full list of textual fields you can apply the filters to please check
 ## Filtering by numerical field. IN range
 
 If you want to filter by a numeric field you can write the filtering expression in two ways:
-- To check wether the field value is within a range use the function **"IN"**
+- To check whether the field value is within a range use the function **"IN"**
 - Compare a field value with a double value with the help of operators **<=**,  **<**,  **>=**, **>**, **=**.
 
 Let's try to use the function "IN" to search for products with price more than $50 and less than $100
@@ -99,7 +99,7 @@ Run the code sample in a terminal using command:
 python search_with_filtering.py
 ```
 
-Check the Search response, now it has only items with price in the range $50 to $100.
+Check the search response, now it has only items with price in the range $50 to $100.
 
 To see the full list of numeric fields you can apply the filters to please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
 
@@ -118,7 +118,7 @@ Run the code sample in a terminal using the command:
 python search_with_filtering.py
 ```
 
-Check the Search response, now it has only items with price in the range between $50 and $100.
+Check the search response, now it has only items with price in the range between $50 and $100.
 
 ## Filtering by multiple fields
 

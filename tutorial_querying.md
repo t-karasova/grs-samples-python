@@ -58,7 +58,7 @@ Now in the field **```results[]```** you can see a list of matched items returne
 
 ## Success 
 
-You have completed the tutorial and now we **encourage** you to **test the search by yourself**, right here in the CloudShell environment, using different search queries.
+You have completed the tutorial and now we **encourage** you to **test the search by yourself**, right here in the Cloud Shell environment, using different search queries.
 
 **Thank you for completing this tutorial!**
 
