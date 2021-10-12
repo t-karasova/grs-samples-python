@@ -2,12 +2,12 @@
 
 ## Let's get started
 
-The filtering in Retail Service is a powerful and convenient search feature, it serves you to fine tune the search request according to your or your customer's needs.
+Filtering in Retail Service is a powerful and convenient search feature. It lets you fine-tune search requests according to your or your customer's needs.
 
-- You can filter by single or multiple fields.
-- You can filter by textual or numerical fields, or both 
-- You can use expression language for constructing a predicate for each field
-- You can combine different expressions with logical operators
+- You can filter by a single or multiple fields.
+- You can filter by text or numeric fields, or both 
+- You can use an expression language for constructing a predicate for each field
+- You can combine different expressions with the help of logical operators
 
 See, the posibilities are impresive.
 
@@ -19,7 +19,7 @@ Lets try them.
 
 To run Python code samples from this tutorial you will need to setup your virtual environment.
 
-Please use this commands in a terminal:
+Please use these commands in a terminal:
 ```bash
 pip install virtualenv
 ```
@@ -29,7 +29,7 @@ virtualenv <your-env>
 ```bash
 source <your-env>/bin/activate
 ```
-Now install google packages:
+Now install Google packages:
 ```bash
 pip install google
 ```
@@ -52,22 +52,22 @@ The example of such expression is
 
 ```'(colorFamily: ANY("black"))'``` 
 
-To see the whole request with a filtering open **search_with_filtering.py**
+To see the whole request with filtering open **search_with_filtering.py**
 
-Run it in a terminal with a command:
+Run it in a terminal with the command:
 ```bash
 python search_with_filtering.py
 ```
 
-Now you can see the ```results[]``` has only items satisfied the filtering expression.
+Now you can see ```results[]``` has only items satisfied the filtering expression.
 
-Feel free to test filtering by textual field by yourself, right here in CloudShell environment.
+Feel free to test filtering by textual field yourself, right here in Cloud Shell environment.
 
 Just find the comment 
 
 "# [TRY DIFFERENT FILTER EXPRESSIONS HERE:]" 
 
-and change the filtering expression for something like this:
+and replace the filtering expression for something like this:
 
 ```
 filter = '(brands: ANY("Google"))'
@@ -82,13 +82,13 @@ To see the full list of textual fields you can apply the filters to please check
 
 ## Filtering by numerical field. IN range
 
-If you want to filter by a numerical field you can write the filtering expression in two ways:
-- To check wether the field value is within the range, then the function **"IN"** can be applied
-- Campare the field value with a double value, then for the comparison you can use operators **<=**,  **<**,  **>=**, **>**, **=**.
+If you want to filter by a numeric field you can write the filtering expression in two ways:
+- To check whether the field value is within a range use the function **"IN"**
+- Compare a field value with a double value with the help of operators **<=**,  **<**,  **>=**, **>**, **=**.
 
-Let's try to use the function "IN" to search for products with price more then $50 and less then $100
+Let's try to use the function "IN" to search for products with price more than $50 and less than $100
 
-Please use the same request as in a step before,  open **search_with_filtering.py** if you have it closed and change the filter expression to:
+Please use the same request as in the step before,  open **search_with_filtering.py** if you have it closed and change the filter expression to:
 
 ```
 filter = 'price: IN(50.0, 100.0)'
@@ -99,26 +99,26 @@ Run the code sample in a terminal using command:
 python search_with_filtering.py
 ```
 
-Check the Search response, now it has only items with price in a range [$50, $100)
+Check the search response, now it has only items with price in the range $50 to $100.
 
-To see the full list of numerical fields you can apply the filters to please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
+To see the full list of numeric fields you can apply the filters to please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
 
-## Filtering by numerical field. Comparison operators
+## Filtering by numeric field. Comparison operators
 
-All the comparison you can use operators **<=**,  **<**,  **>=**, **>**, **=** are available for filtering expressions.
+All the comparison operators **<=**,  **<**,  **>=**, **>**, **=** are available for filtering expressions.
 
-The same as in previous step, use **search_with_filtering.py** to modify the filter expression.
-Try this expression, which is equal to the one in previous step:
+Similarly to the previous step, use **search_with_filtering.py** to modify the filter expression.
+Try the following expression which is equivalent to the one in the previous step:
 ```
 filter = 'price >= 50.0 AND price < 100'
 ```
 
-Run the code sample in a terminal using command:
+Run the code sample in a terminal using the command:
 ```bash
 python search_with_filtering.py
 ```
 
-Check the Search response, now it has only items with price in a range [$50, $100)
+Check the search response, now it has only items with price in the range between $50 and $100.
 
 ## Filtering by multiple fields
 
@@ -126,9 +126,9 @@ You can filter the search results by multiple fields joining the expressions wit
 
 **```filter = expression, { " AND " | "OR", expression };```**
 
-The same as in previous step, use **search_with_filtering.py** to modify the filter expression.
+Similarly to the previous step, use **search_with_filtering.py** to modify the filter expression.
 
-Try this expression to see how different expressions can be combined:
+Try this expression to see how different filtering conditions can be combined:
 ```
 filter = '(categories: ANY("Nest > speakers and displays")) AND (price: IN(80.0, *))'
 ```
@@ -140,9 +140,9 @@ python search_with_filtering.py
 
 ## Success 
 
-You have complete the tutorial and now we **encourage** you to **test the filtering by yourself**, try different combinations of different filter expressions.
+You have completed the tutorial and now we **encourage** you to **test the filtering by yourself**, try different combinations of different filter expressions.
 
-**Thank you for compleating this tutorial!**
+**Thank you for compleaing this tutorial!**
 
 
 

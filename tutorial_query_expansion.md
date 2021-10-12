@@ -2,16 +2,16 @@
 
 ## Let's get started
 
-This tutorial will show you how to enable the query expansion feature, which allows you to increases the recall for query terms with few results,
+This tutorial will show you how to enable the query expansion feature which allows you to increase the recall for query terms with multiple results,
 especially long tail queries.
 
-If the query expansion disabled, only the exact search query is used, even if total size of search result is zero.
+If the query expansion is disabled, only the exact search query is used, even if the total number of search result is zero.
 
-Enable query expansion feature and let Google Retail Search ti build an automatic query expansion.
+Enable query expansion feature and let Google Retail Search build an automatic query expansion.
 
-You can also pin unexpanded products so they will always be at the top of the search results, followed by the expanded results
+You can also pin unexpanded products so they will always be at the top of search results, followed by those that come via expansion.
 
-This is really usefull feature thet helps you to enchance customer expirience. So let's look at it closely
+This is a really usefull feature that helps you enchance customer expirience. So let's look at it closely.
 
 
 **Time to complete**: About 2 minutes
@@ -20,7 +20,7 @@ This is really usefull feature thet helps you to enchance customer expirience. S
 
 To run Python code samples from this tutorial you will need to setup your virtual environment.
 
-Please use this commands in a terminal:
+Please use these commands in a terminal:
 ```bash
 pip install virtualenv
 ```
@@ -30,7 +30,7 @@ virtualenv <your-env>
 ```bash
 source <your-env>/bin/activate
 ```
-Now install google packages:
+Now install Google packages:
 ```bash
 pip install google
 ```
@@ -38,22 +38,21 @@ pip install google
 pip install google-cloud-retail
 ```
 
-**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal to run it.
+**Tip**: Click the copy button on the side of the code box to later paste the command in the Cloud Shell terminal and run it.
 
 
 ## Query expansion
 
-Open **search_with_query_expansion_spec.py**, take a look at the search request, here you see the query expansion condition set with value "AUTO",
-that means the query expansion feature is turned on and the search results will be expanded.
+Open **search_with_query_expansion_spec.py**, take a look at the search request, here you see the query expansion condition set with value "AUTO". The setting means that the query expansion feature is turned on and the search results will be expanded.
 
-Run the sample in a terminal with a command:
+Run the sample in a terminal with the command:
 ```bash
 python search_with_query_expansion_spec.py
 ```
 
-Now you can see the ```results[]``` has products which does not exactly match the search query but are really close to it
+Now you can see ```results[]``` have products that do not exactly match the search query but are really close to it.
 
-Next let's change the condition value to "DISABLED"
+Next let's change the condition value to "DISABLED":
 
 Just find the comment 
 
@@ -62,34 +61,15 @@ Just find the comment
 and change the condition to: 
 ```condition = SearchRequest.QueryExpansionSpec.Condition.DISABLED```
 
-Run the sample in a terminal with a command:
+Run the sample in a terminal with the command:
 ```bash
 python search_with_ordering.py
 ```
 
-Now you see the results contains only items with exact match
-
-## Ordering by multiple fields
-
-Ordering by multiple fields is supported through the use of comma-separated fields in order of priority. 
-
-The lower priority fields will be used to order items with equal values for higher priority fields. 
-
-
-For example, **```rating desc, price```** would order items by their rating first, then the products with the same rating will be ordered by price.
-
-To try that, please change the ordering expression to:
-```
-order = 'rating desc, price'
-```
-
-Run the code sample in a terminal using command:
-```bash
-python search_with_ordering.py
-```
+Now you see the results contain only the items that are an exact match.
 
 ## Success 
 
-You have complete the tutorial and now we **encourage** you to **test the query expansion by yourself**, try different search phrases with and without query expansion
+You have completed the tutorial and now we **encourage** you to **test the query expansion by yourself**, try different search phrases with and without query expansion.
 
-**Thank you for compleating this tutorial!**
+**Thank you for completing this tutorial!**
