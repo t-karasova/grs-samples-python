@@ -19,7 +19,7 @@ Lets see how each of them works.
 
 To run Python code samples from this tutorial you will need to setup your virtual environment.
 
-Please use this commands in a terminal:
+Please use these commands in a terminal:
 ```bash
 pip install virtualenv
 ```
