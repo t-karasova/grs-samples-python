@@ -8,7 +8,7 @@ This tutorial will show you how to send simple search query to the Retail Servic
 
 ## Before you begin
 
-To run Python code samples from this tutorial you will need to setup your virtual environment.
+To run Python code samples from this tutorial you will need to set up your virtual environment.
 
 Please use these commands in a terminal:
 ```bash
@@ -54,7 +54,7 @@ Now in the field **```results[]```** you can see a list of matched items returne
 
 **```attribution_token```** is a unique search token which enables accurate attribution of search model performance.
 
-**```next_page_token```** is a token that points to the next page in the search response. By default the number of products per page is 100. If this field is omitted, there are no subsequent pages.
+**```next_page_token```** is a token that points to the next page in the search response. By default, the number of products per page is 100. If this field is omitted, there are no subsequent pages.
 
 ## Success 
 

@@ -9,16 +9,16 @@ If the query expansion is disabled, only the exact search query is used, even if
 
 Enable query expansion feature and let Google Retail Search build an automatic query expansion.
 
-You can also pin unexpanded products so they will always be at the top of search results, followed by those that come via expansion.
+You can also pin unexpanded products, so they will always be at the top of search results, followed by those that come via expansion.
 
-This is a really usefull feature that helps you enchance customer expirience. So let's look at it closely.
+This is a really useful feature that helps you enhance a customer experience. So let's look at it closely.
 
 
 **Time to complete**: About 2 minutes
 
 ## Before you begin
 
-To run Python code samples from this tutorial you will need to setup your virtual environment.
+To run Python code samples from this tutorial you will need to set up your virtual environment.
 
 Please use these commands in a terminal:
 ```bash
@@ -43,7 +43,7 @@ pip install google-cloud-retail
 
 ## Query expansion
 
-Open **search_with_query_expansion_spec.py**, take a look at the search request, here you see the query expansion condition set with value "AUTO". The setting means that the query expansion feature is turned on and the search results will be expanded.
+Open **search_with_query_expansion_spec.py**, take a look at the search request, here you see the query expansion condition set with value "AUTO". The setting means that the query expansion feature is turned on, and the search results will be expanded.
 
 Run the sample in a terminal with the command:
 ```bash

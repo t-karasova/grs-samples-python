@@ -9,15 +9,15 @@ Filtering in Retail Service is a powerful and convenient search feature. It lets
 - You can use an expression language for constructing a predicate for each field
 - You can combine different expressions with the help of logical operators
 
-See, the posibilities are impresive.
+See, the possibilities are impressive.
 
-Lets try them.
+Let's try them.
 
 **Time to complete**: About 4 minutes
 
 ## Before you begin
 
-To run Python code samples from this tutorial you will need to setup your virtual environment.
+To run Python code samples from this tutorial you will need to set up your virtual environment.
 
 Please use these commands in a terminal:
 ```bash
@@ -44,7 +44,7 @@ pip install google-cloud-retail
 
 A simple expression applying to a textual field could be written like this:
 
-**```( textual_field, ":", "ANY", "(", literal, { ",", literal }, ")"```**
+```(textual_field,":", "ANY", "(",literal,{",",literal},")"```
 
 Function "ANY" returns true if the field contains any of the literals.
 
@@ -61,11 +61,11 @@ python search_with_filtering.py
 
 Now you can see ```results[]``` has only items satisfied the filtering expression.
 
-Feel free to test filtering by textual field yourself, right here in Cloud Shell environment.
+Feel free to test filtering by a textual field yourself, right here in Cloud Shell environment.
 
-Just find the comment 
+Just find the comment: 
 
-"# [TRY DIFFERENT FILTER EXPRESSIONS HERE:]" 
+"#TRY DIFFERENT FILTER EXPRESSIONS HERE:" 
 
 and replace the filtering expression for something like this:
 
@@ -80,7 +80,7 @@ filter = '(sizes: ANY("M","L"))'
 
 To see the full list of textual fields you can apply the filters to please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
 
-## Filtering by numerical field. IN range
+## Filtering by a numerical field. IN range
 
 If you want to filter by a numeric field you can write the filtering expression in two ways:
 - To check whether the field value is within a range use the function **"IN"**
@@ -103,7 +103,7 @@ Check the search response, now it has only items with price in the range $50 to 
 
 To see the full list of numeric fields you can apply the filters to please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
 
-## Filtering by numeric field. Comparison operators
+## Filtering by a numeric field. Comparison operators
 
 All the comparison operators **<=**,  **<**,  **>=**, **>**, **=** are available for filtering expressions.
 
@@ -142,7 +142,7 @@ python search_with_filtering.py
 
 You have completed the tutorial and now we **encourage** you to **test the filtering by yourself**, try different combinations of different filter expressions.
 
-**Thank you for compleaing this tutorial!**
+**Thank you for completing this tutorial!**
 
 
 

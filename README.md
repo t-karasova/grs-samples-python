@@ -1,9 +1,9 @@
 # Google Retail Search
 ## Python code samples
-The code here demonstartes how to consume Google Retail Search API in Python
+The code here demonstrates how to consume Google Retail Search API in Python
 
 ### Authorization
-In order to authenticate and authorize the client place a JSON file with authorization token to your cloudshell project and refer environment variable `GOOGLE_APPLICATION_CREDENTIALS` to it (use full path to file):
+In order to authenticate and authorize the client place a JSON file with authorization token to your Cloud Shell project and refer environment variable `GOOGLE_APPLICATION_CREDENTIALS` to it (use full path to file):
 
 ```
 export GOOGLE_APPLICATION_CREDENTIALS="/home/<use_name>/cloudshell_open/grs-samples-python/token.json"

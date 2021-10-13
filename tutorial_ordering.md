@@ -7,13 +7,13 @@ This tutorial will show you how to order items in a search response.
 The ordering can be applied to most of the product fields, the full list of the fields you can find in [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#order)
 
 
-Lets see how the ordering works.
+Let's see how the ordering works.
 
 **Time to complete**: About 2 minutes
 
 ## Before you begin
 
-To run Python code samples from this tutorial you will need to setup your virtual environment.
+To run Python code samples from this tutorial you will need to set up your virtual environment.
 
 Please use these commands in a terminal:
 ```bash
@@ -58,9 +58,9 @@ Next let's change the ordering direction to show the cheapest products first.
 
 Just find the comment 
 
-"# [TRY DIFFERENT ORDERING EXPRESSIONS HERE:]" 
+"TRY DIFFERENT ORDERING EXPRESSIONS HERE:" 
 
-and change the ordering expresion to: 
+and change the ordering expression to: 
 ```order = 'price asc'``` or just ```order = 'price'``` - that's an equivalent expressions since ascending is the default ordering direction.
 
 Run the sample in a terminal with the command:

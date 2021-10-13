@@ -6,18 +6,18 @@ Using pagination is a simple and easy way not only to view and navigate the sear
 
 This tutorial will show you how to control pagination in your search request.
 
-There are three fields in the search request that give you all the posibilities of navigating through search results: 
-- **```page_size```**, 
+There are three fields in the search request that give you all the possibilities of navigating through search results: 
+- **```page_size```**,
 - **```next_page_token```**,
-- **```offset```**.
+- **```offset```**
 
-Lets see how each of them works.
+Let's see how each of them works.
 
 **Time to complete**: About 2 minutes
 
 ## Before you begin
 
-To run Python code samples from this tutorial you will need to setup your virtual environment.
+To run Python code samples from this tutorial you will need to set up your virtual environment.
 
 Please use these commands in a terminal:
 ```bash
@@ -79,7 +79,7 @@ python search_with_pagination_next_page.py
 
 In the response you see the next page of <page_size> products.
 
-The field **```next_page_token```** now has the value generated to point to the next page and can be used in furher results navigation.
+The field **```next_page_token```** now has the value generated to point to the next page and can be used in further results navigation.
 
 ## Offset
 
@@ -98,7 +98,7 @@ python search_with_pagination_offset.py
 
 In the response you see the requested page of products. 
 
-The field **```next_page_token```** now has the value generated to point to the next page and can be used in furher results navigation.
+The field **```next_page_token```** now has the value generated to point to the next page and can be used in further results navigation.
 
 
 ## Success 

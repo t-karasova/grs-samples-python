@@ -5,16 +5,16 @@
 Boosting is a powerful and convenient feature that allows you to prioritize products that match certain condition.
 To specify a condition you can use filtering expressions.
 
-A boosting specfication can be based on a single field condition or on multiple fields. You can also combine several specifications within one boosting request.
+A boosting specification can be based on a single field condition or on multiple fields. You can also combine several specifications within one boosting request.
 
-In this tutuorial you will see a couple of examples of products boosting, so let's get started.
+In this tutorial you will see a couple of examples of products boosting, so let's get started.
 
 
 **Time to complete**: About 4 minutes
 
 ## Before you begin
 
-To run Python code samples from this tutorial you will need to setup your virtual environment.
+To run Python code samples from this tutorial you will need to set up your virtual environment.
 
 Please use these commands in a terminal:
 ```bash
@@ -37,14 +37,15 @@ pip install google-cloud-retail
 **Tip**: Click the copy button on the side of the code box to later paste the command in the Cloud Shell terminal and run it.
 
 
-## Boosting by one creteria
+## Boosting by one criterion
 
 The boosting specification looks like this:
   
   ```condition_boost_specs {
          condition: string
          boost: double [-1;1]
-    }```
+    }
+```
 
 To set the **```condition```** you should use a filtering expression, like:
 
@@ -61,12 +62,12 @@ Run it in a terminal with the command:
 python search_with_boosting.py
 ```
 
-Now you can check ```results[]```, the poducts that correspond to the boost condition became reranked.
+Now you can check ```results[]```, the products that correspond to the boost condition became reranked.
 
 Please note that setting boost strength to 1.0 gives the item a strong promotion. However, it does not necessarily mean that the boosted item will be the top result at all times, nor that other items will be excluded. 
 Results could still be shown even when none of them matches the condition. Also, results that are significantly more relevant to the search query can still trump your heavily favored but irrelevant items.
 
-You can combine up to 10 boost specifications in one search request. So that you may apply really sophisticated boosting rules to your search request.
+You can combine up to 10 boost specifications in one search request. In this way you may apply really sophisticated boosting rules to your search request.
 
 ## Success 
 
