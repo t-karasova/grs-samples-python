@@ -1,18 +1,3 @@
-# Copyright 2021 Google Inc. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail_v2 import SearchServiceClient, SearchRequest
 
@@ -20,15 +5,13 @@ from google.cloud.retail_v2 import SearchServiceClient, SearchRequest
 project_number = ""
 
 
-# [START get_search_service_client]
+# Get search service client
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
 
 
-# [END get_search_service_client]
-
-# [START get_search_request_with_boost_specification]
+# Get Search Request with Boost specification
 def get_search_request(query: str, _condition: str, _boost_strength: float):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
@@ -39,7 +22,7 @@ def get_search_request(query: str, _condition: str, _boost_strength: float):
     search_request = SearchRequest()
     search_request.placement = default_search_placement  # Placement is used to identify the Serving Config name.
     search_request.query = query
-    search_request.visitor_id = "123456"  # A unique identifier to track visitors
+    search_request.visitor_id = "123456"  # A unique identifier for tracking visitors
     search_request.boost_spec = boost_spec
 
     print("---search request---")
@@ -48,20 +31,17 @@ def get_search_request(query: str, _condition: str, _boost_strength: float):
     return search_request
 
 
-# [END get_search_request_with_boost_specification]
+# [END search_product_with_boost_spec]
 
-# [START search_product_with_boost_spec]
 def search():
     # TRY DIFFERENT BOOST CONDITIONS HERE:
-    condition = '(colorFamily: ANY("black"))'
-    boost = 0.1
+    condition = '(colorFamily: ANY("blue"))'
+    boost = 0.5
 
-    search_request = get_search_request("Tee", condition, boost)
+    search_request = get_search_request("Nest_Maxi", condition, boost)
     search_response = get_search_service_client().search(search_request)
     print("---boost search response---")
     print(search_response)
 
-
-# [END search_product_with_boost_spec]
 
 search()
