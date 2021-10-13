@@ -86,12 +86,12 @@ If you want to filter by a numeric field you can write the filtering expression 
 - To check whether the field value is within a range use the function **"IN"**
 - Compare a field value with a double value with the help of operators **<=**,  **<**,  **>=**, **>**, **=**.
 
-Let's try to use the function "IN" to search for products with price more than $50 and less than $100
+Let's try to use the function "IN" to search for products with price more than $15 and less than $30
 
 Please use the same request as in the step before,  open **search_with_filtering.py** if you have it closed and change the filter expression to:
 
 ```
-filter = 'price: IN(50.0, 100.0)'
+filter = 'price: IN(15.0, 30.0)'
 ```
 
 Run the code sample in a terminal using command:
@@ -110,7 +110,7 @@ All the comparison operators **<=**,  **<**,  **>=**, **>**, **=** are available
 Similarly to the previous step, use **search_with_filtering.py** to modify the filter expression.
 Try the following expression which is equivalent to the one in the previous step:
 ```
-filter = 'price >= 50.0 AND price < 100'
+filter = 'price >= 15.0 AND price < 30'
 ```
 
 Run the code sample in a terminal using the command:
@@ -130,7 +130,7 @@ Similarly to the previous step, use **search_with_filtering.py** to modify the f
 
 Try this expression to see how different filtering conditions can be combined:
 ```
-filter = '(categories: ANY("Nest > speakers and displays")) AND (price: IN(80.0, *))'
+filter = '(categories: ANY("Nest > speakers and displays")) AND (price: IN(15.0, *))'
 ```
 
 Run the code sample in a terminal using command:

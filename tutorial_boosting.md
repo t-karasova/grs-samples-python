@@ -41,7 +41,8 @@ pip install google-cloud-retail
 
 The boosting specification looks like this:
   
-  ```condition_boost_specs {
+  ```
+  condition_boost_specs {
          condition: string
          boost: double [-1;1]
     }
@@ -49,7 +50,10 @@ The boosting specification looks like this:
 
 To set the **```condition```** you should use a filtering expression, like:
 
-```'(colorFamily: ANY("black"))'```  or  ```'(rating: IN(4.0, 5.0))'```
+```'(colorFamily: ANY("black"))'``` 
+
+or  
+```'(rating: IN(4.0, 5.0))'```
 
 More detailed information about the filtering expressions can be found in [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter) 
 
@@ -64,8 +68,12 @@ python search_with_boosting.py
 
 Now you can check ```results[]```, the products that correspond to the boost condition became reranked.
 
-Please note that setting boost strength to 1.0 gives the item a strong promotion. However, it does not necessarily mean that the boosted item will be the top result at all times, nor that other items will be excluded. 
-Results could still be shown even when none of them matches the condition. Also, results that are significantly more relevant to the search query can still trump your heavily favored but irrelevant items.
+## Some notes about boosting
+
+Please note that setting boost strength to 1.0 gives the item a strong promotion. However, it **does not necessarily mean that the boosted item will be the top result at all times**, nor that other items will be excluded. 
+Results could still be shown even when none of them matches the condition. 
+
+Also, results that are **significantly more relevant** to the search query can still trump your heavily favored but irrelevant items.
 
 You can combine up to 10 boost specifications in one search request. In this way you may apply really sophisticated boosting rules to your search request.
 

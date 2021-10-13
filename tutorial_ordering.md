@@ -58,7 +58,7 @@ Next let's change the ordering direction to show the cheapest products first.
 
 Just find the comment 
 
-"TRY DIFFERENT ORDERING EXPRESSIONS HERE:" 
+"#TRY DIFFERENT ORDERING EXPRESSIONS HERE:" 
 
 and change the ordering expression to: 
 ```order = 'price asc'``` or just ```order = 'price'``` - that's an equivalent expressions since ascending is the default ordering direction.
