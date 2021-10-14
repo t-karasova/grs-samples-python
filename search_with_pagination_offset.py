@@ -49,7 +49,7 @@ def get_search_request(query: str, _offset: int, page_size=10):
 
 # [START search_for_products_with_offset]
 def search():
-    search_request = get_search_request("Nest_Maxi", 3)
+    search_request = get_search_request("Tee", 3)
     search_response = get_search_service_client().search(search_request)
 
     print("---offset search results---")

@@ -54,7 +54,7 @@ def search():
     # TRY DIFFERENT QUERY EXPANSION CONDITION HERE:
     condition = SearchRequest.QueryExpansionSpec.Condition.AUTO
 
-    search_request = get_search_request("Nest_Maxi", condition)
+    search_request = get_search_request("Google Youth Hero Tee Grey", condition)
     search_response = get_search_service_client().search(search_request)
 
     print("---query expansion search results---")

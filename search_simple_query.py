@@ -48,7 +48,7 @@ def get_search_request(query: str):
 
 # [START search_for_products_with_query_parameter]
 def search():
-    search_response = get_search_service_client().search(get_search_request("Nest_Maxi"))
+    search_response = get_search_service_client().search(get_search_request("Hoodie"))
 
     print("---search response---")
     print(search_response)

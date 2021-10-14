@@ -52,7 +52,7 @@ def search():
     # [TRY DIFFERENT FILTER EXPRESSIONS HERE:]
     filter = '(colorFamily: ANY("black"))'
 
-    search_request = get_search_request("Nest_Maxi", filter)
+    search_request = get_search_request("Tee", filter)
     search_response = get_search_service_client().search(search_request)
     print("---filtered search response---")
     print(search_response)

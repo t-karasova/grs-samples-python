@@ -51,7 +51,7 @@ def search():
     # TRY DIFFERENT ORDERING EXPRESSIONS HERE:
     order = 'price desc'
 
-    search_request = get_search_request("Nest_Maxi", order)
+    search_request = get_search_request("Hoodie", order)
     search_response = get_search_service_client().search(search_request)
 
     print("---ordered search results---")
