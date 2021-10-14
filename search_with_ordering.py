@@ -21,7 +21,7 @@ def get_search_request(query: str, order: str):
     search_request.placement = default_search_placement
     search_request.query = query
     search_request.order_by = order
-    search_request.visitor_id = "123456"  # A unique identifier for tracking visitors
+    search_request.visitor_id = "123456"  # A unique identifier to track visitors
 
     print("---search request---")
     print(search_request)

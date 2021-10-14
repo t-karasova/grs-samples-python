@@ -20,7 +20,7 @@ def get_search_request_first_page(query: str, page_size: int):
     search_request.placement = default_search_placement  # Placement is used to identify the Serving Config name.
     search_request.query = query
     search_request.page_size = page_size
-    search_request.visitor_id = "123456"  # A unique identifier for tracking visitors
+    search_request.visitor_id = "123456"  # A unique identifier to track visitors
 
     print("---search_request:---")
     print(search_request)
@@ -36,7 +36,7 @@ def get_search_request_next_page(query: str, page_size: int, page_token: str):
     search_request.placement = default_search_placement  # Placement is used to identify the Serving Config name.
     search_request.query = query
     search_request.page_size = page_size
-    search_request.visitor_id = "123456"  # A unique identifier for tracking visitors
+    search_request.visitor_id = "123456"  # A unique identifier to track visitors
     search_request.page_token = page_token
 
     print("---search_request:---")

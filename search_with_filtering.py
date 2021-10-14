@@ -23,7 +23,7 @@ def get_search_request(query: str, _filter: str, page_size=10):
     search_request.query = query
     search_request.filter = _filter
     search_request.page_size = page_size
-    search_request.visitor_id = "123456"  # A unique identifier for tracking visitors
+    search_request.visitor_id = "123456"  # A unique identifier to track visitors
 
     print("---search_request:---")
     print(search_request)

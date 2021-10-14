@@ -21,7 +21,7 @@ def get_search_request(query: str):
     search_request = SearchRequest()
     search_request.placement = default_search_placement  # Placement is used to identify the Serving Config name.
     search_request.query = query
-    search_request.visitor_id = "123456"  # A unique identifier for tracking visitors
+    search_request.visitor_id = "123456"  # A unique identifier to track visitors
 
     print("---search_request:---")
     print(search_request)
