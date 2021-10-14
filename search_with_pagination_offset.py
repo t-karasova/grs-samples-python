@@ -5,13 +5,15 @@ from google.cloud.retail_v2 import SearchServiceClient, SearchRequest
 project_number = ""
 
 
-# Get search service client
+# [START get_search_service_client]
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
 
 
-# Get Search Request for the pagination with offset
+# [END get_search_service_client]
+
+# [START get_search_request_with_offset]
 def get_search_request(query: str, _offset: int, page_size=10):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
@@ -28,7 +30,9 @@ def get_search_request(query: str, _offset: int, page_size=10):
     return search_request
 
 
-# Search for products with pagination. Offset
+# [END get_search_request_with_offset]
+
+# [START search_for_products_with_offset]
 def search():
     search_request = get_search_request("Nest_Maxi", 3)
     search_response = get_search_service_client().search(search_request)
@@ -36,5 +40,7 @@ def search():
     print("---offset search results---")
     print(search_response)
 
+
+# [START search_for_products_with_offset]
 
 search()

@@ -5,13 +5,16 @@ from google.cloud.retail_v2 import SearchServiceClient, SearchRequest
 project_number = ""
 
 
-# Get search service client
+# [START get_search_service_client]
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
 
 
-# Get Search Request with only required fields
+# [END get_search_service_client]
+
+
+# [START get_search_request_with_only_required_fields]
 def get_search_request(query: str):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
@@ -26,12 +29,16 @@ def get_search_request(query: str):
     return search_request
 
 
-# Search for products with query parameter
+# [END get_search_request_with_only_required_fields]
+
+# [START search_for_products_with_query_parameter]
 def search():
     search_response = get_search_service_client().search(get_search_request("Nest_Maxi"))
 
     print("---search response---")
     print(search_response)
 
+
+# [END search_for_products_with_query_parameter]
 
 search()

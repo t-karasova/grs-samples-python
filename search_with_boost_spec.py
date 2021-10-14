@@ -5,13 +5,15 @@ from google.cloud.retail_v2 import SearchServiceClient, SearchRequest
 project_number = ""
 
 
-# Get search service client
+# [START get_search_service_client]
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
 
 
-# Get Search Request with Boost specification
+# [END get_search_service_client]
+
+# [START get_search_request_with_boost_specification]
 def get_search_request(query: str, _condition: str, _boost_strength: float):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
@@ -31,8 +33,9 @@ def get_search_request(query: str, _condition: str, _boost_strength: float):
     return search_request
 
 
-# [END search_product_with_boost_spec]
+# [END get_search_request_with_boost_specification]
 
+# [START search_product_with_boost_spec]
 def search():
     # TRY DIFFERENT BOOST CONDITIONS HERE:
     condition = '(colorFamily: ANY("blue"))'
@@ -43,5 +46,7 @@ def search():
     print("---boost search response---")
     print(search_response)
 
+
+# [END search_product_with_boost_spec]
 
 search()
