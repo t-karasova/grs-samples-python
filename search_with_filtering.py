@@ -6,13 +6,15 @@ from google.cloud.retail_v2 import SearchServiceClient, SearchRequest
 project_number = ""
 
 
-# Get search service client
+# [START get_search_service_client
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
 
 
-# Get Search Request with filter]
+# [END get_search_service_client
+
+# [START get_sarch_request_with_filter]
 def get_search_request(query: str, _filter: str, page_size=10):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
@@ -29,7 +31,9 @@ def get_search_request(query: str, _filter: str, page_size=10):
     return search_request
 
 
-# Search for products with filter
+# [END get_sarch_request_with_filter]
+
+# [START search_for_products_with_filter]
 def search():
     # [TRY DIFFERENT FILTER EXPRESSIONS HERE:]
     filter = '(colorFamily: ANY("black"))'
@@ -39,5 +43,7 @@ def search():
     print("---filtered search response---")
     print(search_response)
 
+
+# [END search_for_products_with_filter]
 
 search()

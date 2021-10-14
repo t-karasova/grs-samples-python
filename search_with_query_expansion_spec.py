@@ -5,13 +5,15 @@ from google.cloud.retail_v2 import SearchServiceClient, SearchRequest
 project_number = ""
 
 
-# Get search service client
+# [START get_search_service_client]
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
 
 
-# Get Search Request with query expansion specification
+# [END get_search_service_client]
+
+# [START get_search_request_with_query_expansion_specification]
 def get_search_request(query: str, condition: SearchRequest.QueryExpansionSpec.Condition):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
@@ -30,7 +32,9 @@ def get_search_request(query: str, condition: SearchRequest.QueryExpansionSpec.C
     return search_request
 
 
-# Search for products with query expansion specification
+# [END get_search_request_with_query_expansion_specification]
+
+# [START search_for_products_with_query_expansion_specification]
 def search():
     # TRY DIFFERENT QUERY EXPANSION CONDITION HERE:
     condition = SearchRequest.QueryExpansionSpec.Condition.AUTO
@@ -41,5 +45,7 @@ def search():
     print("---query expansion search results---")
     print(search_response)
 
+
+# [END search_for_products_with_query_expansion_specification]
 
 search()

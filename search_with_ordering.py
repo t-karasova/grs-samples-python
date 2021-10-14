@@ -5,13 +5,15 @@ from google.cloud.retail_v2 import SearchServiceClient, SearchRequest
 project_number = ""
 
 
-# Get search service client
+# [START get_search_service_client]
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
 
 
-# Get Search Request with ordering
+# [END get_search_service_client]
+
+# [START get_search_request_with_ordering]
 def get_search_request(query: str, order: str):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
@@ -27,7 +29,9 @@ def get_search_request(query: str, order: str):
     return search_request
 
 
-# Search for products with ordering
+# [END get_search_request_with_ordering]
+
+# [START search_for_products_with_ordering]
 def search():
     # TRY DIFFERENT ORDERING EXPRESSIONS HERE:
     order = 'price desc'
@@ -38,5 +42,7 @@ def search():
     print("---ordered search results---")
     print(search_response)
 
+
+# [END search_for_products_with_ordering]
 
 search()

@@ -5,13 +5,15 @@ from google.cloud.retail_v2 import SearchServiceClient, SearchRequest
 project_number = ""
 
 
-# Get search service client
+# [START get_search_service_client]
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
 
 
-# Get Search Request for the pagination with page size
+# [END get_search_service_client]
+
+# [START get_search_request_with_page_size]
 def get_search_request(query: str, page_size: int):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
@@ -27,7 +29,10 @@ def get_search_request(query: str, page_size: int):
     return search_request
 
 
-# Search for products with pagination. Page size
+# [END get_search_request_with_page_size]
+
+
+# [START search_for_products_with_page_size]
 def search():
     search_request = get_search_request("Nest_Maxi", 12)
     search_response = get_search_service_client().search(search_request)
@@ -35,5 +40,7 @@ def search():
     print("---page size search results---")
     print(search_response)
 
+
+# [END search_for_products_with_page_size]
 
 search()
