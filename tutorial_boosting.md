@@ -66,11 +66,11 @@ Run it in a terminal with the command:
 python search_with_boosting.py
 ```
 
-Now you can check ```results[]```, the products that correspond to the boost condition became reranked.
+Now you can check results[]. The products corresponding to the boost condition became reranked.
 
 ## Some notes about boosting
 
-Please note that setting boost strength to 1.0 gives the item a strong promotion. However, it **does not necessarily mean that the boosted item will be the top result at all times**, nor that other items will be excluded. 
+Please note that setting the boost strength to 1.0 gives the item a strong promotion. However, it **does not necessarily mean that the boosted item will be the top result at all times**, nor that other items will be excluded. 
 Results could still be shown even when none of them matches the condition. 
 
 Also, results that are **significantly more relevant** to the search query can still trump your heavily favored but irrelevant items.

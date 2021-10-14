@@ -2,15 +2,15 @@
 
 ## Let's get started
 
-This tutorial will show you how to enable the query expansion feature which allows you to **increase the efficiency for search** for ambiguous or long-tail* query terms. 
+This tutorial shows you how to enable the query expansion feature to **increase the efficiency for search** for ambiguous or long-tail* query terms.
 
 If the query expansion is disabled, only the exact search query is used, even if the total number of search result is zero.
 
-Enable query expansion feature and let Google Retail Search build an **automatic query expansion**.
+Enable the query expansion feature and let the Google Retail Search build an **automatic query expansion**.
 
 You can also **pin unexpanded products**, so they will always be at the top of search results, followed by those that come via expansion.
 
-This is a really useful feature that helps you **enhance a customer experience**. So let's look at it closely.
+This useful feature helps you to **enhance a customer experience**. Let's look at it closely.
 
 **Time to complete**: About 2 minutes
 
@@ -19,7 +19,7 @@ This is a really useful feature that helps you **enhance a customer experience**
 
 ## Before you begin
 
-To run Python code samples from this tutorial you will need to set up your virtual environment.
+To run the Python code samples from this tutorial, you need to set up your virtual environment.
 
 Please use these commands in a terminal:
 ```bash
