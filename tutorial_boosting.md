@@ -77,8 +77,29 @@ Also, results that are **significantly more relevant** to the search query can s
 
 You can combine up to 10 boost specifications in one search request. In this way you may apply really sophisticated boosting rules to your search request.
 
+## Try different boosting conditions
+
+Feel free to test products boosting yourself, right here in Cloud Shell environment.
+
+Just find the comment: 
+
+"# TRY DIFFERENT BOOST CONDITIONS HERE:"
+
+and replace the condition expression for something like this:
+
+```
+condition = '(categories: ANY("Office"))'
+```
+
+Or
+```
+condition = '(attributes.material: ANY("Cotton", "Polyester")) AND (brands: ANY("Google"))'
+```
+
+In the same time play with the boost strength setting any value from -1 to 1.
+
 ## Success 
 
-You have completed the tutorial and now we **encourage** you to **test the filtering by yourself**, try different combinations of different filter expressions.
+You have completed the tutorial and now we **encourage** you to **test the boosting by yourself**, try different combinations of different filter expressions.
 
 **Thank you for completing this tutorial!**

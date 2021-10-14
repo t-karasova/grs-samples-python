@@ -64,13 +64,13 @@ def get_search_request_next_page(query: str, page_size: int, page_token: str):
 
 # [START search_for_products_with_pagination_next_page_token]
 def search():
-    search_request_first_page = get_search_request_first_page("Nest_Maxi", 1)
+    search_request_first_page = get_search_request_first_page("Tee", 6)
     search_first_page_response = get_search_service_client().search(search_request_first_page)
     print("---next page token from the first page:---")
     print(search_first_page_response.next_page_token)
 
     next_page_token = search_first_page_response.next_page_token
-    search_request_next_page = get_search_request_next_page("Nest_Maxi", 1, next_page_token)
+    search_request_next_page = get_search_request_next_page("Tee", 6, next_page_token)
     search_response = get_search_service_client().search(search_request_next_page)
 
     print("---search results from the next page---")

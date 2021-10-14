@@ -49,7 +49,7 @@ def get_search_request(query: str, page_size: int):
 
 # [START search_for_products_with_page_size]
 def search():
-    search_request = get_search_request("Nest_Maxi", 12)
+    search_request = get_search_request("Hoodie", 12)
     search_response = get_search_service_client().search(search_request)
 
     print("---page size search results---")

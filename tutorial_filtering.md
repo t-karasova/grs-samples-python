@@ -70,12 +70,12 @@ Just find the comment:
 and replace the filtering expression for something like this:
 
 ```
-filter = '(brands: ANY("Google"))'
+filter = '(brands: ANY("YouTube"))'
 ```
 
 Or
 ```
-filter = '(sizes: ANY("M","L"))'
+filter = '(colorFamily: ANY("Green","Blue"))'
 ```
 
 To see the full list of textual fields you can apply the filters to please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
@@ -91,7 +91,7 @@ Let's try to use the function "IN" to search for products with price more than $
 Please use the same request as in the step before,  open **search_with_filtering.py** if you have it closed and change the filter expression to:
 
 ```
-filter = 'price: IN(15.0, 30.0)'
+filter = 'price: IN(15.0, 45.0)'
 ```
 
 Run the code sample in a terminal using command:
@@ -99,7 +99,7 @@ Run the code sample in a terminal using command:
 python search_with_filtering.py
 ```
 
-Check the search response, now it has only items with price in the range $50 to $100.
+Check the search response, now it has only items with price in the range $15 to $45.
 
 To see the full list of numeric fields you can apply the filters to please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
 
@@ -110,7 +110,7 @@ All the comparison operators **<=**,  **<**,  **>=**, **>**, **=** are available
 Similarly to the previous step, use **search_with_filtering.py** to modify the filter expression.
 Try the following expression which is equivalent to the one in the previous step:
 ```
-filter = 'price >= 15.0 AND price < 30'
+filter = 'price >= 15.0 AND price < 45.0'
 ```
 
 Run the code sample in a terminal using the command:
@@ -130,7 +130,7 @@ Similarly to the previous step, use **search_with_filtering.py** to modify the f
 
 Try this expression to see how different filtering conditions can be combined:
 ```
-filter = '(categories: ANY("Nest > speakers and displays")) AND (price: IN(15.0, *))'
+filter = '(categories: ANY("Apparel")) AND (price: IN(30.0, *))'
 ```
 
 Run the code sample in a terminal using command:
