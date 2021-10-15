@@ -100,6 +100,6 @@ In the same time play with the boost strength setting any value from -1 to 1.
 
 ## Success 
 
-You have completed the tutorial and now we **encourage** you to **test the boosting by yourself**, try different combinations of different filter expressions.
+You have completed the tutorial! We **encourage you to test the boosting by yourself** and try different combinations of various filter expressions.
 
 **Thank you for completing this tutorial!**
