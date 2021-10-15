@@ -58,7 +58,7 @@ Next let's change the ordering direction to show the cheapest products first.
 
 Just find the comment 
 
-"TRY DIFFERENT ORDERING EXPRESSIONS HERE:" 
+"#TRY DIFFERENT ORDERING EXPRESSIONS HERE:" 
 
 and change the ordering expression to: 
 ```order = 'price asc'``` or just ```order = 'price'``` - that's an equivalent expressions since ascending is the default ordering direction.
@@ -77,11 +77,17 @@ Ordering by multiple fields is supported through the use of comma-separated fiel
 The lower priority fields will be used to order items with equal values for higher priority fields. 
 
 
-For example, **```rating desc, price```** would order items by their rating first, then the products with the same rating will be ordered by price.
+For example, **```price desc, discount desc```** would order items by their price first, then the products with the same price will be ordered by a discount amount.
 
 To try that, please change the ordering expression to:
 ```
-order = 'rating desc, price'
+order = 'price desc, discount'
+```
+
+or
+
+```
+order = 'brands, attributes.collection desc'
 ```
 
 Run the code sample in a terminal using the command:

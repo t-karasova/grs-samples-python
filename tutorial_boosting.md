@@ -41,7 +41,8 @@ pip install google-cloud-retail
 
 The boosting specification looks like this:
   
-  ```condition_boost_specs {
+  ```
+  condition_boost_specs {
          condition: string
          boost: double [-1;1]
     }
@@ -49,7 +50,10 @@ The boosting specification looks like this:
 
 To set the **```condition```** you should use a filtering expression, like:
 
-```'(colorFamily: ANY("black"))'```  or  ```'(rating: IN(4.0, 5.0))'```
+```'(colorFamily: ANY("black"))'``` 
+
+or  
+```'(rating: IN(4.0, 5.0))'```
 
 More detailed information about the filtering expressions can be found in [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter) 
 
@@ -62,15 +66,40 @@ Run it in a terminal with the command:
 python search_with_boosting.py
 ```
 
-Now you can check ```results[]```, the products that correspond to the boost condition became reranked.
+Now you can check results[]. The products corresponding to the boost condition became reranked.
 
-Please note that setting boost strength to 1.0 gives the item a strong promotion. However, it does not necessarily mean that the boosted item will be the top result at all times, nor that other items will be excluded. 
-Results could still be shown even when none of them matches the condition. Also, results that are significantly more relevant to the search query can still trump your heavily favored but irrelevant items.
+## Some notes about boosting
+
+Please note that setting the boost strength to 1.0 gives the item a strong promotion. However, it **does not necessarily mean that the boosted item will be the top result at all times**, nor that other items will be excluded. 
+Results could still be shown even when none of them matches the condition. 
+
+Also, results that are **significantly more relevant** to the search query can still trump your heavily favored but irrelevant items.
 
 You can combine up to 10 boost specifications in one search request. In this way you may apply really sophisticated boosting rules to your search request.
 
+## Try different boosting conditions
+
+Feel free to test product boosting yourself right now in Cloud Shell environment.
+
+Just find the comment: 
+
+"# TRY DIFFERENT BOOST CONDITIONS HERE:"
+
+and replace the condition expression with something like this:
+
+```
+condition = '(categories: ANY("Office"))'
+```
+
+Or
+```
+condition = '(attributes.material: ANY("Cotton", "Polyester")) AND (brands: ANY("Google"))'
+```
+
+At the same time, you can test the boost strength by setting any value from -1 to 1.
+
 ## Success 
 
-You have completed the tutorial and now we **encourage** you to **test the filtering by yourself**, try different combinations of different filter expressions.
+You have completed the tutorial! We **encourage** you to **test the boosting by yourself** and try different combinations of various filter expressions.
 
 **Thank you for completing this tutorial!**

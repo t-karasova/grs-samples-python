@@ -52,8 +52,6 @@ Run it in a terminal with the command:
 python search_with_pagination_page_size.py
 ```
 
-## Page size. Response analyze
-
 Now you can see **```results[]```** contains the number of products which you set as the page size.
 
 The **```total_size```** does not equal the page size, it's the number of matched items for this search query, so it will not change as you play with the number of products per page.
@@ -75,8 +73,6 @@ Run it in a terminal with the command:
 python search_with_pagination_next_page.py
 ```
 
-## Next page token. Analyzing the response
-
 In the response you see the next page of <page_size> products.
 
 The field **```next_page_token```** now has the value generated to point to the next page and can be used in further results navigation.
@@ -93,8 +89,6 @@ Run it in a terminal with the command:
 ```bash
 python search_with_pagination_offset.py
 ```
-
-## Offset. Analyzing the response
 
 In the response you see the requested page of products. 
 
