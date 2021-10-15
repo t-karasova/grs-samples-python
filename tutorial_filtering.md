@@ -67,7 +67,7 @@ Just find the comment:
 
 "#TRY DIFFERENT FILTER EXPRESSIONS HERE:" 
 
-and replace the filtering expression for something like this:
+and replace the filtering expression with something like this:
 
 ```
 filter = '(brands: ANY("YouTube"))'
