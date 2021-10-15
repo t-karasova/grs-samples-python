@@ -79,13 +79,13 @@ You can combine up to 10 boost specifications in one search request. In this way
 
 ## Try different boosting conditions
 
-Feel free to test products boosting yourself, right here in Cloud Shell environment.
+Feel free to test product boosting yourself right now in Cloud Shell environment.
 
 Just find the comment: 
 
 "# TRY DIFFERENT BOOST CONDITIONS HERE:"
 
-and replace the condition expression for something like this:
+and replace the condition expression with something like this:
 
 ```
 condition = '(categories: ANY("Office"))'
@@ -96,10 +96,10 @@ Or
 condition = '(attributes.material: ANY("Cotton", "Polyester")) AND (brands: ANY("Google"))'
 ```
 
-In the same time play with the boost strength setting any value from -1 to 1.
+At the same time, you can test the boost strength by setting any value from -1 to 1.
 
 ## Success 
 
-You have completed the tutorial! We **encourage you to test the boosting by yourself** and try different combinations of various filter expressions.
+You have completed the tutorial! We **encourage** you to **test the boosting by yourself** and try different combinations of various filter expressions.
 
 **Thank you for completing this tutorial!**
