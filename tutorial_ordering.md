@@ -2,20 +2,20 @@
 
 ## Let's get started
 
-This tutorial will show you how to order items in a search response. 
+This tutorial shows you how to order items in a search response. 
 
-The ordering can be applied to most of the product fields, the full list of the fields you can find in [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#order)
+You can apply ordering to most of the product fields. To find the complete list of available fields, check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#order)
 
 
-Let's see how the ordering works.
+And now, let's see how the product ordering works.
 
 **Time to complete**: About 2 minutes
 
 ## Before you begin
 
-To run Python code samples from this tutorial you will need to set up your virtual environment.
+To run Python code samples from this tutorial, you need to set up your virtual environment.
 
-Please use these commands in a terminal:
+To do that, run the following commands in a terminal:
 ```bash
 pip install virtualenv
 ```
@@ -25,7 +25,7 @@ virtualenv <your-env>
 ```bash
 source <your-env>/bin/activate
 ```
-Now install Google packages:
+Next, install Google packages:
 ```bash
 pip install google
 ```
@@ -33,53 +33,55 @@ pip install google
 pip install google-cloud-retail
 ```
 
-**Tip**: Click the copy button beside the code box to later paste the command in the Cloud Shell terminal and run it.
+**Tip**: Click the copy button beside the code box to paste the command in the Cloud Shell terminal and run it.
 
 
 ## Ordering by a single field
 
-To use the ordering feature you need to specify the field and the ordering direction. You can order by textual as well as by numerical fields.
+To use the ordering feature, you need to specify the field and the ordering direction. You can order by both the text and numeric fields.
 
-First let's order the search results by price, the more expensive ones first. In such case the ordering expression should be set as 
+First, let's order the search results by price when more expensive items come first. To do that, set the ordering expression as follows: 
 
 ```order = 'price desc'```
  
 
-To see the whole request with ordering open **search_with_ordering.py**
+To see the whole request with ordering, open **search_with_ordering.py**
 
-Run the sample in a terminal with the command:
+Run the sample in a terminal using the following command:
 ```bash
 python search_with_ordering.py
 ```
 
-Now you can see ```results[]``` are ordered by price descending.
+As you can see now, ```results[]``` are ordered by price descending.
 
-Next let's change the ordering direction to show the cheapest products first.
+Next, let's change the ordering direction to show the cheapest products first.
 
-Just find the comment 
+To do that, find the comment 
 
 "#TRY DIFFERENT ORDERING EXPRESSIONS HERE:" 
 
-and change the ordering expression to: 
-```order = 'price asc'``` or just ```order = 'price'``` - that's an equivalent expressions since ascending is the default ordering direction.
+and change the ordering expression to the following one:
 
-Run the sample in a terminal with the command:
+```order = 'price asc'``` or just ```order = 'price'``` - those are equivalent expressions since ascending is the default ordering direction.
+
+Run the sample in a terminal using the command:
+
 ```bash
 python search_with_ordering.py
 ```
 
-Now you see the products are ordered by price ascending
+You have sorted the products by price ascending.
 
 ## Ordering by multiple fields
 
-Ordering by multiple fields is supported through the use of comma-separated fields in the order of priority, more prioritized first. 
+You can order items by multiple fields using the comma-separated fields in order of priority (more prioritized come first). 
 
-The lower priority fields will be used to order items with equal values for higher priority fields. 
+To order items with equal values for higher priority fields, use the lower priority fields. 
 
 
-For example, **```price desc, discount desc```** would order items by their price first, then the products with the same price will be ordered by a discount amount.
+For example, **```price desc, discount desc```** orders items by their price first. The products with the same price will be ordered by a discount amount.
 
-To try that, please change the ordering expression to:
+To try that, change the ordering expression to the next one:
 ```
 order = 'price desc, discount'
 ```
@@ -97,6 +99,6 @@ python search_with_ordering.py
 
 ## Success 
 
-You have completed the tutorial and now we **encourage** you to **test the ordering by yourself**, try different combinations of different order expressions.
+You have completed the tutorial! We **encourage** you to **test the ordering by yourself**, and try different combinations of various order expressions.
 
 **Thank you for completing this tutorial!**
