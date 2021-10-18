@@ -3,20 +3,20 @@
 ## Let's get started
 
 Boosting is a powerful and convenient feature that allows you to prioritize products that match certain condition.
-To specify a condition you can use filtering expressions.
+To specify a condition, you can use filtering expressions.
 
-A boosting specification can be based on a single field condition or on multiple fields. You can also combine several specifications within one boosting request.
+A boosting specification can be based on a single field condition or on multiple fields. Also, you can combine several specifications into one boosting request.
 
-In this tutorial you will see a couple of examples of products boosting, so let's get started.
+In this tutorial you will learn some examples of product boosting.
 
 
 **Time to complete**: About 4 minutes
 
 ## Before you begin
 
-To run Python code samples from this tutorial you will need to set up your virtual environment.
+To run Python code samples from this tutorial, you need to set up your virtual environment.
 
-Please use these commands in a terminal:
+Run the following commands in a terminal:
 ```bash
 pip install virtualenv
 ```
@@ -26,7 +26,7 @@ virtualenv <your-env>
 ```bash
 source <your-env>/bin/activate
 ```
-Now install Google packages:
+Next, install Google packages:
 ```bash
 pip install google
 ```
@@ -34,7 +34,7 @@ pip install google
 pip install google-cloud-retail
 ```
 
-**Tip**: Click the copy button on the side of the code box to later paste the command in the Cloud Shell terminal and run it.
+**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
 
 ## Boosting by one criterion
@@ -48,25 +48,25 @@ The boosting specification looks like this:
     }
 ```
 
-To set the **```condition```** you should use a filtering expression, like:
+To set the **```condition```**, you should use a filtering expression like the one below:
 
 ```'(colorFamily: ANY("black"))'``` 
 
 or  
 ```'(rating: IN(4.0, 5.0))'```
 
-More detailed information about the filtering expressions can be found in [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter) 
+You can find more detailed information about the filtering expressions in the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter) 
 
-The field **```boost```** defines the strength of the condition boost, which should be in the range between -1 and 1. Negative boost means demotion.
+The field **```boost```** defines the strength of the condition boost, which should be in the range of -1 to 1. Negative boost means demotion.
 
-To see the whole request with a product boosting open **search_with_boosting.py**
+To see the whole request with a product boosting, open **search_with_boosting.py**
 
-Run it in a terminal with the command:
+Run it in a terminal with the following command:
 ```bash
 python search_with_boosting.py
 ```
 
-Now you can check results[]. The products corresponding to the boost condition became reranked.
+Now you can check ```results[]```. The products corresponding to the boost condition became reranked.
 
 ## Some notes about boosting
 
@@ -75,13 +75,13 @@ Results could still be shown even when none of them matches the condition.
 
 Also, results that are **significantly more relevant** to the search query can still trump your heavily favored but irrelevant items.
 
-You can combine up to 10 boost specifications in one search request. In this way you may apply really sophisticated boosting rules to your search request.
+You can combine up to 10 boost specifications in one search request. In this way, you may apply really sophisticated boosting rules to your search request.
 
 ## Try different boosting conditions
 
-Feel free to test product boosting yourself right now in Cloud Shell environment.
+Feel free to test product boosting yourself right now in the Cloud Shell environment.
 
-Just find the comment: 
+To do that, find the comment: 
 
 "# TRY DIFFERENT BOOST CONDITIONS HERE:"
 
