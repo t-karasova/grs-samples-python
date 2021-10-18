@@ -1,6 +1,6 @@
 # Google Retail Search
 ## Python code samples
-The code here demonstrates how to consume Google Retail Search API in Python
+This code demonstrates how to consume the Google Retail Search API in Python
 
 ### Authorization
 
@@ -16,7 +16,7 @@ pip install google
 pip install google-cloud-retail
 ```
 ### Run code samples
-To run a chosen code sample open a terminal window and execute the command like the following:
+To run a chosen code sample, open a terminal window and execute the command like in the example below:
 ```
 cd cloudshell_open/grs-samples-python
 python search_with_boost_spec.py 
