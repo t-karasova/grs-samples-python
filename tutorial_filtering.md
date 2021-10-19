@@ -2,12 +2,12 @@
 
 ## Let's get started
 
-Filtering in Retail Service is a powerful and convenient search feature. It lets you fine-tune search requests according to your or your customer's needs.
+Filtering in the Retail Service is a powerful and convenient search feature. It lets you fine-tune search requests according to your or your customer's needs.
 
-- You can filter by a single or multiple fields.
-- You can filter by text or numeric fields, or both 
-- You can use an expression language for constructing a predicate for each field
-- You can combine different expressions with the help of logical operators
+- You can filter by single or multiple fields.
+- You can filter by text or numeric fields, or both. 
+- You can use an expression language to construct a predicate for each field.
+- You can combine different expressions using logical operators.
 
 See, the possibilities are impressive.
 
@@ -17,9 +17,9 @@ Let's try them.
 
 ## Before you begin
 
-To run Python code samples from this tutorial you will need to set up your virtual environment.
+To run Python code samples from this tutorial, you need to set up your virtual environment.
 
-Please use these commands in a terminal:
+To do that, run the following commands in a terminal:
 ```bash
 pip install virtualenv
 ```
@@ -29,7 +29,7 @@ virtualenv <your-env>
 ```bash
 source <your-env>/bin/activate
 ```
-Now install Google packages:
+Next, install Google packages:
 ```bash
 pip install google
 ```
@@ -40,9 +40,9 @@ pip install google-cloud-retail
 **Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal to run it.
 
 
-## Filtering by textual field
+## Filtering by text field
 
-A simple expression applying to a textual field could be written like this:
+You can write a simple expression that applies to the text field and looks like this:
 
 ```(textual_field,":", "ANY", "(",literal,{",",literal},")"```
 
@@ -52,18 +52,18 @@ The example of such expression is
 
 ```'(colorFamily: ANY("black"))'``` 
 
-To see the whole request with filtering open **search_with_filtering.py**
+To see the whole request with the filtering applied, open **search_with_filtering.py**
 
-Run it in a terminal with the command:
+Run it in a terminal along with the command:
 ```bash
 python search_with_filtering.py
 ```
 
-Now you can see ```results[]``` has only items satisfied the filtering expression.
+As you can see now, ```results[]``` contains only items that satisfy the filtering expression.
 
-Feel free to test filtering by a textual field yourself, right here in Cloud Shell environment.
+Feel free to test filtering by a textfield yourself, right here in the Cloud Shell environment.
 
-Just find the comment: 
+To do that, find the comment: 
 
 "#TRY DIFFERENT FILTER EXPRESSIONS HERE:" 
 
@@ -78,37 +78,38 @@ Or
 filter = '(colorFamily: ANY("Green","Blue"))'
 ```
 
-To see the full list of textual fields you can apply the filters to please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
+Please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter) to see the complete list of the text fields you can apply the filters to.
 
-## Filtering by a numerical field. IN range
+## Filtering by a numeric field. IN range
 
-If you want to filter by a numeric field you can write the filtering expression in two ways:
-- To check whether the field value is within a range use the function **"IN"**
-- Compare a field value with a double value with the help of operators **<=**,  **<**,  **>=**, **>**, **=**.
+To filter by a numeric field, you can write the filtering expression in two ways:
+- To check whether the field value is within a range, use the function **"IN"**
+- To compare a field value with a double value, use operators **<=**,  **<**,  **>=**, **>**, **=**.
 
-Let's try to use the function "IN" to search for products with price more than $15 and less than $30
+Let's use the function "IN" to search for products with the price exceeding $15 and less than $30.
 
-Please use the same request as in the step before,  open **search_with_filtering.py** if you have it closed and change the filter expression to:
+Please use the same request as in the previous step. Open **search_with_filtering.py** if you have closed it, and change the filter expression to the following:
 
 ```
 filter = 'price: IN(15.0, 45.0)'
 ```
 
-Run the code sample in a terminal using command:
+Run the code sample in a terminal using the next command:
 ```bash
 python search_with_filtering.py
 ```
 
-Check the search response, now it has only items with price in the range $15 to $45.
+Check the search response. Now, it contains only items with prices in the range of $15 to $45.
 
-To see the full list of numeric fields you can apply the filters to please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
+Please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter) to see the complete list of the numeric fields you can apply the filters to.
 
 ## Filtering by a numeric field. Comparison operators
 
-All the comparison operators **<=**,  **<**,  **>=**, **>**, **=** are available for filtering expressions.
+All comparison operators **<=**,  **<**,  **>=**, **>**, **=** are available for filtering expressions.
 
-Similarly to the previous step, use **search_with_filtering.py** to modify the filter expression.
-Try the following expression which is equivalent to the one in the previous step:
+Like in the previous step, use **search_with_filtering.py** to modify the filter expression.
+
+Try the following expression which is equivalent to the one you have used in the previous step:
 ```
 filter = 'price >= 15.0 AND price < 45.0'
 ```
@@ -118,29 +119,29 @@ Run the code sample in a terminal using the command:
 python search_with_filtering.py
 ```
 
-Check the search response, now it has only items with price in the range between $50 and $100.
+Check the search response. Now, it contains only items with prices in the range between $15 and $45.
 
 ## Filtering by multiple fields
 
-You can filter the search results by multiple fields joining the expressions with **"AND"** or **"OR"** operators.
+To filter the search results by multiple fields, you can combine the expressions with **"AND"** or **"OR"** operators.
 
 **```filter = expression, { " AND " | "OR", expression };```**
 
-Similarly to the previous step, use **search_with_filtering.py** to modify the filter expression.
+Like in the previous step, use **search_with_filtering.py** to modify the filter expression.
 
-Try this expression to see how different filtering conditions can be combined:
+Try the following expression to see how you can combine different filtering conditions: 
 ```
 filter = '(categories: ANY("Apparel")) AND (price: IN(30.0, *))'
 ```
 
-Run the code sample in a terminal using command:
+Run the code sample in a terminal using the next command:
 ```bash
 python search_with_filtering.py
 ```
 
 ## Success 
 
-You have completed the tutorial and now we **encourage** you to **test the filtering by yourself**, try different combinations of different filter expressions.
+You have completed the tutorial! We **encourage** you to **test the filtering by yourself** and try different combinations of various filter expressions.
 
 **Thank you for completing this tutorial!**
 

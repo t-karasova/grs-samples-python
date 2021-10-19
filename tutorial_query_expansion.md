@@ -4,13 +4,15 @@
 
 This tutorial shows you how to enable the query expansion feature to **increase the efficiency for search** for ambiguous or long-tail* query terms.
 
-If the query expansion is disabled, only the exact search query is used, even if the total number of search result is zero.
+Disabling the query expansion results in using only the exact search query, even if the total number of search results is zero.
 
 Enable the query expansion feature and let the Google Retail Search build an **automatic query expansion**.
 
-You can also **pin unexpanded products**, so they will always be at the top of search results, followed by those that come via expansion.
+You can also **pin unexpanded products**, so that they always appear at the top of search results followed by products enlisted via expansion.
 
-This useful feature helps you to **enhance a customer experience**. Let's look at it closely.
+This useful feature helps you to **enhance a customer experience**. 
+
+Let's look at it closely.
 
 **Time to complete**: About 2 minutes
 
@@ -21,7 +23,7 @@ This useful feature helps you to **enhance a customer experience**. Let's look a
 
 To run the Python code samples from this tutorial, you need to set up your virtual environment.
 
-Please use these commands in a terminal:
+Run these commands in a terminal:
 ```bash
 pip install virtualenv
 ```
@@ -31,7 +33,7 @@ virtualenv <your-env>
 ```bash
 source <your-env>/bin/activate
 ```
-Now install Google packages:
+Next, install Google packages:
 ```bash
 pip install google
 ```
@@ -44,34 +46,35 @@ pip install google-cloud-retail
 
 ## Query expansion
 
-Open **search_with_query_expansion_spec.py**, take a look at the search request, here you see the query expansion condition set with value "AUTO". The setting means that the query expansion feature is turned on, and the search results will be expanded.
+Open **search_with_query_expansion_spec.py** and take a look at the search request. Here you can see the query expansion condition set with value "AUTO". The setting enables the query expansion feature and expands the search results.
 
-Run the sample in a terminal with the command:
+Run the sample in a terminal using the command:
 ```bash
 python search_with_query_expansion_spec.py
 ```
 
-Now you can see ```results[]``` have products that do not exactly match the search query but are really close to it.
+As you can see, ```results[]``` contain products that do not exactly match the search query but are close to it.
 
-Next let's change the condition value to "DISABLED":
+Next, let's change the condition value to "DISABLED".
 
-Just find the comment 
+To do that, find the comment 
 
  "#TRY DIFFERENT QUERY EXPANSION CONDITION HERE:"
 
-and change the condition to: 
+and change the condition to the following: 
 
 ```condition = SearchRequest.QueryExpansionSpec.Condition.DISABLED```
 
-Run the sample in a terminal with the command:
+Run the sample in a terminal using the command:
+
 ```bash
 python search_with_ordering.py
 ```
 
-Now you see the results contain only the items that are an exact match.
+As you can see, the results contain only items that exactly match the search query.
 
 ## Success 
 
-You have completed the tutorial and now we **encourage** you to **test the query expansion by yourself**, try different search phrases with and without query expansion.
+You have completed the tutorial! We **encourage** you to **test the query expansion by yourself** and try different search phrases with and without query expansion.
 
 **Thank you for completing this tutorial!**
