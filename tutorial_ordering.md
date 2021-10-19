@@ -97,7 +97,9 @@ Run the code sample in a terminal using the command:
 python search_with_ordering.py
 ```
 
-## Success 
+## Congratulations
+
+<walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
 You have completed the tutorial! We **encourage** you to **test the ordering by yourself**, and try different combinations of various order expressions.
 

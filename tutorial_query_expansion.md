@@ -73,7 +73,9 @@ python search_with_ordering.py
 
 As you can see, the results contain only items that exactly match the search query.
 
-## Success 
+## Congratulations
+
+<walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
 You have completed the tutorial! We **encourage** you to **test the query expansion by yourself** and try different search phrases with and without query expansion.
 

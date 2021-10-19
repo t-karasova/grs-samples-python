@@ -24,9 +24,8 @@ project_number = ""
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
+    # [END get_search_service_client]
 
-
-# [END get_search_service_client]
 
 # [START get_search_request_with_page_size]
 def get_search_request(query: str, page_size: int):
@@ -42,9 +41,7 @@ def get_search_request(query: str, page_size: int):
     print(search_request)
 
     return search_request
-
-
-# [END get_search_request_with_page_size]
+    # [END get_search_request_with_page_size]
 
 
 # [START search_for_products_with_page_size]
@@ -54,8 +51,7 @@ def search():
 
     print("---page size search results---")
     print(search_response)
+    # [END search_for_products_with_page_size]
 
-
-# [END search_for_products_with_page_size]
 
 search()

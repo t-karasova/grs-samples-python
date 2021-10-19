@@ -96,7 +96,9 @@ You receive the requested page of products in a response.
 The field **```next_page_token```** now possesses the value intended to forward you to the next page. You can use this field in further results navigation.
 
 
-## Success 
+## Congratulations
+
+<walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
 You have completed the tutorial! We **encourage** you to **test the pagination by yourself** right here in the Cloud Shell environment using different combinations of values for pagination parameters.
 

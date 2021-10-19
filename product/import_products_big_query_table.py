@@ -1,0 +1,78 @@
+# Copyright 2021 Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import time
+
+from google.api_core.client_options import ClientOptions
+from google.cloud.retail_v2 import BigQuerySource, ProductInputConfig, ProductServiceClient, \
+    ImportProductsRequest
+
+# TODO Define the project number here:
+project_number = ""
+
+endpoint = "retail.googleapis.com"
+default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
+project_id = "crs-interactive-tutorials"
+dataset_id = "products"
+table_id = "products_for_import"
+
+
+# [START product_client]
+def get_product_service_client():
+    client_options = ClientOptions(endpoint)
+    return ProductServiceClient(client_options=client_options)
+    # [END product_client]
+
+
+# [START get_import_products_big_query_request]
+def get_import_products_big_query_request(reconciliation_mode):
+    big_query_source = BigQuerySource()
+    big_query_source.project_id = project_id
+    big_query_source.dataset_id = dataset_id
+    big_query_source.table_id = table_id
+    big_query_source.data_schema = "product"
+
+    input_config = ProductInputConfig()
+    input_config.big_query_source = big_query_source
+
+    import_request = ImportProductsRequest()
+    import_request.parent = default_catalog
+    import_request.reconciliation_mode = reconciliation_mode
+    import_request.input_config = input_config
+
+    print("---import products from big query table request---")
+    print(import_request)
+
+    return import_request
+    # [END get_import_products_big_query_request]
+
+
+# [START import_products_from_big_query]
+def import_products_from_gcs():
+    reconciliation_mode = ImportProductsRequest.ReconciliationMode.INCREMENTAL
+    import_big_query_request = get_import_products_big_query_request(reconciliation_mode)
+    big_query_operation = get_product_service_client().import_products(import_big_query_request)
+
+    print(big_query_operation.operation.name)
+
+    while not big_query_operation.done():
+        print("---please wait till operation is done---")
+        time.sleep(5)
+
+    print("---import products operation is done---")
+    # [END import_products_from_big_query]
+
+
+import_products_from_gcs()

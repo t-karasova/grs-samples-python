@@ -139,7 +139,9 @@ Run the code sample in a terminal using the next command:
 python search_with_filtering.py
 ```
 
-## Success 
+## Congratulations
+
+<walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
 You have completed the tutorial! We **encourage** you to **test the filtering by yourself** and try different combinations of various filter expressions.
 

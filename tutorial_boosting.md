@@ -98,8 +98,9 @@ condition = '(attributes.material: ANY("Cotton", "Polyester")) AND (brands: ANY(
 
 At the same time, you can test the boost strength by setting any value from -1 to 1.
 
-## Success 
+## Congratulations
 
+<walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 You have completed the tutorial! We **encourage** you to **test the boosting by yourself** and try different combinations of various filter expressions.
 
 **Thank you for completing this tutorial!**

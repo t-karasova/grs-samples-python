@@ -59,7 +59,9 @@ As you can see now, the field **```results[]```** contains a list of matched ite
 
 **```next_page_token```** is a token that forwards to the next page in the search response. By default, the number of products per page is 100. If this field is omitted, there are no subsequent pages.
 
-## Success 
+## Congratulations
+
+<walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
 You have completed the tutorial! We **encourage** you to **test the search by yourself** right here in the Cloud Shell environment using different search queries.
 

@@ -25,9 +25,8 @@ default_search_placement = "projects/" + project_number + "/locations/global/cat
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
+    # [END get_search_service_client]
 
-
-# [END get_search_service_client]
 
 # [START get_search_request_for_the_first_page]
 def get_search_request_first_page(query: str, page_size: int):
@@ -41,9 +40,8 @@ def get_search_request_first_page(query: str, page_size: int):
     print(search_request)
 
     return search_request
+    # [END get_search_request_for_the_first_page]
 
-
-# [END get_search_request_for_the_first_page]
 
 # [START get_search_request_for_the_next_page]
 def get_search_request_next_page(query: str, page_size: int, page_token: str):
@@ -58,9 +56,8 @@ def get_search_request_next_page(query: str, page_size: int, page_token: str):
     print(search_request)
 
     return search_request
+    # [END get_search_request_for_the_next_page]
 
-
-# [END get_search_request_for_the_next_page]
 
 # [START search_for_products_with_pagination_next_page_token]
 def search():
@@ -75,8 +72,7 @@ def search():
 
     print("---search results from the next page---")
     print(search_response)
+    # [END search_for_products_with_pagination_next_page_token]
 
-
-# [END search_for_products_with_pagination_next_page_token]
 
 search()

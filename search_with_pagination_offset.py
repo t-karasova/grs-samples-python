@@ -24,9 +24,8 @@ project_number = ""
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
+    # [END get_search_service_client]
 
-
-# [END get_search_service_client]
 
 # [START get_search_request_with_offset]
 def get_search_request(query: str, _offset: int, page_size=10):
@@ -43,9 +42,8 @@ def get_search_request(query: str, _offset: int, page_size=10):
     print(search_request)
 
     return search_request
+    # [END get_search_request_with_offset]
 
-
-# [END get_search_request_with_offset]
 
 # [START search_for_products_with_offset]
 def search():
@@ -54,8 +52,7 @@ def search():
 
     print("---offset search results---")
     print(search_response)
+    # [START search_for_products_with_offset]
 
-
-# [START search_for_products_with_offset]
 
 search()
