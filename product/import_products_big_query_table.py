@@ -16,16 +16,15 @@
 import time
 
 from google.api_core.client_options import ClientOptions
-from google.api_core.operations_v1.operations_client import OperationsClient
-from google.cloud.retail import BigQuerySource, ProductInputConfig, ProductServiceClient, \
+from google.cloud.retail_v2 import BigQuerySource, ProductInputConfig, ProductServiceClient, \
     ImportProductsRequest
 
-# TODO Define the project number and project Id here:
+# TODO Define the project number here:
 project_number = ""
-project_id = ""
 
 endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
+project_id = "crs-interactive-tutorials"
 dataset_id = "products"
 table_id = "products_for_import"
 
@@ -35,12 +34,6 @@ def get_product_service_client():
     client_options = ClientOptions(endpoint)
     return ProductServiceClient(client_options=client_options)
     # [END product_client]
-
-
-# [START operation_client]
-def get_operation_service_client():
-    return OperationsClient
-    # [END operation_client]
 
 
 # [START get_import_products_big_query_request]
@@ -67,10 +60,8 @@ def get_import_products_big_query_request(reconciliation_mode):
 
 
 # [START import_products_from_big_query]
-def import_products_from_big_query():
-    # TRY THE FULL RECONCILIATION MODE HERE:
+def import_products_from_gcs():
     reconciliation_mode = ImportProductsRequest.ReconciliationMode.INCREMENTAL
-
     import_big_query_request = get_import_products_big_query_request(reconciliation_mode)
     big_query_operation = get_product_service_client().import_products(import_big_query_request)
 
@@ -84,4 +75,4 @@ def import_products_from_big_query():
     # [END import_products_from_big_query]
 
 
-import_products_from_big_query()
+import_products_from_gcs()
