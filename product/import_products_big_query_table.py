@@ -16,7 +16,6 @@
 import time
 
 from google.api_core.client_options import ClientOptions
-from google.api_core.operation_async import AsyncOperation
 from google.api_core.operations_v1.operations_client import OperationsClient
 from google.cloud.retail import BigQuerySource, ProductInputConfig, ProductServiceClient, \
     ImportProductsRequest
@@ -77,9 +76,7 @@ def import_products_from_big_query():
 
     print(big_query_operation.operation.name)
 
-    operation_status = get_operation_service_client().get_operation(big_query_operation.operation.name)
-
-    while not operation_status:
+    while not big_query_operation.done():
         print("---please wait till operation is done---")
         time.sleep(5)
 
