@@ -80,7 +80,9 @@ Once you have called the import products method, the **import operation** has be
 
 The importing may take some time depending on the size of product set in your BigQuery table.
 
-Call the Operation Client to get the operation status. 
+The operation is completed when the field ```operation.done()``` is set to true. Check the result, one of the following fields should be present:
+ - ```error```, if the operation failed, or
+ - ```response```, if the operation was successful.
 
 If the operation was successful, you can unpack the response to **ImportProductsResponse** and check a sample of errors
 encountered while processing the request in the field ```error_samples[]```.
