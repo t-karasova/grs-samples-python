@@ -41,7 +41,7 @@ pip install google
 pip install google-cloud-retail
 ```
 
-**Tip**: Click the copy button on the side of the code box to later paste the command in the Cloud Shell terminal and run it.
+**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
 
 ## Query expansion

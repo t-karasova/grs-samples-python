@@ -16,7 +16,7 @@
 import time
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail_v2 import ProductInlineSource, ProductInputConfig, \
+from google.cloud.retail import ProductInlineSource, ProductInputConfig, \
     ImportProductsRequest, Product, PriceInfo, ColorInfo, \
     ProductServiceClient, FulfillmentInfo
 from google.protobuf.field_mask_pb2 import FieldMask
@@ -47,7 +47,7 @@ def get_products():
                           "Dark blue"]
 
     fulfillment_info1 = FulfillmentInfo()
-    fulfillment_info1.type_ = "pickup-in-store"
+    fulfillment_info1.type = "pickup-in-store"
     fulfillment_info1.place_ids = ["store1", "store2"]
 
     field_mask1 = FieldMask(paths=["title", "categories", "price_info", "color_info"])
@@ -72,7 +72,7 @@ def get_products():
     color_info2.colors = ["Sky blue"]
 
     fulfillment_info2 = FulfillmentInfo()
-    fulfillment_info2.type_ = "pickup-in-store"
+    fulfillment_info2.type = "pickup-in-store"
     fulfillment_info2.place_ids = ["store2", "store3"]
 
     field_mask2 = FieldMask(paths=["title", "categories", "price_info", "color_info"])
