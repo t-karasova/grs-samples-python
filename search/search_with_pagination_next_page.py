@@ -14,7 +14,7 @@
 
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail_v2 import SearchServiceClient, SearchRequest
+from google.cloud.retail import SearchServiceClient, SearchRequest
 
 # TODO Define the project number here:
 project_number = ""
