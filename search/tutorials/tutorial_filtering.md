@@ -141,14 +141,14 @@ python search_with_filtering.py
 
 ## Filtering. Error handling
 
-In case of sending some invalid data or if any of required fields is missed in the request the Search Service will respond with an error message.
-An entire list of fields of Search Request with the requirements to each of them you may find in the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
+In case of sending some invalid data or if any of the required fields is missing in the request, the Search Service responds with an error message.
+To find a complete list of the Search Request fields with their corresponding requirements, check the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
 
-There is a list of **textual and numerical fields supported for filtering** in the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
+To check a list of **text and numeric fields that support filtering**, use the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
 
-In this tutorial you will get an error message trying to filter the search results by a field which is not supposed to be used for filtering, like "name".
+If you try to filter the search results by the field that is **not intended for filtering** (for example, the "name" field), you will get an error message.
 
-Please change the value of variable "filter" to:
+Change the variable "filter" value to the following:
 ``` filter = '(name: ANY("some_random"))'```
 
 and run the code once again:

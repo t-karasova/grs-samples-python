@@ -99,14 +99,14 @@ python search_with_ordering.py
 
 ## Ordering. Error handling
 
-In case of sending some invalid data or if any of required fields is missed in the request the Search Service will respond with an error message.
-An entire list of fields of Search Request with the requirements to each of them you may find in the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
+In case of sending some invalid data or if any of the required fields is missing in the request, the Search Service responds with an error message.
+To find a complete list of the Search Request fields with their corresponding requirements, check the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
 
-There is a list of **orderable fields** in the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#order)
+To check a list of **ordering fields**, use the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#order)
 
-In this tutorial you will get an error message trying to order the search results by a field which is not supposed to be used for ordering, like "name".
+If you try to order the search results by the field that is **not intended for ordering** (for example, the "name" field), you will get an error message.
 
-Please change the value of variable "order" to:
+Change the variable "order" value to the following:
 ```order = 'name desc'```
 
 and run the code once again:

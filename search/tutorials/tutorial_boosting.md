@@ -60,22 +60,22 @@ or read about it in the [Retail API documentation](https://cloud.google.com/reta
 
 The field **```boost```** defines the strength of the condition boost, which should be in the range of -1 to 1. Negative boost means demotion.
 
-Please open **search_with_boost_spec.py**
+Now, open **search_with_boost_spec.py**
 
-The initial request the boost strength is set to zero: ```boost = 0.0```, so the boosting will **not affect** the order of the products in the response.
+In the initial request, the boost strength is set to zero: ```boost = 0.0```, so the boosting will **not affect** the order of the products in the response.
 
 Run the sample in a terminal with the following command:
 ```bash
 python search_with_boost_spec.py
 ```
-Please check the response, and you will see the original order of products depending on their relevance to the query phrase.
+Check the response to see the original order of products depending on their relevance to the query phrase.
 
 Next, let's change the value of the field **boost** and run the code sample once again:
 ```boost = 1.0```
 
-Now you can check ```results[]```. The products corresponding to the boost condition became reranked - you can see blue **products on the top**.
+Now you can check ```results[]```. The products corresponding to the boost condition became reranked. Now, blue products are **on the top** of the list.
 
-If you set ```boost = -1.0``` the blue products will be placed **in the bottom** of the search result.
+If you set ```boost = -1.0```, blue products will appear **at the bottom** of the search result.
 
 ## Some notes about boosting
 
@@ -109,14 +109,14 @@ At the same time, you can test the boost strength by setting any value from -1 t
 
 ## Boosting. Error handling
 
-In case of sending some invalid data or if any of required fields is missed in the request the Search Service will respond with an error message.
-An entire list of fields of Search Request with the requirements to each of them you may find in the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
+In case of sending some invalid data or if any of the required fields is missing in the request, the Search Service responds with an error message.
+To find a complete list of the Search Request fields with their corresponding requirements, check the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
 
-There is a list of **textual and numerical fields supported for boosting** in the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
+To check a list of **text and numeric fields that support boosting** in the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
 
-In this tutorial you will get an error message trying to boost the search results with a condition of field which is **not supposed to be used for boosting**, like "name".
+If you try to boost the search results and set a condition in the field which is **not supposed for boosting** (for example, the "name" field), you will get an error message.
 
-Please change the value of variable "condition" to:
+Change the variable "condition" value to the following:
 ``` condition = '(name: ANY("some_random"))'```
 
 and run the code once again:

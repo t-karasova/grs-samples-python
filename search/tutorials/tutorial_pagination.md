@@ -64,8 +64,8 @@ We will use **```next_page_token```** in the next tutorial step.
 
 After you have received a response at the previous step, you can request the next page. 
 
-First you will need to receive the ```next_page_token```, then to set it to a request field ```page_token``` and call the Search service again.
-To do it, please find the comment "#PASTE CALL WITH NEXT PAGE TOKEN HERE:" and paste this piece of code:
+You need to receive the ```next_page_token```, set it to a request field ```page_token```, and call the Search service again.
+To do it, find the comment "#PASTE CALL WITH NEXT PAGE TOKEN HERE:" and paste this piece of code:
 ```
     next_page_token = search_response_first_page.page_token
     search_request_next_page = get_search_request("Hoodie", page_size, offset, next_page_token)
@@ -88,13 +88,13 @@ The field **```next_page_token```** possesses the value intended to forward you 
 
 In other cases, instead of navigating from page to page or getting results with top relevance, you can directly jump to a particular position using the offset.
 
-On the previous step you have requested the second page with 6 products per page using ```next_page_token```.
-To reproduce the same effect using ```offset``` you need to set the field ```page_size``` with the same value which is "6",
-and make a small calculation to get the offset value:
+You have requested the second page with 6 products per page using ```next_page_token``` in the previous step .
+To reproduce the same effect using ```offset```, configure the field ```page_size``` with the same value which is "6",
+and perform a small calculation to get the offset value:
 
-offset = 6 * (2 - 1) = 6, where 6 - is a page size, and 2 - is a page number you would like to see.
+offset = 6 * (2 - 1) = 6, where 6 is a page size, and 2 is a number of page you would like to switch too.
 
-Please find the comment "#PASTE CALL WITH OFFSET HERE:" and paste this piece of code:
+Find the comment "#PASTE CALL WITH OFFSET HERE:" and paste this piece of code:
 ```
     offset = 6
     search_request_second_page = get_search_request("Hoodie", page_size, offset, page_token)
@@ -109,22 +109,23 @@ Run the code sample again:
 python search_with_pagination.py
 ```
 
-Please take a look at both "next page search results" and "second page search results" you can compare the lists of products received using next_page_token and offset, they supposed to be equal.
+Take a look at both "next page search results" and "second page search results". You can compare the lists of received products using both the next_page_token and offset that should be equal.
 
-Now you kow how the offset works, but let's make the calculation one more time, just to make it clear.
-If you want to jump on the 7th page with a page size 12, the offset value you need to set should be calculated this way:
+Now you kow how the offset works. Let's perform the calculation one more time to make it clear.
+If you want to jump to the 7th page with a page size 12, the offset value you need to set should be calculated this way:
 
 offset = 12 * (7 - 1) = 72
 
 
 ## Pagination. Error handling
 
-In case of sending some invalid data or if any of required fields is missed in the request the Search Service will respond with an error message.
-An entire list of fields of Search Request with the requirements to each of them you may find in the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
+In case of sending some invalid data or if any of the required fields is missing in the request, the Search Service responds with an error message.
+To find a complete list of the Search Request fields with their corresponding requirements, check the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
 
-In this tutorial you will get an error message trying to request the Search Service with negative page size
+If you try to request the Search Service with negative page size, you will get an error message.
 
-Please change the value of the variable ```page_size``` to any negative value and run the code one more time.
+
+Change the value of the variable ```page_size``` to any negative value and run the code one more time.
 ```bash
 python search_with_pagination.py
 ```
