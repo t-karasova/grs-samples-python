@@ -60,13 +60,13 @@ or read about it in the [Retail API documentation](https://cloud.google.com/reta
 
 The field **```boost```** defines the strength of the condition boost, which should be in the range of -1 to 1. Negative boost means demotion.
 
-Please open **search_with_boosting.py**
+Please open **search_with_boost_spec.py**
 
 The initial request the boost strength is set to zero: ```boost = 0.0```, so the boosting will **not affect** the order of the products in the response.
 
 Run the sample in a terminal with the following command:
 ```bash
-python search_with_boosting.py
+python search_with_boost_spec.py
 ```
 Please check the response, and you will see the original order of products depending on their relevance to the query phrase.
 
@@ -121,7 +121,7 @@ Please change the value of variable "condition" to:
 
 and run the code once again:
 ```bash
-python search_with_boosting.py
+python search_with_boost_spec.py
 ```
 
 You should see the following error message:

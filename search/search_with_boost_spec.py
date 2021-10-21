@@ -17,7 +17,6 @@ from google.api_core.client_options import ClientOptions
 from google.cloud.retail import SearchServiceClient, SearchRequest
 
 # TODO Define the project number here:
-from pyasn1.compat.octets import null
 
 project_number = ""
 
