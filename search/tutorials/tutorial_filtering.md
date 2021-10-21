@@ -75,7 +75,7 @@ filter = '(brands: ANY("YouTube"))'
 
 Or
 ```
-filter = '(colorFamily: ANY("Green","Blue"))'
+filter = '(colorFamily: ANY("White","Grey"))'
 ```
 
 Please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter) to see the complete list of the text fields you can apply the filters to.
@@ -138,6 +138,28 @@ Run the code sample in a terminal using the next command:
 ```bash
 python search_with_filtering.py
 ```
+
+## Filtering. Error handling
+
+In case of sending some invalid data or if any of required fields is missed in the request the Search Service will respond with an error message.
+An entire list of fields of Search Request with the requirements to each of them you may find in the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
+
+There is a list of **textual and numerical fields supported for filtering** in the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
+
+In this tutorial you will get an error message trying to filter the search results by a field which is not supposed to be used for filtering, like "name".
+
+Please change the value of variable "filter" to:
+``` filter = '(name: ANY("some_random"))'```
+
+and run the code once again:
+```bash
+python search_with_filtering.py
+```
+
+You should see the following error message:
+
+```google.api_core.exceptions.InvalidArgument: 400 Invalid filter syntax '(name: ANY("some_randome"))'. Parsing filter failed with error: Unsupported field "name" on ":" operator.```
+
 
 ## Success 
 

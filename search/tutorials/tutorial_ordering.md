@@ -97,6 +97,27 @@ Run the code sample in a terminal using the command:
 python search_with_ordering.py
 ```
 
+## Ordering. Error handling
+
+In case of sending some invalid data or if any of required fields is missed in the request the Search Service will respond with an error message.
+An entire list of fields of Search Request with the requirements to each of them you may find in the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
+
+There is a list of **orderable fields** in the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#order)
+
+In this tutorial you will get an error message trying to order the search results by a field which is not supposed to be used for ordering, like "name".
+
+Please change the value of variable "order" to:
+```order = 'name desc'```
+
+and run the code once again:
+```bash
+python search_with_ordering.py
+```
+
+You should see the following error message:
+
+```google.api_core.exceptions.InvalidArgument: 400 Invalid orderBy syntax 'name desc'. Parsing orderBy failed with error: Unsupported field in orderBy: name. ```
+
 ## Success 
 
 You have completed the tutorial! We **encourage** you to **test the ordering by yourself**, and try different combinations of various order expressions.
