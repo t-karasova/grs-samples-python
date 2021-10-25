@@ -4,9 +4,8 @@
 
 Redirect Control lets you specify a URL to redirect the users to when they search for a specific query. 
 Since we are not able to check its effect on the Evaluate page, we will test it in the Cloud Shell 
-using our Python code samples. Make sure that you have a Redirect Control
-created and attached to a serving config. Step-by-step instruction on how to do that can be found in 
-Creating and Managing Controls video tutorial.
+using our Python code samples. Make sure that you have created and attached the Redirect Control
+to the serving config. You can find the step-by-step instruction on how to do it in the Creating and Managing Controls video tutorial.
 
 **Time to complete**: About 4 minutes
 
