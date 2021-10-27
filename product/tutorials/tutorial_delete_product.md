@@ -1,0 +1,80 @@
+# **Delete Product Tutorial**
+
+## Let's get started
+
+If you need to make some detached changes in your product catalog, you may call the following Retail API methods:
+ - create_product, 
+ - get_product, 
+ - update_product, 
+ - delete_product.
+
+In this tutorial you will call the **delete_product()** method.
+
+[Retail API documentation](https://cloud.google.com/retail/docs/upload-catalog#json-format)
+
+**Time to complete**: About 2 minutes
+
+## Before you begin
+
+To run Python code samples from this tutorial, you need to set up your virtual environment.
+
+To do that, run the following commands in a terminal:
+
+```bash
+python3 -m venv tutorial-env
+```
+
+```bash
+source tutorial-env/bin/activate
+```
+
+Next, install Google packages:
+
+```bash
+python3 -m pip install google
+```
+
+```bash
+python3 -m pip install google.cloud.retail
+```
+
+**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
+
+## Delete a product
+
+To build DeleteProductRequest, only ```name``` field is required. You should pass the **full resource name of Product**, such as 
+```projects/<project_number>/locations/global/catalogs/<catalog_id>/branches/<branch_id>/products/<product_id>.```
+
+You can find the DeleteProductRequest example in a **delete_product.py**
+
+When you run this code sample, a product will be created in a catalog, then it will be removed using a prepared request.
+
+Open terminal and run the command:
+
+```bash
+python product/delete_product.py
+```
+
+There is no return value for this method, so to check if the product was successfully removed let's try to delete this product one more time. As the product cannot be deleted twice, we expect the following error message:
+
+
+TODO
+```[PUT THE ERROR MESSAGE HERE]```
+
+Copy the product name from the output message printed in a terminal and assign it to the variable ```created_product_name```.
+Now, run the code again, you should receive appropriate error message.
+
+## Error handling
+
+If you send a request without the field ```name``` or if the field format is incorrect you will get an error message.
+Let's now remove the product_id part from the ```name```  value and send this request again. The expected error message should be like:
+
+```[PUT THE ERROR MESSAGE HERE]```
+
+## Congratulations
+
+<walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
+
+You have completed the tutorial! Now you know how to remove a single product from the catalog using Retail API.
+
+**Thank you for completing this tutorial!**

@@ -12,19 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import random
+import string
+
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail_v2 import Product, ProductServiceClient, CreateProductRequest, UpdateProductRequest, \
-    DeleteProductRequest
+from google.cloud.retail_v2 import Product, ProductServiceClient, UpdateProductRequest, PriceInfo
 from google.cloud.retail_v2.types import product
 from google.protobuf.field_mask_pb2 import FieldMask
 
+from setup_cleanup import create_product, delete_product
+
 # TODO Define the project number here:
-project_number = ""
+project_number = "1038874412926"
 
 default_branch_name = "projects/" + project_number + "/locations/global/catalogs/default_catalog/branches/default_branch"
-endpoint = "retail.googleapis.com"
+endpoint = "test-retail.sandbox.googleapis.com:443"
+product_id = ''.join(random.sample(string.ascii_lowercase, 8))
 
-product_id = 'get-sample-product-id'
+
+def get_product_name(product_id: str):
+    return 'projects/' + project_number + '/locations/global/catalogs/default_catalog/branches/0/products/' + product_id
 
 
 # [START get_product_service_client]
@@ -34,59 +41,59 @@ def get_product_service_client():
     # [END get_product_service_client]
 
 
-# [START generate_product_to_create]
-def generate_product() -> Product:
+# [START generate_product_for_update]
+def generate_product_for_update(product_id: str) -> Product:
+    price_info = PriceInfo()
+    price_info.price = 20.0
+    price_info.original_price = 25.5
+    price_info.currency_code = "USD"
     return product.Product(
-        title='Nest Mini',
+        id=product_id,
+        name=get_product_name(product_id),
+        title='Updated Nest Mini',
         type_=product.Product.Type.PRIMARY,
-        categories=['Speakers and displays'],
-        brands=['Google'],
-        uri='http://www.test-uri.com',
+        categories=['Updated Speakers and displays'],
+        brands=['Updated Google'],
+        availability="OUT_OF_STOCK",
+        price_info=price_info,
     )
-    # [END generate_product_to_create]
-
-
-# [START create_product]
-def create_product(product_to_create: Product, product_id: str) -> object:
-    create_product_request = CreateProductRequest()
-    create_product_request.product = product_to_create
-    create_product_request.product_id = product_id
-    create_product_request.parent = default_branch_name
-    return get_product_service_client().create_product(create_product_request)
-    # [END create_product]
-
-
-# [START delete_created_product]
-def delete_created_product(product_name: str):
-    delete_product_request = DeleteProductRequest()
-    delete_product_request.name = product_name
-    return get_product_service_client().delete_product(delete_product_request)
-    # [END delete_created_product]
+    # [END generate_product_for_update]
 
 
 # [START update_product_request]
-def update_product_with_mask(product_to_update: Product, field_mask: FieldMask):
+def get_update_product_request(product_to_update: Product, field_mask: FieldMask):
     update_product_request = UpdateProductRequest()
     update_product_request.product = product_to_update
     update_product_request.update_mask = field_mask
     update_product_request.allow_missing = True
-    return get_product_service_client().update_product(update_product_request)
+
+    print("---update product request with update_mask---")
+    print(update_product_request)
+
+    return update_product_request
     # [END update_product_request]
 
 
 # [START update_product]
-def get_product_call():
-    # create product
-    created_product = create_product(generate_product(), product_id)
+def update_product(original_product: Product):
+    field_mask = FieldMask(paths=['title', 'price_info', 'color_info'])
+
+    print('---product before update---')
+    print(original_product)
+
     # update product
-    created_product.categories = ['updated category']
-    created_product.title = "updated title"
-    update_with_mask_response = update_product_with_mask(created_product, field_mask)
-    print("update_with_mask_response:")
-    print(update_with_mask_response)
+    updated_product = get_product_service_client().update_product(
+        get_update_product_request(generate_product_for_update(original_product.id), field_mask))
+
+    print('---updated product---:')
+    print(updated_product)
 
     # [END update_product]
 
-    # delete product
-    delete_created_product(created_product.name)
-    print("---product was deleted:---")
+
+# create product
+created_product = create_product(product_id)
+# UPDATE PRODUCT
+update_product(created_product)
+# delete product
+delete_product(created_product.name)

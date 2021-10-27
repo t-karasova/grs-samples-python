@@ -16,16 +16,15 @@ import random
 import string
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail_v2 import Product, ProductServiceClient, CreateProductRequest, GetProductRequest, DeleteProductRequest
-from google.cloud.retail_v2.types import product
+from google.cloud.retail import ProductServiceClient, GetProductRequest
+
+from setup_cleanup import create_product, delete_product
 
 # TODO Define the project number here:
-project_number = ""
 
-default_branch_name = "projects/" + project_number + "/locations/global/catalogs/default_catalog/branches/default_branch"
-endpoint = "retail.googleapis.com"
-
-product_id = 'get-sample-product-id'
+project_number = "1038874412926"
+endpoint = "test-retail.sandbox.googleapis.com:443"
+product_id = ''.join(random.sample(string.ascii_lowercase, 8))
 
 
 # [START get_product_service_client]
@@ -33,36 +32,6 @@ def get_product_service_client():
     client_options = ClientOptions(endpoint)
     return ProductServiceClient(client_options=client_options)
     # [END get_product_service_client]
-
-
-# [START generate_product_to_create]
-def generate_product() -> Product:
-    return product.Product(
-        title='Nest Mini',
-        type_=product.Product.Type.PRIMARY,
-        categories=['Speakers and displays'],
-        brands=['Google'],
-        uri='http://www.test-uri.com',
-    )
-    # [END generate_product_to_create]
-
-
-# [START create_product]
-def create_product(product_to_create: Product, product_id: str) -> object:
-    create_product_request = CreateProductRequest()
-    create_product_request.product = product_to_create
-    create_product_request.product_id = product_id
-    create_product_request.parent = default_branch_name
-    return get_product_service_client().create_product(create_product_request)
-    # [END create_product]
-
-
-# [START delete_created_product]
-def delete_created_product(product_name: str):
-    delete_product_request = DeleteProductRequest()
-    delete_product_request.name = product_name
-    return get_product_service_client().delete_product(delete_product_request)
-    # [END delete_created_product]
 
 
 # [START get_product_request]
@@ -78,17 +47,20 @@ def get_product_request(product_name: str) -> object:
 
 
 # [START get_product]
-def get_product_call():
-    # create product
-    created_product = create_product(generate_product(), product_id)
-    # get product
-    get_request = get_product_request(created_product.name)
+def get_product(_product_name: str):
+    # get a product from catalog
+    get_request = get_product_request(_product_name)
     get_product_response = get_product_service_client().get_product(get_request)
 
     print("---get product response:---")
     print(get_product_response)
+    return get_product_response
     # [END get_product]
 
-    # delete product
-    delete_created_product(created_product.name)
-    print("---product was deleted:---")
+
+# create a product
+created_product = create_product(product_id)
+# GET CREATED PRODUCT
+product = get_product(created_product.name)
+# remove created product
+delete_product(product.name)
