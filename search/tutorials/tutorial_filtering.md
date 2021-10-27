@@ -40,7 +40,7 @@ pip install google-cloud-retail
 **Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal to run it.
 
 
-## Filtering by text field
+## Filtering by text field. Filtering expression
 
 You can write a simple expression that applies to the text field and looks like this:
 
@@ -61,7 +61,9 @@ python search_with_filtering.py
 
 As you can see now, ```results[]``` contains only items that satisfy the filtering expression.
 
-Feel free to test filtering by a textfield yourself, right here in the Cloud Shell environment.
+## Filtering by text field. Use case
+
+Now, you can try filtering by a text field yourself, right here in the Cloud Shell environment.
 
 To do that, find the comment: 
 
@@ -142,6 +144,7 @@ python search_with_filtering.py
 ## Filtering. Error handling
 
 In case of sending some invalid data or if any of the required fields is missing in the request, the Search Service responds with an error message.
+
 To find a complete list of the Search Request fields with their corresponding requirements, check the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
 
 To check a list of **text and numeric fields that support filtering**, use the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
