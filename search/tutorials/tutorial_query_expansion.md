@@ -68,7 +68,7 @@ and change the condition to the following:
 Run the sample in a terminal using the command:
 
 ```bash
-python search_with_ordering.py
+python search_with_query_expansion_spec.py
 ```
 
 As you can see, the results contain only items that exactly match the search query.

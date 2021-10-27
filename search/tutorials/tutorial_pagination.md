@@ -46,12 +46,12 @@ pip install google-cloud-retail
 
 The ```page_size``` request field allows you to limit the number of items in the search response.
 
-To view the request with ```page_size```, open **search_with_pagination_page_size.py**. 
+To view the request with ```page_size```, open **search_with_pagination.py**. 
 
 Run it in a terminal with the next command:
 
 ```bash
-python search_with_pagination_page_size.py
+python search_with_pagination.py
 ```
 
 As you can see now, **```results[]```** contain the exact number of products you have set as the page size.
@@ -63,15 +63,21 @@ We will use **```next_page_token```** in the next tutorial step.
 ## Next page token
 
 After you have received a response at the previous step, you can request the next page. 
-To get the next N=<page_size> of found items, send the **same** request with a **```page_token```** property set to the value of ```next_page_token``` from the previous response.
 
-First, open the **search_with_pagination_next_page.py**. We have placed there a sequence of requests for you to run:
-- The first one with only the page size, to get the ```next_page_token``` value from its response. 
-- The other, to navigate to the next page using ```page_token``` and the ```next_page_token``` value. 
+You need to receive the ```next_page_token```, set it to a request field ```page_token```, and call the Search service again.
+To do it, find the comment "#PASTE CALL WITH NEXT PAGE TOKEN HERE:" and paste this piece of code:
+```
+    next_page_token = search_response_first_page.page_token
+    search_request_next_page = get_search_request("Hoodie", page_size, offset, next_page_token)
+    search_response_next_page = get_search_service_client().search(search_request_next_page)
 
-Run the following command in a terminal:
+    print("---next page search results---")
+    print(search_response_next_page)
+```
+
+Run the code sample again:
 ```bash
-python search_with_pagination_next_page.py
+python search_with_pagination.py
 ```
 
 You can see the next page of <page_size> products in the response.
@@ -82,19 +88,50 @@ The field **```next_page_token```** possesses the value intended to forward you 
 
 In other cases, instead of navigating from page to page or getting results with top relevance, you can directly jump to a particular position using the offset.
 
-For example, to request the tenth page of the results when the page size is **5**, set the offset to **45**, calculated as **(10 - 1) * 5**.
+You have requested the second page with 6 products per page using ```next_page_token``` in the previous step .
+To reproduce the same effect using ```offset```, configure the field ```page_size``` with the same value which is "6",
+and perform a small calculation to get the offset value:
 
-Open the **search_with_pagination_offset.py**, run it, and check the result of **```page_size```** and the **```offset```** parameters combination.
+offset = 6 * (2 - 1) = 6, where 6 is a page size, and 2 is a number of page you would like to switch too.
 
-Run it in a terminal using the command:
-```bash
-python search_with_pagination_offset.py
+Find the comment "#PASTE CALL WITH OFFSET HERE:" and paste this piece of code:
+```
+    offset = 6
+    search_request_second_page = get_search_request("Hoodie", page_size, offset, page_token)
+    search_response_second_page = get_search_service_client().search(search_request_second_page)
+
+    print("---second page search results---")
+    print(search_response_second_page)
 ```
 
-You receive the requested page of products in a response. 
+Run the code sample again:
+```bash
+python search_with_pagination.py
+```
 
-The field **```next_page_token```** now possesses the value intended to forward you to the next page. You can use this field in further results navigation.
+Take a look at both "next page search results" and "second page search results". You can compare the lists of received products using both the next_page_token and offset that should be equal.
 
+Now you kow how the offset works. Let's perform the calculation one more time to make it clear.
+If you want to jump to the 7th page with a page size 12, the offset value you need to set should be calculated this way:
+
+offset = 12 * (7 - 1) = 72
+
+
+## Pagination. Error handling
+
+In case of sending some invalid data or if any of the required fields is missing in the request, the Search Service responds with an error message.
+To find a complete list of the Search Request fields with their corresponding requirements, check the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
+
+If you try to request the Search Service with negative page size, you will get an error message.
+
+
+Change the value of the variable ```page_size``` to any negative value and run the code one more time.
+```bash
+python search_with_pagination.py
+```
+
+You should see the following error message:
+```google.api_core.exceptions.InvalidArgument: 400 `page_size` must be nonnegative, but is set to -6.``` 
 
 ## Success 
 

@@ -50,23 +50,32 @@ The boosting specification looks like this:
 
 To set the **```condition```**, you should use a filtering expression like the one below:
 
-```'(colorFamily: ANY("black"))'``` 
+```'(colorFamily: ANY("blue"))'``` 
 
 or  
 ```'(rating: IN(4.0, 5.0))'```
 
-You can find more detailed information about the filtering expressions in the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter) 
+You can learn how to use filters in the [Filtering Tutorial](tutorial_filtering.md) 
+or read about it in the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter) 
 
 The field **```boost```** defines the strength of the condition boost, which should be in the range of -1 to 1. Negative boost means demotion.
 
-To see the whole request with a product boosting, open **search_with_boosting.py**
+Now, open **search_with_boost_spec.py**
 
-Run it in a terminal with the following command:
+In the initial request, the boost strength is set to zero: ```boost = 0.0```, so the boosting will **not affect** the order of the products in the response.
+
+Run the sample in a terminal with the following command:
 ```bash
-python search_with_boosting.py
+python search_with_boost_spec.py
 ```
+Check the response to see the original order of products depending on their relevance to the query phrase.
 
-Now you can check ```results[]```. The products corresponding to the boost condition became reranked.
+Next, let's change the value of the field **boost** and run the code sample once again:
+```boost = 1.0```
+
+Now you can check ```results[]```. The products corresponding to the boost condition became reranked. Now, blue products are **on the top** of the list.
+
+If you set ```boost = -1.0```, blue products will appear **at the bottom** of the search result.
 
 ## Some notes about boosting
 
@@ -97,6 +106,27 @@ condition = '(attributes.material: ANY("Cotton", "Polyester")) AND (brands: ANY(
 ```
 
 At the same time, you can test the boost strength by setting any value from -1 to 1.
+
+## Boosting. Error handling
+
+In case of sending some invalid data or if any of the required fields is missing in the request, the Search Service responds with an error message.
+To find a complete list of the Search Request fields with their corresponding requirements, check the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
+
+To check a list of **text and numeric fields that support boosting** in the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
+
+If you try to boost the search results and set a condition in the field which is **not supposed for boosting** (for example, the "name" field), you will get an error message.
+
+Change the variable "condition" value to the following:
+``` condition = '(name: ANY("some_random"))'```
+
+and run the code once again:
+```bash
+python search_with_boost_spec.py
+```
+
+You should see the following error message:
+
+```google.api_core.exceptions.InvalidArgument: 400 Invalid filter syntax '(name: ANY("some_random"))'. Parsing filter failed with error: Unsupported field "name" on ":" operator.```
 
 ## Success 
 
