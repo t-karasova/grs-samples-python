@@ -36,7 +36,7 @@ pip install google-cloud-retail
 **Tip**: Click the copy button beside the code box to paste the command in the Cloud Shell terminal and run it.
 
 
-## Ordering by a single field
+## Ordering by a single field. Ordering expression
 
 To use the ordering feature, you need to specify the field and the ordering direction. You can order by both the text and numeric fields.
 
@@ -53,6 +53,8 @@ python search_with_ordering.py
 ```
 
 As you can see now, ```results[]``` are ordered by price descending.
+
+## Ordering by a single field. Product sorting
 
 Next, let's change the ordering direction to show the cheapest products first.
 
@@ -77,7 +79,6 @@ You have sorted the products by price ascending.
 You can order items by multiple fields using the comma-separated fields in order of priority (more prioritized come first). 
 
 To order items with equal values for higher priority fields, use the lower priority fields. 
-
 
 For example, **```price desc, discount desc```** orders items by their price first. The products with the same price will be ordered by a discount amount.
 
