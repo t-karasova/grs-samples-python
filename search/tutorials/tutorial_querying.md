@@ -59,7 +59,11 @@ As you can see now, the field **```results[]```** contains a list of matched ite
 
 **```next_page_token```** is a token that forwards to the next page in the search response. By default, the number of products per page is 100. If this field is omitted, there are no subsequent pages.
 
-Next, try to experiment with the query phrases. Find the comment "# TRY DIFFERENT QUERY PHRASES HERE:" 
+## Simple query. Query phrase calibrating
+
+Next, try to experiment with the query phrases. 
+
+Find the comment "# TRY DIFFERENT QUERY PHRASES HERE:" 
 and change the value of "query_phrase" with something like this:
 
 ``` query_phrase= "Zip Hoodie"``` 
