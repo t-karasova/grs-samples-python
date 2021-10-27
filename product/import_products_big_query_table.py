@@ -25,11 +25,12 @@ from google.cloud.retail import BigQuerySource, ProductInputConfig, ProductServi
 project_number = ""
 project_id = ""
 
-endpoint = "retail.googleapis.com"
+endpoint = "test-retail.sandbox.googleapis.com:443"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
 dataset_id = "products"
 table_id = "products_for_import"
-
+# TO CHECK ERROR HANDLING USE THE TABLE OF INVALID PRODUCTS
+#table_id = "invalid_products_for_import"
 
 # [START product_client]
 def get_product_service_client():
@@ -46,6 +47,8 @@ def get_operation_service_client():
 
 # [START get_import_products_big_query_request]
 def get_import_products_big_query_request(reconciliation_mode):
+    # TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE:
+    # default_catalog = "invalid catalog name"
     big_query_source = BigQuerySource()
     big_query_source.project_id = project_id
     big_query_source.dataset_id = dataset_id

@@ -24,7 +24,7 @@ from google.protobuf.field_mask_pb2 import FieldMask
 # TODO Define the project number here:
 project_number = ""
 
-endpoint = "retail.googleapis.com"
+endpoint = "test-retail.sandbox.googleapis.com:443"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
 
 
@@ -52,6 +52,7 @@ def get_products():
 
     field_mask1 = FieldMask(paths=["title", "categories", "price_info", "color_info"])
 
+    # TO CHECK ERROR HANDLING COMMENT OUT THE PRODUCT NAME HERE:
     product1.title = "#IamRemarkable Pen"
     product1.categories = ["Office"]
     product1.uri = "https://shop.googlemerchandisestore.com/Google+Redesign/Office/IamRemarkable+Pen"
@@ -101,6 +102,8 @@ def get_product_service_client():
 
 # [START get_import_products_inline_request]
 def get_import_products_inline_request(products_to_import):
+    # TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE:
+    # default_catalog = "invalid catalog name"
     inline_source = ProductInlineSource()
     inline_source.products = products_to_import
 

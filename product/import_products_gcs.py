@@ -22,11 +22,13 @@ from google.cloud.retail import GcsSource, ProductInputConfig, ProductServiceCli
 # TODO Define the project number here:
 project_number = ""
 
-endpoint = "retail.googleapis.com"
+endpoint = "test-retail.sandbox.googleapis.com:443"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
 gcs_bucket = "gs://products_catalog/"
 gcs_errors_bucket = "gs://products_catalog/error"
 gcs_products_object = "products_for_search.json"
+# TO CHECK ERROR HANDLING USE THE JONS WITH INVALID PRODUCT
+# gcs_products_object = "invalid_products_for_import.json"
 
 
 # [START product_client]
@@ -38,6 +40,8 @@ def get_product_service_client():
 
 # [START get_import_products_gcs_request]
 def get_import_products_gcs_request(gcs_object_name: str):
+    # TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE:
+    # default_catalog = "invalid catalog name"
     gcs_source = GcsSource()
     gcs_source.input_uris = ["{0}/{1}".format(gcs_bucket, gcs_object_name)]
 

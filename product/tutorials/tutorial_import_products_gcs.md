@@ -67,10 +67,38 @@ The operation is completed when the field ```operation.done()``` is set to true.
  - ```error```, if the operation failed, or
  - ```response```, if the operation was successful.
 
-If the operation was successful, you can unpack the response to **ImportProductsResponse** and check a sample of errors
-encountered while processing the request in the field ```error_samples[]```.
+You have imported valid product objects to the catalog, so the operation should be successful, and the operation object should contain a field ```response```. 
 
-When set in the request, the ```errors_config``` field points to the destination for the importing errors.
+Check the ```response``` field in the operation object returned and printed to the Terminal. 
+The ```error_samples[]``` field should be empty.
+
+## Error handling
+
+Now, let's try to import a couple of invalid product objects and check the error message in the operation response, note that in this case the operation itself is considered as successful.
+
+The field title is a required field, so if you remove it, you will get invalid product object. There is a ```invalid_products_for_import.json``` in the Cloud Storage bucket which contains such an invalid product.
+Let's use it for import to get an error message.
+
+Go to the code sample assign the file name as a value of gcs_products_object:
+
+```gcs_products_object = "invalid_products_for_import.json"```
+
+Now, run the code sample and wait till the operation will be done. Check the operation printed out to the Terminal.
+The operation if completed, it is successful, so you can find a field ```response```, otherwise there would be a field ```error``` instead.
+
+Check the error message in the ```response.error_samples``` list, it should point on the invalid product object and its field which caused a problem, in our case the message should be:
+
+//TODO
+//[PUT ERROR MESSAGE HERE]
+
+Next, let's send invalid import request to get failed operation. 
+
+Go tho the code sample and in the method ```get_import_products_gcs_request```  and add there a local variable "default_catalog" with some invalid catalog name.
+
+Now run the code one more time and check the operation object, now it contains the field ```error``` instead of ```response```. The error message should be the following:
+
+//TODO
+//[PUT ERROR MESSAGE HERE]
 
 ## Congratulations
 
