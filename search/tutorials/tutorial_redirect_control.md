@@ -34,19 +34,22 @@ pip install google-cloud-retail
 **Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal to run it.
 
 
-## Configuring Search to use Redirect Control
+## Configuring search to use Redirect Control
 
-Open Editor to see all the code samples and choose **search_simple_query.py**. Make sure that project_number variable
+Open Editor to see all the code samples and choose **search_simple_query.py**. Make sure that ```project_number``` variable
 is set:
 
 ```project_number = "<YOUR_PROJECT_NUMBER>"```
 
-Now you have to change the query variable to match the one you configured as query term in
+Now you need to change the query variable to match the one you configured as query term in
 your Redirect Control:
 
 ```title_query = "<YOUR_QUERY_TERM>"```
 
 Next step is to configure the Search Service to use the serving config that has the redirect control attached.
+
+## Configuring search to use serving config
+
 In the code sample, find `default_search_placement` variable.
 
 Before applying the changes, it should look like this:
@@ -59,7 +62,10 @@ After applying the changes, it should look like this:
 
 ```default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/<YOUR_SERVING_CONFIG_ID>"```
 
+## Redirect control console output
+
 We want to check the effect of the Redirect Control printed in our console. 
+
 Let's go to the bottom of the code sample and find a following code fragment:
 
 ```print("---search response---")```
