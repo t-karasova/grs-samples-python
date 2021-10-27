@@ -89,10 +89,13 @@ The field **```next_page_token```** possesses the value intended to forward you 
 In other cases, instead of navigating from page to page or getting results with top relevance, you can directly jump to a particular position using the offset.
 
 You have requested the second page with 6 products per page using ```next_page_token``` in the previous step .
+
 To reproduce the same effect using ```offset```, configure the field ```page_size``` with the same value which is "6",
 and perform a small calculation to get the offset value:
 
 offset = 6 * (2 - 1) = 6, where 6 is a page size, and 2 is a number of page you would like to switch too.
+
+## Offset use case
 
 Find the comment "#PASTE CALL WITH OFFSET HERE:" and paste this piece of code:
 ```
@@ -112,10 +115,10 @@ python search_with_pagination.py
 Take a look at both "next page search results" and "second page search results". You can compare the lists of received products using both the next_page_token and offset that should be equal.
 
 Now you kow how the offset works. Let's perform the calculation one more time to make it clear.
+
 If you want to jump to the 7th page with a page size 12, the offset value you need to set should be calculated this way:
 
 offset = 12 * (7 - 1) = 72
-
 
 ## Pagination. Error handling
 
