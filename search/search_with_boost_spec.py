@@ -17,6 +17,7 @@ from google.api_core.client_options import ClientOptions
 from google.cloud.retail import SearchServiceClient, SearchRequest
 
 # TODO Define the project number here:
+
 project_number = ""
 
 
@@ -29,12 +30,15 @@ def get_search_service_client():
 # [END get_search_service_client]
 
 # [START get_search_request_with_boost_specification]
-def get_search_request(query: str, _condition: str, _boost_strength: float):
+def get_search_request(query: str, condition: str, boost_strength: float):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
-    boost_spec = SearchRequest().BoostSpec()
-    boost_spec.ConditionBoostSpec().condition = _condition
-    boost_spec.ConditionBoostSpec.boost = _boost_strength
+    condition_boost_spec = SearchRequest.BoostSpec.ConditionBoostSpec()
+    condition_boost_spec.condition = condition
+    condition_boost_spec.boost = boost_strength
+
+    boost_spec = SearchRequest.BoostSpec()
+    boost_spec.condition_boost_specs = [condition_boost_spec]
 
     search_request = SearchRequest()
     search_request.placement = default_search_placement  # Placement is used to identify the Serving Config name.
@@ -53,8 +57,8 @@ def get_search_request(query: str, _condition: str, _boost_strength: float):
 # [START search_product_with_boost_spec]
 def search():
     # TRY DIFFERENT BOOST CONDITIONS HERE:
-    condition = '(colorFamily: ANY("black"))'
-    boost = 0.1
+    condition = '(colorFamily: ANY("blue"))'
+    boost = 1.0
 
     search_request = get_search_request("Tee", condition, boost)
     search_response = get_search_service_client().search(search_request)

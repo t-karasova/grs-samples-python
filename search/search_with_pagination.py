@@ -24,38 +24,46 @@ project_number = ""
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
+    # [END get_search_service_client]
 
-
-# [END get_search_service_client]
 
 # [START get_search_request_with_page_size]
-def get_search_request(query: str, page_size: int):
+def get_search_request(query: str, page_size: int, offset: int, next_page_token: str):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
     search_request = SearchRequest()
     search_request.placement = default_search_placement
+    search_request.visitor_id = "123456"  # A unique identifier to track visitors
     search_request.query = query
     search_request.page_size = page_size
-    search_request.visitor_id = "123456"  # A unique identifier to track visitors
+    search_request.offset = offset
+    search_request.page_token = next_page_token
 
     print("---search_request:---")
     print(search_request)
 
     return search_request
-
-
-# [END get_search_request_with_page_size]
+    # [END get_search_request_with_page_size]
 
 
 # [START search_for_products_with_page_size]
 def search():
-    search_request = get_search_request("Hoodie", 12)
-    search_response = get_search_service_client().search(search_request)
+    # TRY DIFFERENT PAGINATION PARAMETERS HERE:
+    page_size = 6
+    offset = 0
+    page_token = ""
 
-    print("---page size search results---")
-    print(search_response)
+    search_request_first_page = get_search_request("nest_maxi", page_size, offset, page_token)
+    search_response_first_page = get_search_service_client().search(search_request_first_page)
 
+    print("---first page search results---")
+    print(search_response_first_page)
 
-# [END search_for_products_with_page_size]
+    # PASTE CALL WITH NEXT PAGE TOKEN HERE:
+
+    # PASTE CALL WITH OFFSET HERE:
+
+    # [END search_for_products_with_page_size]
+
 
 search()
