@@ -148,5 +148,6 @@ TODO
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
 You have completed the tutorial! Now you know how to update a product in a catalog using Retail API.
+We encourage you to practice in updating products right here, in Cloud Shell environment or in your oun Google Cloud Catalog.
 
 **Thank you for completing this tutorial!**

@@ -76,5 +76,6 @@ TODO
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
 You have completed the tutorial! Now you know how to get a single product from the catalog using Retail API.
+We encourage you to practice in getting products right here, in Cloud Shell environment or in your oun Google Cloud Catalog.
 
 **Thank you for completing this tutorial!**
