@@ -12,7 +12,8 @@ In this tutorial you will call the **delete_product()** method.
 
 [Retail API documentation](https://cloud.google.com/retail/docs/upload-catalog#json-format)
 
-**Time to complete**: About 2 minutes
+**Time to complete**: 
+<walkthrough-tutorial-duration duration="2.0"></walkthrough-tutorial-duration>
 
 ## Before you begin
 
@@ -42,8 +43,12 @@ python3 -m pip install google.cloud.retail
 
 ## Delete a product
 
-To build DeleteProductRequest, only ```name``` field is required. You should pass the **full resource name of Product**, such as 
-```projects/<project_number>/locations/global/catalogs/<catalog_id>/branches/<branch_id>/products/<product_id>.```
+To build DeleteProductRequest, only **```name```** field is required. 
+
+You should pass the **full resource name of Product**, such as:
+```none
+projects/<project_number>/locations/global/catalogs/<catalog_id>/branches/<branch_id>/products/<product_id>
+```
 
 You can find the DeleteProductRequest example in a **delete_product.py**
 
@@ -61,13 +66,17 @@ There is no return value for this method, so to check if the product was success
 TODO
 ```[PUT THE ERROR MESSAGE HERE]```
 
-Copy the product name from the output message printed in a terminal and assign it to the variable ```created_product_name```.
-Now, run the code again, you should receive appropriate error message.
+Copy the product name from the output message ( it is printed in a terminal ) and assign it to the variable **```created_product_name```**.
+
+Now, run the code again, you should receive the error message as above.
 
 ## Error handling
 
-If you send a request without the field ```name``` or if the field format is incorrect you will get an error message.
-Let's now remove the product_id part from the ```name```  value and send this request again. The expected error message should be like:
+If you send a request without the field **```name```** or if the field format is incorrect you will get an error message.
+
+Let's now remove the product_id part from the **```name```**  value and send this request again. 
+
+**The expected error message** should be like:
 
 ```[PUT THE ERROR MESSAGE HERE]```
 

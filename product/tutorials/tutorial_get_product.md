@@ -12,7 +12,8 @@ In this tutorial you will call the **get_product()** method and check the servic
 
 [Retail API documentation](https://cloud.google.com/retail/docs/upload-catalog#json-format)
 
-**Time to complete**: About 2 minutes
+**Time to complete**: 
+<walkthrough-tutorial-duration duration="2.0"></walkthrough-tutorial-duration>
 
 ## Before you begin
 
@@ -42,7 +43,10 @@ python3 -m pip install google.cloud.retail
 
 ## Get a product
 
-To build GetProductRequest only ```name``` field is required. You should pass the **full resource name of Product**, such as ```projects/<project_number>/locations/global/catalogs/<catalog_id>/branches/<branch_id>/products/<product_id>```.
+To build GetProductRequest only ```name``` field is required. You should pass the **full resource name of Product**, which is:
+```none
+projects/<project_number>/locations/global/catalogs/<catalog_id>/branches/<branch_id>/products/<product_id>
+```
 
 You can find the GetProductRequest example in a **get_product.py**
 
@@ -54,12 +58,15 @@ Open terminal and run the command:
 python product/get_product.py
 ```
 
-The Retail API returns the requested product with all product fields despite the list od retrievable fields provided in a product.retrievable_fields - it defines which product fields should be displayed only in a SearchResponse.
+The Retail API returns the requested **product with all product fields** despite the list od retrievable fields provided in a product.retrievable_fields - it defines which product fields should be displayed only in a SearchResponse.
 
 ## Error handling
 
-If you send a request without the field ```name``` or if the field format is incorrect you will get an error message.
-Let's now remove the product_id part from the ```name```  value and send this request again. The expected error message should be like:
+If you send a request without the field **```name```** or if the field format is incorrect you will get an error message.
+
+Let's now remove the product_id part from the **```name```**  value and send this request again. 
+
+**The expected error message** should be like:
 
 TODO
 ```[PUT THE ERROR MESSAGE HERE]```

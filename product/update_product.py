@@ -46,7 +46,7 @@ def generate_product_for_update(product_id: str) -> Product:
     price_info = PriceInfo()
     price_info.price = 20.0
     price_info.original_price = 25.5
-    price_info.currency_code = "USD"
+    price_info.currency_code = "EUR"
     return product.Product(
         id=product_id,
         name=get_product_name(product_id),
@@ -61,13 +61,13 @@ def generate_product_for_update(product_id: str) -> Product:
 
 
 # [START update_product_request]
-def get_update_product_request(product_to_update: Product, field_mask: FieldMask):
+def get_update_product_request(product_to_update: Product):
     update_product_request = UpdateProductRequest()
     update_product_request.product = product_to_update
-    update_product_request.update_mask = field_mask
     update_product_request.allow_missing = True
+    # PASTE UPDATE MASK HERE:
 
-    print("---update product request with update_mask---")
+    print("---update product request---")
     print(update_product_request)
 
     return update_product_request
@@ -76,14 +76,9 @@ def get_update_product_request(product_to_update: Product, field_mask: FieldMask
 
 # [START update_product]
 def update_product(original_product: Product):
-    field_mask = FieldMask(paths=['title', 'price_info', 'color_info'])
-
-    print('---product before update---')
-    print(original_product)
-
     # update product
     updated_product = get_product_service_client().update_product(
-        get_update_product_request(generate_product_for_update(original_product.id), field_mask))
+        get_update_product_request(generate_product_for_update(original_product.id)))
 
     print('---updated product---:')
     print(updated_product)

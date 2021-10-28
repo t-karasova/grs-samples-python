@@ -3,14 +3,21 @@
 ## Let's get started
 
 To fill the catalog or to update a massive amount of products we recommend to use import_products method. However
-sometimes you may need to make some detached changes in your product catalog. So Retail API provides you such ability
-exposing create_product, get_product, update_product, and delete_product methods.
+sometimes you may need to make some detached changes in your product catalog. 
+
+For such cases the Retail API provides you such ability
+exposing 
+ - create_product, 
+ - get_product, 
+ - update_product,
+ - delete_product methods.
 
 In this tutorial you will **create a simple product**.
 
 [Retail API documentation](https://cloud.google.com/retail/docs/upload-catalog#json-format)
 
-**Time to complete**: About 2 minutes
+**Time to complete**: 
+<walkthrough-tutorial-duration duration="2.0"></walkthrough-tutorial-duration>
 
 ## Before you begin
 
@@ -38,26 +45,32 @@ python3 -m pip install google.cloud.retail
 
 **Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
+
 ## Product object overview
 
 The required product fields are:
-```name``` - Full resource name of the product, such as ```projects/<project_number>/locations/global/catalogs/<catalog_id>
-/branches/<branch_id>/products/<product_id>```.
-```id``` - Product identifier, which is the final component of product name.
-```type``` - The type of the product. Default to "PRIMARY"
-```primary_product_id``` - Variant group identifier, required for VARIANT products
-```categories[]``` - Names of categories the product belongs to, can represent different category hierarchies.
-```title``` - The product title which will be to a customer
+
+ - **```name```** - Full resource name of the product, which is:
+ ```none
+ projects/<project_number>/locations/global/catalogs/<catalog_id>/branches/<branch_id>/products/<product_id>
+ ```
+
+ - **```id```** - Product identifier, which is the final component of product name.
+ - **```type```** - The type of the product. Default to "PRIMARY"
+ - **```primary_product_id```** - Variant group identifier, required for VARIANT products
+ - **```categories[]```** - Names of categories the product belongs to, can represent different category hierarchies.
+ - **```title```** - The product title which will be to a customer
+
 
 ## Product types overview
 
 There are 3 types of products:
 
-- ```PRIMARY``` is a simple product which you, as a customer, can think about. From the Retail perspective it is also a
+- **```PRIMARY```** - is a simple product which you, as a customer, can think about. From the Retail perspective it is also a
   primary unit for indexing and search serving and predicting. It can be grouped with multiple VARIANT products as a parent product.
-- ```VARIANT``` - it is a product item which usually share some common attributes with its parent PRIMARY product, but
+- **```VARIANT```** - it is a product item which usually share some common attributes with its parent PRIMARY product, but
   they have variant attributes like different colors, sizes and prices, etc.
-- ```COLLECTION``` - it is a product item which groups PRIMARY or VARIANT products that are sold together, such as a jewelry set with necklaces, earrings and rings, etc.
+- **```COLLECTION```** - it is a product item which groups PRIMARY or VARIANT products that are sold together, such as a jewelry set with necklaces, earrings and rings, etc.
 
 You can get full information about Product object and its fields in
 the [Retail API documentation](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#google.cloud.retail.v2.Product)
@@ -66,7 +79,7 @@ the [Retail API documentation](https://cloud.google.com/retail/docs/reference/rp
 
 In this tutorial you will create a simple PRIMARY product, like this one, presented in JSON format:
 
-```
+```py
 {
   "name": "projects/<PROJECT_NUMBER>/locations/global/catalogs/default_catalog/branches/0/products/<PRODUCT_ID>",
   "id": "PRODUCT_ID",
@@ -76,7 +89,7 @@ In this tutorial you will create a simple PRIMARY product, like this one, presen
   ],
   "brands": [
     "Google"
-  ] 
+  ], 
   "title": "Nest Mini",
   "availability": "IN_STOCK",
   "price_info": {
@@ -92,9 +105,9 @@ Open **create_product.py** code sample and check this product generation with th
 ## Create a product in a catalog
 
 To create a product you should send a **CreateProductRequest** to Retail API with the following required fields specified:
-```product``` - the product object you want to create
-```product_id``` - product id 
-```parent``` - a branch name in a catalog where the product will be created
+ - **```product```** - the product object you want to create
+ - **```product_id```** - product id 
+ - **```parent```** - a branch name in a catalog where the product will be created
 
 You can find the create product request example in a **create_product.py**
 
@@ -109,10 +122,10 @@ The Retail API returns the created product as a response
 ## Create a product. Error handling
 
 If you send a request without one of required fields or if the field format is incorrect you will get an error message.
+
 Let's now remove the product field ```name``` and send this request again. The expected error message should be like:
 
-TODO
-```[PUT THE ERROR MESSAGE HERE]```
+TODO ```[PUT THE ERROR MESSAGE HERE]```
 
 ## Congratulations
 
