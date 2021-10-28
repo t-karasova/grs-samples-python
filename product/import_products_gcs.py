@@ -27,7 +27,7 @@ default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branch
 gcs_bucket = "gs://products_catalog/"
 gcs_errors_bucket = "gs://products_catalog/error"
 gcs_products_object = "products_for_search.json"
-# TO CHECK ERROR HANDLING USE THE JONS WITH INVALID PRODUCT
+# TO CHECK ERROR HANDLING USE THE JSON WITH INVALID PRODUCT
 # gcs_products_object = "invalid_products_for_import.json"
 
 
