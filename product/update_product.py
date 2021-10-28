@@ -18,20 +18,15 @@ import string
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail_v2 import Product, ProductServiceClient, UpdateProductRequest, PriceInfo
 from google.cloud.retail_v2.types import product
-from google.protobuf.field_mask_pb2 import FieldMask
 
 from setup_cleanup import create_product, delete_product
 
 # TODO Define the project number here:
-project_number = "1038874412926"
+project_number = " "
 
 default_branch_name = "projects/" + project_number + "/locations/global/catalogs/default_catalog/branches/default_branch"
-endpoint = "test-retail.sandbox.googleapis.com:443"
-product_id = ''.join(random.sample(string.ascii_lowercase, 8))
-
-
-def get_product_name(product_id: str):
-    return 'projects/' + project_number + '/locations/global/catalogs/default_catalog/branches/0/products/' + product_id
+endpoint = "retail.googleapis.com:443"
+generated_product_id = ''.join(random.sample(string.ascii_lowercase, 8))
 
 
 # [START get_product_service_client]
@@ -49,7 +44,7 @@ def generate_product_for_update(product_id: str) -> Product:
     price_info.currency_code = "EUR"
     return product.Product(
         id=product_id,
-        name=get_product_name(product_id),
+        name='projects/' + project_number + '/locations/global/catalogs/default_catalog/branches/default_branch/products/' + product_id,
         title='Updated Nest Mini',
         type_=product.Product.Type.PRIMARY,
         categories=['Updated Speakers and displays'],
@@ -87,7 +82,7 @@ def update_product(original_product: Product):
 
 
 # create product
-created_product = create_product(product_id)
+created_product = create_product(generated_product_id)
 # UPDATE PRODUCT
 update_product(created_product)
 # delete product

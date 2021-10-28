@@ -14,7 +14,7 @@ exposing
 
 In this tutorial you will **create a simple product**.
 
-[Retail API documentation](https://cloud.google.com/retail/docs/upload-catalog#json-format)
+You can find detailed information about managing catalog information in the [Retail API documentation](https://cloud.google.com/retail/docs/manage-catalog)
 
 **Time to complete**: 
 <walkthrough-tutorial-duration duration="2.0"></walkthrough-tutorial-duration>
@@ -68,7 +68,7 @@ There are 3 types of products:
 
 - **```PRIMARY```** - is a simple product which you, as a customer, can think about. From the Retail perspective it is also a
   primary unit for indexing and search serving and predicting. It can be grouped with multiple VARIANT products as a parent product.
-- **```VARIANT```** - it is a product item which usually share some common attributes with its parent PRIMARY product, but
+- **```VARIANT```** - it is a SKU (Stock keeping unit) -the product item which usually share some common attributes with its parent PRIMARY product, but
   they have variant attributes like different colors, sizes and prices, etc.
 - **```COLLECTION```** - it is a product item which groups PRIMARY or VARIANT products that are sold together, such as a jewelry set with necklaces, earrings and rings, etc.
 
@@ -81,7 +81,7 @@ In this tutorial you will create a simple PRIMARY product, like this one, presen
 
 ```py
 {
-  "name": "projects/<PROJECT_NUMBER>/locations/global/catalogs/default_catalog/branches/0/products/<PRODUCT_ID>",
+  "name": "projects/<PROJECT_NUMBER>/locations/global/catalogs/default_catalog/branches/default_branch/products/<PRODUCT_ID>",
   "id": "PRODUCT_ID",
   "type": "PRIMARY",
   "categories": [

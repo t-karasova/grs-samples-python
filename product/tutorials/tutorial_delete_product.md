@@ -10,7 +10,7 @@ If you need to make some detached changes in your product catalog, you may call 
 
 In this tutorial you will call the **delete_product()** method.
 
-[Retail API documentation](https://cloud.google.com/retail/docs/upload-catalog#json-format)
+You can find detailed information about managing catalog information in the [Retail API documentation](https://cloud.google.com/retail/docs/manage-catalog)
 
 **Time to complete**: 
 <walkthrough-tutorial-duration duration="2.0"></walkthrough-tutorial-duration>

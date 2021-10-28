@@ -17,14 +17,10 @@ from google.cloud.retail_v2 import Product, ProductServiceClient, CreateProductR
 from google.cloud.retail_v2.types import product
 
 # TODO Define the project number here:
-project_number = "1038874412926"
+project_number = " "
 
 default_branch_name = "projects/" + project_number + "/locations/global/catalogs/default_catalog/branches/default_branch"
-endpoint = "test-retail.sandbox.googleapis.com:443"
-
-
-def get_product_name(product_id: str):
-    return 'projects/' + project_number + '/locations/global/catalogs/default_catalog/branches/0/products/' + product_id
+endpoint = "retail.googleapis.com:443"
 
 
 # [START get_product_service_client]

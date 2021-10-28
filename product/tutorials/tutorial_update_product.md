@@ -12,7 +12,7 @@ exposing
 
 In this tutorial you will **update product in a catalog**.
 
-[Retail API documentation](https://cloud.google.com/retail/docs/upload-catalog#json-format)
+You can find detailed information about managing catalog information in the [Retail API documentation](https://cloud.google.com/retail/docs/manage-catalog)
 
 **Time to complete**: 
 <walkthrough-tutorial-duration duration="3.0"></walkthrough-tutorial-duration>
@@ -58,7 +58,7 @@ When you run this code sample, first a product will be created in a catalog, the
 The **originaly created product** is the following:
 ```py
 {
-  "name": "projects/<PROJECT_NUMBER>/locations/global/catalogs/default_catalog/branches/0/products/<PRODUCT_ID>",
+  "name": "projects/<PROJECT_NUMBER>/locations/global/catalogs/default_catalog/branches/default_branch/products/<PRODUCT_ID>",
   "id": "<PRODUCT_ID>",
   "type": "PRIMARY",
   "categories": [
@@ -82,9 +82,9 @@ Let's assume you want to update each of its fields. You should set the product o
 The **product object for update** is the following:
 ```py
 {
-  "name": "projects/<PROJECT_NUMBER>/locations/global/catalogs/default_catalog/branches/0/products/<PRODUCT_ID>", #cannot be ubdated , should point to existent product
-  "id": "<PRODUCT_ID>", #cannot be ubdated 
-  "type": "PRIMARY", #cannot be ubdated
+  "name": "projects/<PROJECT_NUMBER>/locations/global/catalogs/default_catalog/branches/default_branch/products/<PRODUCT_ID>", #cannot be updated , should point to existent product
+  "id": "<PRODUCT_ID>", #cannot be updated 
+  "type": "PRIMARY", #cannot be updated
   "categories": [
     "Updated Speakers and displays"
   ],

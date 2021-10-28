@@ -21,13 +21,13 @@ from google.cloud.retail import ProductServiceClient, DeleteProductRequest
 from setup_cleanup import create_product
 
 # TODO Define the project number here:
-project_number = "1038874412926"
-endpoint = "test-retail.sandbox.googleapis.com:443"
+project_number = " "
+endpoint = "retail.googleapis.com:443"
 
-default_branch_name = "projects/" + project_number + "/locations/global/catalogs/default_catalog/branches/default_branch"
+default_branch_name = "projects/" + project_number \
+                      + "/locations/global/catalogs/default_catalog/branches/default_branch"
 
 product_id = ''.join(random.sample(string.ascii_lowercase, 8))
-product_name = 'projects/' + project_number + '/locations/global/catalogs/default_catalog/branches/0/products/' + product_id
 
 
 # [START get_product_service_client]
@@ -37,8 +37,8 @@ def get_product_service_client():
     # [END get_product_service_client]
 
 
-# [START get_delete_created_product_request]
-def get_delete_created_product_request(product_name: str):
+# [START get_delete_product_request]
+def get_delete_product_request(product_name: str):
     delete_product_request = DeleteProductRequest()
     delete_product_request.name = product_name
 
@@ -46,19 +46,17 @@ def get_delete_created_product_request(product_name: str):
     print(delete_product_request)
 
     return delete_product_request
-    # [END get_delete_created_product_request]
+    # [END get_delete_product_request]
 
 
 # [START delete_product]
-def delete_product(_product_name: str):
-    delete_product_request = get_delete_created_product_request(_product_name)
+def delete_product(product_name: str):
+    delete_product_request = get_delete_product_request(product_name)
     get_product_service_client().delete_product(delete_product_request)
 
-    print("deleting product " + _product_name)
+    print("deleting product " + product_name)
     print("---product was deleted:---")
 
 
-# create a product, get name
-created_product_name = create_product(product_id).name
 # DELETE PRODUCT
-delete_product(created_product_name)
+delete_product(create_product(product_id).name)

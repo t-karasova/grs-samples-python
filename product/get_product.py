@@ -22,8 +22,8 @@ from setup_cleanup import create_product, delete_product
 
 # TODO Define the project number here:
 
-project_number = "1038874412926"
-endpoint = "test-retail.sandbox.googleapis.com:443"
+project_number = " "
+endpoint = "retail.googleapis.com:443"
 product_id = ''.join(random.sample(string.ascii_lowercase, 8))
 
 
@@ -47,9 +47,9 @@ def get_product_request(product_name: str) -> object:
 
 
 # [START get_product]
-def get_product(_product_name: str):
+def get_product(product_name: str):
     # get a product from catalog
-    get_request = get_product_request(_product_name)
+    get_request = get_product_request(product_name)
     get_product_response = get_product_service_client().get_product(get_request)
 
     print("---get product response:---")
@@ -63,4 +63,4 @@ created_product = create_product(product_id)
 # GET CREATED PRODUCT
 product = get_product(created_product.name)
 # remove created product
-delete_product(product.name)
+delete_product(created_product.name)
