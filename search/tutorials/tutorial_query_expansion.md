@@ -41,7 +41,7 @@ pip install google
 pip install google-cloud-retail
 ```
 
-**Tip**: Click the copy button on the side of the code box to later paste the command in the Cloud Shell terminal and run it.
+**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
 
 ## Query expansion
@@ -73,7 +73,9 @@ python search_with_query_expansion_spec.py
 
 As you can see, the results contain only items that exactly match the search query.
 
-## Success 
+## Congratulations
+
+<walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
 You have completed the tutorial! We **encourage** you to **test the query expansion by yourself** and try different search phrases with and without query expansion.
 

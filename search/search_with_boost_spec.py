@@ -25,9 +25,8 @@ project_number = ""
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
+    # [END get_search_service_client]
 
-
-# [END get_search_service_client]
 
 # [START get_search_request_with_boost_specification]
 def get_search_request(query: str, condition: str, boost_strength: float):
@@ -50,9 +49,8 @@ def get_search_request(query: str, condition: str, boost_strength: float):
     print(search_request)
 
     return search_request
+    # [END get_search_request_with_boost_specification]
 
-
-# [END get_search_request_with_boost_specification]
 
 # [START search_product_with_boost_spec]
 def search():
@@ -64,8 +62,7 @@ def search():
     search_response = get_search_service_client().search(search_request)
     print("---boost search response---")
     print(search_response)
+    # [END search_product_with_boost_spec]
 
-
-# [END search_product_with_boost_spec]
 
 search()
