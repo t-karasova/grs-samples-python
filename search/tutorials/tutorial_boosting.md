@@ -37,7 +37,7 @@ pip install google-cloud-retail
 **Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
 
-## Boosting by one criterion
+## Boosting by one criterion. Condition and filtering expression 
 
 The boosting specification looks like this:
   
@@ -63,6 +63,9 @@ The field **```boost```** defines the strength of the condition boost, which sho
 Now, open **search_with_boost_spec.py**
 
 In the initial request, the boost strength is set to zero: ```boost = 0.0```, so the boosting will **not affect** the order of the products in the response.
+
+
+## Boosting by one criterion. Boost results
 
 Run the sample in a terminal with the following command:
 ```bash
@@ -112,14 +115,16 @@ At the same time, you can test the boost strength by setting any value from -1 t
 In case of sending some invalid data or if any of the required fields is missing in the request, the Search Service responds with an error message.
 To find a complete list of the Search Request fields with their corresponding requirements, check the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
 
-To check a list of **text and numeric fields that support boosting** in the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
+To check the list of **text and numeric fields that support boosting**, use the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
+
+## Boosting. Error handling results
 
 If you try to boost the search results and set a condition in the field which is **not supposed for boosting** (for example, the "name" field), you will get an error message.
 
 Change the variable "condition" value to the following:
 ``` condition = '(name: ANY("some_random"))'```
 
-and run the code once again:
+Run the code once again:
 ```bash
 python search_with_boost_spec.py
 ```

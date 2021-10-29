@@ -44,9 +44,11 @@ pip install google-cloud-retail
 **Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
 
-## Query expansion
+## Query expansion. AUTO condition
 
-Open **search_with_query_expansion_spec.py** and take a look at the search request. Here you can see the query expansion condition set with value "AUTO". The setting enables the query expansion feature and expands the search results.
+Open **search_with_query_expansion_spec.py** and take a look at the search request. 
+
+Here, you can see the query expansion condition set with value "AUTO". The setting enables the query expansion feature and expands the search results.
 
 Run the sample in a terminal using the command:
 ```bash
@@ -54,6 +56,8 @@ python search_with_query_expansion_spec.py
 ```
 
 As you can see, ```results[]``` contain products that do not exactly match the search query but are close to it.
+
+## Query expansion. DISABLED condition
 
 Next, let's change the condition value to "DISABLED".
 
