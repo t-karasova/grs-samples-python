@@ -4,7 +4,7 @@
 
 This tutorial shows you how to send a simple search query to the Retail Service and analyze the response.
 
-**Time to complete**: About 1 minute
+**Time to complete**: About 2 minute
 
 ## Before you begin
 
