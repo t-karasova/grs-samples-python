@@ -24,9 +24,8 @@ project_number = ""
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
+    # [END get_search_service_client]
 
-
-# [END get_search_service_client]
 
 # [START get_search_request_with_query_expansion_specification]
 def get_search_request(query: str, condition: SearchRequest.QueryExpansionSpec.Condition):
@@ -45,9 +44,8 @@ def get_search_request(query: str, condition: SearchRequest.QueryExpansionSpec.C
     print(search_request)
 
     return search_request
+    # [END get_search_request_with_query_expansion_specification]
 
-
-# [END get_search_request_with_query_expansion_specification]
 
 # [START search_for_products_with_query_expansion_specification]
 def search():
@@ -59,8 +57,7 @@ def search():
 
     print("---query expansion search results---")
     print(search_response)
+    # [END search_for_products_with_query_expansion_specification]
 
-
-# [END search_for_products_with_query_expansion_specification]
 
 search()
