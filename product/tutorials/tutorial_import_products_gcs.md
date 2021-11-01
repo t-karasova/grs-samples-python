@@ -94,7 +94,7 @@ Now, run the code sample and wait till the operation is completed.
 
 Next, check the operation printed out to the Terminal.
 
-## Error handling. Response analysis
+## Error handling output analysis
 
 If the operation is completed successfuly, you can find a **```response```** field. Otherwise, there would be an **```error```** field instead.
 
