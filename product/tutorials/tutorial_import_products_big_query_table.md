@@ -124,7 +124,7 @@ In the code sample, find the **```get_import_products_big_query_request()```** m
 
 Now, run the code again and check the operation object. It contains the **```error```** field instead of **```response```**. 
 
-The error message should look something like this:
+The error message should be as follows:
 
 //TODO
 //[PUT ERROR MESSAGE HERE]
