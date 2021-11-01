@@ -111,7 +111,7 @@ In the code sample, go to the **```get_import_products_gcs_request```**  method,
 
 Now, run the code once again and check the operation object. It contains the **```error```** field instead of the **```response```**. 
 
-The error message should look something like this:
+The error message should be as follows:
 
 //TODO
 //[PUT ERROR MESSAGE HERE]
