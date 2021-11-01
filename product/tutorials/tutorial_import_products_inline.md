@@ -111,7 +111,7 @@ In the code sample, find the **```get_import_products_inline_request```**  metho
 
 Run the code once again and check the operation object. Now, it contains the **```error```** field instead of **```response```**. 
 
-The error message should be the following:
+The error message should be as follows:
 
 //TODO
 //[PUT ERROR MESSAGE HERE]
