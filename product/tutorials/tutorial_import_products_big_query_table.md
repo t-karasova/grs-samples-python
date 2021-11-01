@@ -91,23 +91,23 @@ Check the **```response```** field in the operation object returned to and print
 The **```error_samples[]```** field should be empty.
 
 
-
 ## Error handling
 
 Now, let's try to import a couple of invalid product objects and check the error message in the operation response. 
 
 Note that in this case the operation itself is considered successful.
 
-The field title is a required field. If you remove it, you will get invalid product object. There is a **```products_for_import_some_invalid```** table in the BigQuery dataset that contains such invalid products.
+The title field is required. If you remove it, you will get invalid product object. There is a **```products_for_import_some_invalid```** table in the BigQuery dataset that contains such invalid products.
 
 Let's use it for importing to get an error message.
 
-Go to the code sample and assign the file name as a value of ```gcs_products_object```:
+Go to the code sample and assign the ```gcs_products_object```value to the file name:
 ```py
 table_id = "products_for_import_some_invalid"
 ```
 
-Now, run the code sample and wait till the operation completes. Check the operation result printed out to the Terminal.
+Now, run the code sample and wait till the operation is completed. Check the operation result printed out to the Terminal.
+
 The operation is completed successfully, so you can find a **```response```** field. Otherwise, there would be an **```error```** field instead.
 
 ## Error handling output analysis
@@ -118,11 +118,13 @@ In our case, the message should look like this:
 //TODO
 //[PUT ERROR MESSAGE HERE]
 
-Next, let's send invalid import request to get the operation failed. 
+Next, let's send invalid import request to make the operation fail. 
 
-In the code sample, find the method **```get_import_products_big_query_request()```**, and add there a local variable ```default_catalog``` with some invalid catalog name.
+In the code sample, find the **```get_import_products_big_query_request()```** method, and add there a local variable ```default_catalog``` with some invalid catalog name.
 
-Now, run the code again and check the operation object. It contains the **```error```** field instead of **```response```**. The error message should be the following:
+Now, run the code again and check the operation object. It contains the **```error```** field instead of **```response```**. 
+
+The error message should look something like this:
 
 //TODO
 //[PUT ERROR MESSAGE HERE]
