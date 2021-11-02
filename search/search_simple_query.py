@@ -12,12 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import SearchServiceClient, SearchRequest
 
 # TODO Define the project number here:
-project_number = ""
+project_number = " "
 
 
 # [START get_search_service_client]
