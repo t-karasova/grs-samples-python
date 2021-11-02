@@ -64,41 +64,54 @@ Once you have called the import products method from the Retail API, the **impor
 
 Importing may take some time depending on the size of product set in your Cloud Source.
 
-The operation is completed when the field **```operation.done()```** is set to true. Check the result, one of the following fields should be present:
- - **```error```**, if the operation failed, or
+The operation is completed when the field **```operation.done()```** is set to true. 
+
+Check the result, one of the following fields should be present:
+ - **```error```**, if the operation failed.
  - **```response```**, if the operation was successful.
 
-You have imported valid product objects to the catalog, so the operation should be successful, and the operation object should contain a field **```response```**. 
+You have imported valid product objects to the catalog. The operation should be successful, and the operation object should contain a **```response```** field. 
 
 TODO[PUT OPERATION OBJECT HERE]
 
-Check the **```response```** field in the operation object returned and printed to the Terminal. 
+Check the **```response```** field in the operation object returned to and printed in the Terminal. 
+
 The **```error_samples[]```** field should be empty.
 
 ## Error handling
 
-Now, let's try to import a couple of invalid product objects and check the error message in the operation response, note that in this case the operation itself is considered as successful.
+Now, let's try to import a few invalid product objects and check the error message in the operation response. Note that in this case the operation itself is considered successful.
 
-The field title is a required field, so if you remove it, you will get invalid product object. There is a **```invalid_products_for_import.json```** in the Cloud Storage bucket which contains such an invalid product.
+The title field is required, so if you remove it, you get the invalid product object. There is an **```invalid_products_for_import.json```** in the Cloud Storage bucket containing such an invalid product.
+
 Let's use it for import to get an error message.
 
-Go to the code sample assign the file name as a value of gcs_products_object:
+Go to the code sample, assign a value of ```gcs_products_object``` to the file name:
 
 ```gcs_products_object = "invalid_products_for_import.json"```
 
-Now, run the code sample and wait till the operation will be done. Check the operation printed out to the Terminal.
-The operation if completed, it is successful, so you can find a field **```response```**, otherwise there would be a field **```error```** instead.
+Now, run the code sample and wait till the operation is completed. 
 
-Check the error message in the **```response.error_samples```** list, it should point on the invalid product object and its field which caused a problem, in our case the message should be:
+Next, check the operation printed out to the Terminal.
+
+## Error handling output analysis
+
+If the operation is completed successfuly, you can find a **```response```** field. Otherwise, there would be an **```error```** field instead.
+
+Check the error message in the **```response.error_samples```** list. It should state the invalid product object and its field that has caused a problem. 
+
+In our case, the message should be:
 
 //TODO
 //[PUT ERROR MESSAGE HERE]
 
-Next, let's send invalid import request to get failed operation. 
+Next, let's send invalid import request to make the operation fail. 
 
-Go tho the code sample and in the method **```get_import_products_gcs_request```**  and add there a local variable ```default_catalog``` with some invalid catalog name.
+In the code sample, go to the **```get_import_products_gcs_request```**  method, and add there a local variable ```default_catalog``` with some invalid catalog name.
 
-Now run the code one more time and check the operation object, now it contains the field **```error```** instead of **```response```**. The error message should be the following:
+Now, run the code once again and check the operation object. It contains the **```error```** field instead of the **```response```**. 
+
+The error message should be as follows:
 
 //TODO
 //[PUT ERROR MESSAGE HERE]
@@ -107,7 +120,6 @@ Now run the code one more time and check the operation object, now it contains t
 
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-You have completed the tutorial! Now you know how to prepare the data for import and how to import products from Google
-Cloud Storage.
+You have completed the tutorial! Now you know how to prepare the data for importing andd import products from the Google Cloud Storage.
 
 **Thank you for completing this tutorial!**
