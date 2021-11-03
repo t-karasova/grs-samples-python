@@ -12,19 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import time
+
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail_v2 import ProductServiceClient, Product, UpdateProductRequest, GetProductRequest, \
     CustomAttribute
 
 # TODO Define the project number here:
 project_number = " "
-endpoint = "retail.googleapis.com:443"
 product_id = "GGOEAAEC172013"
 
 
 # [START get_product_service_client]
 def get_product_service_client():
-    client_options = ClientOptions(endpoint)
+    client_options = ClientOptions("retail.googleapis.com")
     return ProductServiceClient(client_options=client_options)
     # [END get_product_service_client]
 
@@ -68,6 +69,9 @@ def update_product(product_to_update_id):
 
     print('---updated product---:')
     print(updated_product)
+
+    print('---Wait 5 minutes to be sure the catalog has been indexed after the changes---:')
+    time.sleep(300)
     # [END update_product]
 
 

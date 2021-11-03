@@ -4,11 +4,11 @@
 
 Retail Search allows you to configure the product attributes for the search purpose. 
 
-If you want the Retail Search to be able to filter and facet your catalog using this product attribute, you should set it as indexable.
+If you want the Retail Search to be able to filter and facet your catalog using a product attribute, you should set it as indexable.
 
-If you want to enable the search by some product attribute, you should make this attribute searchable. Note, that onsy text attributes can be searchable.
+If you want to enable the search by some product attribute, you should make this attribute searchable. Note, that only text attributes can be searchable.
 
-In this tutorial you will learn how to configure the product attributes to allow the Retail Search to perform products indexing and search.
+In this tutorial you will learn how to configure the product attributes to make them searchable and indexable for the Retail Search service.
 
 **Time to complete**: About 4 minutes
 
@@ -38,7 +38,7 @@ pip install google-cloud-retail
 
 ## Filter by unindexable field
 
-There are several products in the catalog with the attribute "eco-friendly".  The attribute's field **```indexable```** is set to **false**.
+There are several products in the catalog with the attribute "eco-friendly".  The attribute field **```indexable```** is set to **false**.
 
 ```json
  "eco-friendly":{
@@ -56,61 +56,64 @@ There are several products in the catalog with the attribute "eco-friendly".  Th
 
 Let's try to search for a sweater and filter the search results by this field.
 
-To do that you should use a filter **```'(attributes.eco-friendly: ANY("recycled packaging"))'```**
+To do that, use a filter **```'(attributes.eco-friendly: ANY("recycled packaging"))'```**
 
 You can find the prepared SearchRequest in the **search/search_attribute_config.py**
 
-Run the sample in a terminal using the command:
+Run the sample in a Terminal using the following command:
 
 ```bash
 python search/search_attribute_config.py
 ```
 Check the search response printed out to the Terminal.
-As the attribute was not indexed, the filter was not applied to the search resuts, and you see the unfiltered list of products in a response.
 
-## Make the product attribute Indexable
+The attribute was not indexed, so the filter was not applied to the search results. In a response, you can see the unfiltered list of products.
 
-To make the attribute indexable we need to set the "indexable" field to "true". 
+## Make the product attribute indexable
+
+To make the attribute indexable, set the "indexable" field to "true". 
 
 Let's do it using the **```update_product()```** method in **search/update_attribute_configuration.py**
 
-Run it in a terminal using the command:
+Run the code in a Terminal using the following command:
 
 ```bash
 python search/update_attribute_configuration.py
 ```
+Note, as you have changed the catalog data, the Retail Search needs some time to index products,
+the time depends on the catalog size, it usually takes up to 5 minutes.
 
 ## Filter by indexable field
 
-Now, as you have configured the product attribute "eco-friendly" as **indexable**, let's check the Retail API treats it now.
+Now, as you have configured the product attribute "eco-friendly" as **indexable**, let's check how the Retail API treats it now.
 
-Request the Search Service again with the same request with the filter: ```'(attributes.eco-friendly: ANY("recycled packaging"))'```
+Request the Search Service again using the same request with the filter: ```'(attributes.eco-friendly: ANY("recycled packaging"))'```
 
 ```bash
 python search/search_attribute_config.py
 ```
 
-As you are searching by the indexable field the filter is applied to the search response and in the result list you will see the requested product.
+As you run the search by indexable field, the filter applies to the search response. You can see the requested product in the result list.
 
 ## Search for non-searchable attribute value
 
-Next, let's request the Retail Search with a query **"Low-impact fabrics"**. This is one of the values of the "eco-friendly" attribute, which is still non-searchable.
+Next, let's request the Retail Search using the **"Low-impact fabrics"** query. This is one of the values of the "eco-friendly" attribute, which is still non-searchable.
 
-The search response should be empty as the Retail Search do not take this attribute into account performing the search.
+The search response should be empty because the Retail Search does not take this attribute into account while performing the search.
 
-Open the **search/search_attribute_config.py** and change the value in the field **```search_request.query```**:
+Open the **search/search_attribute_config.py** and change the value in the **```search_request.query```** field:
 ```py
  search_request.query = "Low-impact fabrics"
 ```
 
-Comment out the line ```search_request.filter = '(attributes.eco-friendly: ANY("recycled packaging"))'``` to avoid the narrowing down search results. 
+Comment out the line ```search_request.filter = '(attributes.eco-friendly: ANY("recycled packaging"))'``` to avoid the narrowing search results down. 
 
-Run the code in a terminal using the command:
+Run the code in a Terminal using the following command:
 
 ```bash
 python search/search_attribute_config.py
 ```
-Check the result is empty
+Check the result: it should be empty.
 
 ## Make the attribute searchable
 
@@ -124,10 +127,11 @@ Update the product running the command:
 ```bash
 python search/update_attribute_configuration.py
 ```
+The changes will take effect after the Retail Search will index them, it might take approximately 5 minutes.
 
-## Search for Searchable attribute value
+## Search for searchable attribute value
 
-Call the Retail Search  with the query **"Low-impact fabrics"** again.
+Call the Retail Search  with the **"Low-impact fabrics"** query again.
 
 This time the service should return the matched product. 
 
