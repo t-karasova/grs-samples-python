@@ -17,19 +17,18 @@ import time
 
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import GcsSource, ProductInputConfig, ProductServiceClient, ImportErrorsConfig, \
-    ImportProductsRequest
+    ImportProductsRequest, ImportProductsResponse
 
 # TODO Define the project number here:
 project_number = ""
 
-endpoint = "test-retail.sandbox.googleapis.com:443"
+endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
-gcs_bucket = "gs://products_catalog/"
+gcs_bucket = "gs://products_catalog"
 gcs_errors_bucket = "gs://products_catalog/error"
-gcs_products_object = "products_for_search.json"
+#gcs_products_object = "products_for_search.json"
 # TO CHECK ERROR HANDLING USE THE JSON WITH INVALID PRODUCT
-# gcs_products_object = "invalid_products_for_import.json"
-
+gcs_products_object = "products_for_import_some_invalid.json"
 
 # [START product_client]
 def get_product_service_client():
@@ -41,7 +40,7 @@ def get_product_service_client():
 # [START get_import_products_gcs_request]
 def get_import_products_gcs_request(gcs_object_name: str):
     # TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE:
-    # default_catalog = "invalid catalog name"
+    default_catalog = "invalid_catalog_name"
     gcs_source = GcsSource()
     gcs_source.input_uris = ["{0}/{1}".format(gcs_bucket, gcs_object_name)]
 
@@ -69,6 +68,7 @@ def import_products_from_gcs():
     import_gcs_request = get_import_products_gcs_request(gcs_products_object)
     gcs_operation = get_product_service_client().import_products(import_gcs_request)
 
+    print("---the operation was started:----")
     print(gcs_operation.operation.name)
 
     while not gcs_operation.done():
@@ -76,6 +76,13 @@ def import_products_from_gcs():
         time.sleep(5)
 
     print("---import products operation is done---")
+    print("---number of successfully imported products---")
+    print(gcs_operation.metadata.success_count)
+    print("---number of failures during the importing---")
+    print(gcs_operation.metadata.failure_count)
+    print("---operation result:---")
+    print(gcs_operation.result())
+
     # [END import_products_from_gcs]
 
 

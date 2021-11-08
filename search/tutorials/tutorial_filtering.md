@@ -50,7 +50,7 @@ Function "ANY" returns true if the field contains any of the literals.
 
 The example of such expression is 
 
-```'(colorFamily: ANY("black"))'``` 
+```'(colorFamily: ANY("Black"))'``` 
 
 To see the whole request with the filtering applied, open **search_with_filtering.py**
 
@@ -77,7 +77,7 @@ filter = '(brands: ANY("YouTube"))'
 
 Or
 ```
-filter = '(colorFamily: ANY("White","Grey"))'
+filter = '(colorFamily: ANY("White","Gray"))'
 ```
 
 Please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter) to see the complete list of the text fields you can apply the filters to.

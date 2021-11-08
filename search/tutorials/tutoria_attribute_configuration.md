@@ -41,11 +41,10 @@ pip install google-cloud-retail
 There are several products in the catalog with the attribute "eco-friendly".  The attribute field **```indexable```** is set to **false**.
 
 ```json
- "eco-friendly":{
+ "ecofriendly":{
       "indexable":"false",
       "searchable":"false",
       "text":[
-         "Low-impact fabrics",
          "recycled fabrics",
          "recycled packaging",
          "plastic-free packaging",
@@ -67,8 +66,11 @@ python search/search_attribute_config.py
 ```
 Check the search response printed out to the Terminal.
 
-The attribute was not indexed, so the filter was not applied to the search results. In a response, you can see the unfiltered list of products.
+The attribute was not indexed, so the filter was not applied to this field and the following error message is expected:
 
+```bash
+google.api_core.exceptions.InvalidArgument: 400 Invalid filter syntax '(attributes.ecofriendly: ANY("recycled packaging"))'. Parsing filter failed with error: Unsupported field "attributes.ecofriendly" on ":" operator..
+```
 ## Make the product attribute indexable
 
 To make the attribute indexable, set the "indexable" field to "true". 
@@ -97,13 +99,13 @@ As you run the search by indexable field, the filter applies to the search respo
 
 ## Search for non-searchable attribute value
 
-Next, let's request the Retail Search using the **"Low-impact fabrics"** query. This is one of the values of the "eco-friendly" attribute, which is still non-searchable.
+Next, let's request the Retail Search using the **"ethically made sweater"** query. This is one of the values of the "eco-friendly" attribute, which is still non-searchable.
 
 The search response should be empty because the Retail Search does not take this attribute into account while performing the search.
 
 Open the **search/search_attribute_config.py** and change the value in the **```search_request.query```** field:
 ```py
- search_request.query = "Low-impact fabrics"
+ search_request.query = "ethically made sweater"
 ```
 
 Comment out the line ```search_request.filter = '(attributes.eco-friendly: ANY("recycled packaging"))'``` to avoid the narrowing search results down. 
@@ -131,7 +133,7 @@ The changes will take effect after the Retail Search will index them, it might t
 
 ## Search for searchable attribute value
 
-Call the Retail Search  with the **"Low-impact fabrics"** query again.
+Call the Retail Search  with the **"ethically made sweater"** query again.
 
 This time the service should return the matched product. 
 

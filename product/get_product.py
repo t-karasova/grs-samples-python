@@ -22,8 +22,8 @@ from setup_cleanup import create_product, delete_product
 
 # TODO Define the project number here:
 
-project_number = " "
-endpoint = "retail.googleapis.com:443"
+project_number = ""
+endpoint = "retail.googleapis.com"
 product_id = ''.join(random.sample(string.ascii_lowercase, 8))
 
 

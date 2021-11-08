@@ -72,19 +72,17 @@ Once you have called the import products method, the **import operation** has st
 
 Importing may take some time depending on the size of product set in your inline source.
 
-The operation is completed when the **```operation.done()```** ifield s set to true. C
+The operation is completed when the **```operation.done()```** field is set to true.
 
-heck the result, one of the following fields should be present:
+Check the result, one of the following fields should be present:
  - **```error```**, if the operation failed.
- - **```response```**, if the operation was successful.
+ - **```result```**, if the operation was successful.
 
-You have imported valid product objects to the catalog, so the operation should be successful, and the operation object should contain a **```response```** field. 
+You have imported valid product objects to the catalog.
 
-TODO[PUT OPERATION OBJECT HERE] 
+Check the ```import_operation.metadata.success_count``` field to get the total number of the successfully imported products.
 
-Check the **```response```** field in the operation object returned to and printed in the Terminal. 
-
-The **```error_samples[]```** field should be empty.
+The number of failures during the product import is returned in ```import_operation.metadata.failure_count``` field.
 
 ## Error handling
 
@@ -98,23 +96,26 @@ Now, run the code sample and wait till the operation is completed. Check the ope
 
 ## Error hanfling output analysis
 
-The operation is successfully completed, so you can find a **```response```** field. Otherwise, there would be an **```error```** field instead.
+The operation is successfully completed, so you can find a **```result```** field. Otherwise, there would be an **```error```** field instead.
 
-Check the error message in the **```response.error_samples```** list. It should state the invalid product object and its field which caused a problem. In our case, the message should be:
+Check the error message in the **```result.error_samples```** list. It should state the invalid product object and its field which caused a problem. In our case, the message should be:
 
-//TODO
-//[PUT ERROR MESSAGE HERE]
+```
+error_samples {
+  code: 3
+  message: "Field \"inputConfig.productInlineSource.products.title\" is a required field, but no value is found."
+}
+```
 
 Next, let's send invalid import request to make the operation fail. 
 
 In the code sample, find the **```get_import_products_inline_request```**  method, and add there a local variable ```default_catalog``` with some invalid catalog name.
 
-Run the code once again and check the operation object. Now, it contains the **```error```** field instead of **```response```**. 
+Run the code once again and check the error message, it should be as follows:
 
-The error message should be as follows:
-
-//TODO
-//[PUT ERROR MESSAGE HERE]
+```
+google.api_core.exceptions.InvalidArgument: 400 Request contains an invalid argument.
+```
 
 ## Congratulations
 

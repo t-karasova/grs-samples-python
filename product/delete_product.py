@@ -21,8 +21,8 @@ from google.cloud.retail import ProductServiceClient, DeleteProductRequest
 from setup_cleanup import create_product
 
 # TODO Define the project number here:
-project_number = " "
-endpoint = "retail.googleapis.com:443"
+project_number = ""
+endpoint = "retail.googleapis.com"
 
 default_branch_name = "projects/" + project_number \
                       + "/locations/global/catalogs/default_catalog/branches/default_branch"

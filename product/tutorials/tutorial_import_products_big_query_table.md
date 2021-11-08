@@ -52,7 +52,7 @@ Before you import products to your catalog, you need to upload the data to the B
 
  - Create an [empty BigQuery table](https://cloud.google.com/bigquery/docs/tables#creating_an_empty_table_with_a_schema_definition)
   using the Retail schema, and create products in it using SQL.
- - Create a BigQuery table using the prepared JSON file with products set in the GCS bucket. You can define the Retail schema or
+ - Create a BigQuery table using the prepared JSON file with products. You can define the Retail schema or
   use an autodetect option.
 
 Then, import your data to the Retail API.
@@ -76,58 +76,75 @@ python product/import_products_big_query_table.py
 
 Once you have called the import products method, the **import operation** has started.
 
-Importing may take some time depending on the size of product set in your BigQuery table.
+Importing may take some time depending on the size your BigQuery table.
 
-The operation is completed when the field **```operation.done()```** is set to true. Check the result, one of the following fields should be present:
- - **```error```** if the operation failed.
- - **```response```** if the operation was successful.
+The operation is completed when the field **```operation.done()```** is set to true. 
 
-You have imported valid product objects to the catalog. The operation should be successful, and the operation object should contain a **```response```** field. 
+Check the result, one of the following fields should be present:
+ - **```error```**, if the operation failed.
+ - **```result```**, if the operation was successful.
 
-TODO[PUT OPERATION OBJECT HERE]
+You have imported valid product objects to the catalog.
 
-Check the **```response```** field in the operation object returned to and printed in the Terminal. 
+Check the ```big_query_operation.metadata.success_count``` field to get the total number of the successfully imported products - expected number is 316.
 
-The **```error_samples[]```** field should be empty.
+The number of failures during the product import is returned in ```big_query_operation.metadata.failure_count``` field - expected number is 0.
 
+The operation is successful, and the operation object contains a **```result```** field.
+Check it printed out in a Terminal, it should be like following: 
+```
+errors_config {
+  gcs_prefix: "gs://945579214386_us_import_product/errors7399332380794639317"
+}
+```
 
-## Error handling
+## Errors appeared during the importing
 
 Now, let's try to import a couple of invalid product objects and check the error message in the operation response. 
 
-Note that in this case the operation itself is considered successful.
-
-The title field is required. If you remove it, you will get invalid product object. There is a **```products_for_import_some_invalid```** table in the BigQuery dataset that contains such invalid products.
+The title field is required, so if you remove it, you get the invalid product object. 
+The other example of invalid product is a product with some incorrect value of product.availability field.
+There is a **```products_for_import_invalid```** table in the BigQuery dataset that contains such invalid products.
 
 Let's use it for importing to get an error message.
 
-Go to the code sample and assign the ```gcs_products_object```value to the file name:
+Go to the code sample and assign the ```table_id```value to the table with invalid products:
+
 ```py
-table_id = "products_for_import_some_invalid"
+table_id = "products_for_import_invalid"
+```
+Now, run the code sample and wait till the operation is completed. 
+
+Next, check the operation printed out to the Terminal.
+
+## Errors appeared during the importing. Output analysis
+
+If the operation is completed successfully, you can find a **```result```** field. Otherwise, there would be an **```error```** field instead.
+
+In this case the operation considered as successful, and the ```big_query_operation.metadata.success_count``` field contains the number of the successfully imported products, which is "2".
+
+There are two invalid products in the input JSON file, and the number of failures during the product import in the ```big_query_operation.metadata.failure_count``` field is also "2".
+
+The ```operation.result``` field points to the errors bucket where you can find a json file with all the importing errors.
+
+The errors are the following: 
+
+```json
+{"code":3,"message":"Invalid value at 'availability' (type.googleapis.com/google.cloud.retail.v2main.Product.Availability): \"INVALID_VALUE\"","details":[{"@type":"type.googleapis.com/google.protobuf.Struct","value":{"line_number":1}}]}
+{"code":3,"message":"The string in \"product.title\" is a required field, but no value is found.","details":[{"@type":"type.googleapis.com/google.protobuf.Struct","value":{"line_number":4}}]}
 ```
 
-Now, run the code sample and wait till the operation is completed. Check the operation result printed out to the Terminal.
-
-The operation is completed successfully, so you can find a **```response```** field. Otherwise, there would be an **```error```** field instead.
-
-## Error handling output analysis
-
-Check the error message in the **```response.error_samples```** list. It should point to the invalid product object and its field that has caused a problem. 
-In our case, the message should look like this:
-
-//TODO
-//[PUT ERROR MESSAGE HERE]
+## Errors appeared due to invalid request
 
 Next, let's send invalid import request to make the operation fail. 
 
 In the code sample, find the **```get_import_products_big_query_request()```** method, and add there a local variable ```default_catalog``` with some invalid catalog name.
 
-Now, run the code again and check the operation object. It contains the **```error```** field instead of **```response```**. 
+Now, run the code again and check the error message, it should be like following:
 
-The error message should be as follows:
-
-//TODO
-//[PUT ERROR MESSAGE HERE]
+```
+google.api_core.exceptions.InvalidArgument: 400 Request contains an invalid argument.
+```
 
 ## Congratulations
 
