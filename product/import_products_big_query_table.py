@@ -16,7 +16,6 @@
 import time
 
 from google.api_core.client_options import ClientOptions
-from google.api_core.operations_v1.operations_client import OperationsClient
 from google.cloud.retail import BigQuerySource, ProductInputConfig, ProductServiceClient, \
     ImportProductsRequest
 

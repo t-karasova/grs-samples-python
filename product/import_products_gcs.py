@@ -17,7 +17,7 @@ import time
 
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import GcsSource, ProductInputConfig, ProductServiceClient, ImportErrorsConfig, \
-    ImportProductsRequest, ImportProductsResponse
+    ImportProductsRequest
 
 # TODO Define the project number here:
 project_number = ""
