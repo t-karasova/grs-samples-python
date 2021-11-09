@@ -21,7 +21,7 @@ from google.cloud.retail_v2.types import product
 project_number = os.getenv('PROJECT_NUMBER')
 
 default_branch_name = "projects/" + project_number + "/locations/global/catalogs/default_catalog/branches/default_branch"
-endpoint = "retail.googleapis.com"
+endpoint = "retail.googleapis.com:443"
 
 
 def get_product_service_client():
