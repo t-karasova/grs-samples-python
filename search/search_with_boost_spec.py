@@ -56,7 +56,7 @@ def get_search_request(query: str, condition: str, boost_strength: float):
 def search():
     # TRY DIFFERENT BOOST CONDITIONS HERE:
     condition = '(colorFamily: ANY("blue"))'
-    boost = 1.0
+    boost = 0.0
 
     search_request = get_search_request("Tee", condition, boost)
     search_response = get_search_service_client().search(search_request)
