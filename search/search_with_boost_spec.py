@@ -12,13 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import SearchServiceClient, SearchRequest
 
 # TODO Define the project number here:
 
-project_number = ""
+project_number = os.getenv('PROJECT_ID')
 
 
 # [START get_search_service_client]
@@ -54,7 +55,7 @@ def get_search_request(query: str, condition: str, boost_strength: float):
 
 # [START search_product_with_boost_spec]
 def search():
-    # TRY DIFFERENT BOOST CONDITIONS HERE:
+    # Try different conditions here:
     condition = '(colorFamily: ANY("Blue"))'
     boost = 0.0
 

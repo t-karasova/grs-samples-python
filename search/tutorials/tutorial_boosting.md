@@ -1,4 +1,4 @@
-# **Boosting Tutorial**
+# **Search With Boosting Tutorial**
 
 ## Let's get started
 
@@ -11,30 +11,6 @@ In this tutorial you will learn some examples of product boosting.
 
 
 **Time to complete**: About 4 minutes
-
-## Before you begin
-
-To run Python code samples from this tutorial, you need to set up your virtual environment.
-
-Run the following commands in a terminal:
-```bash
-pip install virtualenv
-```
-```bash
-virtualenv <your-env>
-```
-```bash
-source <your-env>/bin/activate
-```
-Next, install Google packages:
-```bash
-pip install google
-```
-```bash
-pip install google-cloud-retail
-```
-
-**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
 
 ## Boosting by one criterion. Condition and filtering expression 
@@ -60,16 +36,17 @@ or read about it in the [Retail API documentation](https://cloud.google.com/reta
 
 The field **```boost```** defines the strength of the condition boost, which should be in the range of -1 to 1. Negative boost means demotion.
 
-Now, open **search_with_boost_spec.py**
+Now, open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python-1/search/search_with_boost_spec.py" regex="boost.*0">search_with_boost_spec.py</walkthrough-editor-select-regex>
+
 
 In the initial request, the boost strength is set to zero: ```boost = 0.0```, so the boosting will **not affect** the order of the products in the response.
 
 
 ## Boosting by one criterion. Boost results
 
-Run the sample in a terminal with the following command:
+Run the sample in a <walkthrough-editor-spotlight spotlightId="menu-terminal-new-terminal">terminal</walkthrough-editor-spotlight> with the following command:
 ```bash
-python search_with_boost_spec.py
+python cloudshell_open/grs-samples-python/search/search_with_boost_spec.py
 ```
 Check the response to see the original order of products depending on their relevance to the query phrase.
 
@@ -93,11 +70,7 @@ You can combine up to 10 boost specifications in one search request. In this way
 
 Feel free to test product boosting yourself right now in the Cloud Shell environment.
 
-To do that, find the comment: 
-
-"# TRY DIFFERENT BOOST CONDITIONS HERE:"
-
-and replace the condition expression with something like this:
+Replace the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python-1/search/search_with_boost_spec.py" regex="condition = '.*'">condition</walkthrough-editor-select-regex> expression with something like this:
 
 ```
 condition = '(categories: ANY("Office"))'
@@ -108,7 +81,7 @@ Or
 condition = '(attributes.material: ANY("Cotton", "Polyester")) AND (brands: ANY("Google"))'
 ```
 
-At the same time, you can test the boost strength by setting any value from -1 to 1.
+At the same time, you can test the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python-1/search/search_with_boost_spec.py" regex="boost = /D.*">boost strength</walkthrough-editor-select-regex> by setting any value from -1 to 1.
 
 ## Boosting. Error handling
 
@@ -121,20 +94,25 @@ To check the list of **text and numeric fields that support boosting**, use the 
 
 If you try to boost the search results and set a condition in the field which is **not supposed for boosting** (for example, the "name" field), you will get an error message.
 
-Change the variable "condition" value to the following:
+Change the variable <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python-1/search/search_with_boost_spec.py" regex="condition = '.*'">condition</walkthrough-editor-select-regex> value to the following:
 ``` condition = '(name: ANY("some_random"))'```
 
 Run the code once again:
 ```bash
-python search_with_boost_spec.py
+python cloudshell_open/grs-samples-python/search/search_with_boost_spec.py
 ```
 
 You should see the following error message:
 
 ```google.api_core.exceptions.InvalidArgument: 400 Invalid filter syntax '(name: ANY("some_random"))'. Parsing filter failed with error: Unsupported field "name" on ":" operator.```
 
-## Success 
+## Congratulations
+
+<walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
 You have completed the tutorial! We **encourage** you to **test the boosting by yourself** and try different combinations of various filter expressions.
+
+<walkthrough-tutorial-link id="tutorial_query_expansion" title="What's next?  Search with query expansion tutorial" keepPrevious=true>
+Learn how to enable the query expansion feature using Retail API</walkthrough-tutorial-link>
 
 **Thank you for completing this tutorial!**
