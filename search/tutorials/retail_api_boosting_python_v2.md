@@ -12,6 +12,30 @@ In this tutorial you will learn some examples of product boosting.
 
 **Time to complete**: About 4 minutes
 
+## Before you begin
+
+To run Python code samples from this tutorial, you need to set up your virtual environment.
+
+Run the following commands in a terminal:
+```bash
+pip install virtualenv
+```
+```bash
+virtualenv <your-env>
+```
+```bash
+source <your-env>/bin/activate
+```
+Next, install Google packages:
+```bash
+pip install google
+```
+```bash
+pip install google-cloud-retail
+```
+
+**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
+
 
 ## Boosting by one criterion. Condition and filtering expression 
 
