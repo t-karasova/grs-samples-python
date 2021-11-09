@@ -44,7 +44,7 @@ In the initial request, the boost strength is set to zero: ```boost = 0.0```, so
 
 ## Boosting by one criterion. Boost results
 
-Run the sample in a <walkthrough-editor-spotlight spotlightId="menu-terminal-new-terminal">terminal</walkthrough-editor-spotlight> with the following command:
+Run the sample in a Terminal with the following command:
 ```bash
 python cloudshell_open/grs-samples-python/search/search_with_boost_spec.py
 ```
