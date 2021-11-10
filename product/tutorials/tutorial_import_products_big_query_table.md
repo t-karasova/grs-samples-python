@@ -76,7 +76,7 @@ python product/import_products_big_query_table.py
 
 Once you have called the import products method, the **import operation** has started.
 
-Importing may take some time depending on the size your BigQuery table.
+Importing may take some time depending on the size of your BigQuery table.
 
 The operation is completed when the field **```operation.done()```** is set to true. 
 
@@ -84,26 +84,26 @@ Check the result, one of the following fields should be present:
  - **```error```**, if the operation failed.
  - **```result```**, if the operation was successful.
 
-You have imported valid product objects to the catalog.
+You have imported valid product objects into the catalog.
 
-Check the ```big_query_operation.metadata.success_count``` field to get the total number of the successfully imported products - expected number is 316.
+Check the ```big_query_operation.metadata.success_count``` field to get the total number of the successfully imported products. Their expected number is 316.
 
-The number of failures during the product import is returned in ```big_query_operation.metadata.failure_count``` field - expected number is 0.
+The number of failures during the product import is returned in ```big_query_operation.metadata.failure_count``` field. Their expected number is 0.
 
 The operation is successful, and the operation object contains a **```result```** field.
-Check it printed out in a Terminal, it should be like following: 
+Check it printed out in a Terminal. It should look like the next example: 
 ```
 errors_config {
   gcs_prefix: "gs://945579214386_us_import_product/errors7399332380794639317"
 }
 ```
 
-## Errors appeared during the importing
+## Errors appeared during product importing
 
 Now, let's try to import a couple of invalid product objects and check the error message in the operation response. 
 
 The title field is required, so if you remove it, you get the invalid product object. 
-The other example of invalid product is a product with some incorrect value of product.availability field.
+Another example of an invalid product is a product with an incorrect value of the ```product.availability``` field.
 There is a **```products_for_import_invalid```** table in the BigQuery dataset that contains such invalid products.
 
 Let's use it for importing to get an error message.
@@ -121,9 +121,9 @@ Next, check the operation printed out to the Terminal.
 
 If the operation is completed successfully, you can find a **```result```** field. Otherwise, there would be an **```error```** field instead.
 
-In this case the operation considered as successful, and the ```big_query_operation.metadata.success_count``` field contains the number of the successfully imported products, which is "2".
+In this case, the operation is considered as successful, and the ```big_query_operation.metadata.success_count``` field contains the number of the successfully imported products, which is "2".
 
-There are two invalid products in the input JSON file, and the number of failures during the product import in the ```big_query_operation.metadata.failure_count``` field is also "2".
+There are two invalid products in the BigQuery table, and the number of failures during the product import in the ```big_query_operation.metadata.failure_count``` field is also "2".
 
 The ```operation.result``` field points to the errors bucket where you can find a json file with all the importing errors.
 
@@ -140,7 +140,7 @@ Next, let's send invalid import request to make the operation fail.
 
 In the code sample, find the **```get_import_products_big_query_request()```** method, and add there a local variable ```default_catalog``` with some invalid catalog name.
 
-Now, run the code again and check the error message, it should be like following:
+Now, run the code again and check the error message, it should look like this:
 
 ```
 google.api_core.exceptions.InvalidArgument: 400 Request contains an invalid argument.

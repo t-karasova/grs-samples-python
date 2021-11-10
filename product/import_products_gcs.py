@@ -40,7 +40,7 @@ def get_product_service_client():
 # [START get_import_products_gcs_request]
 def get_import_products_gcs_request(gcs_object_name: str):
     # TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE:
-    default_catalog = "invalid_catalog_name"
+    #default_catalog = "invalid_catalog_name"
     gcs_source = GcsSource()
     gcs_source.input_uris = ["{0}/{1}".format(gcs_bucket, gcs_object_name)]
 

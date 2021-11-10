@@ -68,7 +68,7 @@ Check the search response printed out to the Terminal.
 
 The attribute was not indexed, so the filter was not applied to this field and the following error message is expected:
 
-```bash
+```
 google.api_core.exceptions.InvalidArgument: 400 Invalid filter syntax '(attributes.ecofriendly: ANY("recycled packaging"))'. Parsing filter failed with error: Unsupported field "attributes.ecofriendly" on ":" operator..
 ```
 ## Make the product attribute indexable

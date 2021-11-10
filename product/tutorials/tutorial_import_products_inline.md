@@ -78,7 +78,7 @@ Check the result, one of the following fields should be present:
  - **```error```**, if the operation failed.
  - **```result```**, if the operation was successful.
 
-You have imported valid product objects to the catalog.
+You have imported valid product objects into the catalog.
 
 Check the ```import_operation.metadata.success_count``` field to get the total number of the successfully imported products.
 
@@ -111,7 +111,7 @@ Next, let's send invalid import request to make the operation fail.
 
 In the code sample, find the **```get_import_products_inline_request```**  method, and add there a local variable ```default_catalog``` with some invalid catalog name.
 
-Run the code once again and check the error message, it should be as follows:
+Run the code once again and check the error message, it should look like this:
 
 ```
 google.api_core.exceptions.InvalidArgument: 400 Request contains an invalid argument.

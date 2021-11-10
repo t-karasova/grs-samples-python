@@ -70,14 +70,14 @@ Check the result, one of the following fields should be present:
  - **```error```**, if the operation failed.
  - **```result```**, if the operation was successful.
 
-You have imported valid product objects to the catalog.
+You have imported valid product objects into the catalog.
 
 Check the ```gcs_operation.metadata.success_count``` field to get the total number of the successfully imported products.
 
-The number of failures during the product import is returned in ```gcs_operation.metadata.failure_count``` field.
+The number of failures during the product import is returned to the ```gcs_operation.metadata.failure_count``` field.
 
 The operation is successful, and the operation object contains a **```result```** field.
-Check it printed out in a Terminal, it should be like following: 
+Check it printed out in a Terminal. It should look like this: 
 
 ```
 errors_config {
@@ -90,8 +90,8 @@ errors_config {
 Now, let's try to import a few invalid product objects and check the error message in the operation response. Note that in this case the operation itself is considered successful.
 
 The title field is required, so if you remove it, you get the invalid product object. 
-The other example of invalid product is a product with some incorrect value of product.availability field.
-There is an **```products_for_import_some_invalid.json```** in the Cloud Storage bucket containing such an invalid products.
+Another example of an invalid product is a product with an incorrect value of the ```product.availability``` field.
+There is a **```products_for_import_some_invalid.json```** file in the Cloud Storage bucket containing such an invalid products.
 
 Let's use it for import to get an error message.
 
@@ -103,11 +103,11 @@ Now, run the code sample and wait till the operation is completed.
 
 Next, check the operation printed out to the Terminal.
 
-## Errors appeared during the importing. Output analysis
+## Errors appeared during importing. Output analysis
 
 If the operation is completed successfully, you can find a **```result```** field. Otherwise, there would be an **```error```** field instead.
 
-In this case the operation considered as successful, and the ```gcs_operation.metadata.success_count``` field contains the number of the successfully imported products, which is "2".
+In this case, the operation is considered as successful, and the ```gcs_operation.metadata.success_count``` field contains the number of the successfully imported products, which is "2".
 
 There are two invalid products in the input JSON file, and the number of failures during the product import in the ```gcs_operation.metadata.failure_count``` field is also "2".
 
@@ -126,7 +126,7 @@ Next, let's send invalid import request to make the operation fail.
 
 In the code sample, find the **```get_import_products_gcs_request()```** method, and add there a local variable ```default_catalog``` with some invalid catalog name.
 
-Now, run the code again and check the error message, it should be like following:
+Now, run the code again and check the error message. It should look like this:
 
 ```
 google.api_core.exceptions.InvalidArgument: 400 Request contains an invalid argument.
