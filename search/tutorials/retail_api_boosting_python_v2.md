@@ -36,7 +36,7 @@ or read about it in the [Retail API documentation](https://cloud.google.com/reta
 
 The field **```boost```** defines the strength of the condition boost, which should be in the range of -1 to 1. Negative boost means demotion.
 
-Now, open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python-1/search/search_with_boost_spec.py" regex="boost.*0">search_with_boost_spec.py</walkthrough-editor-select-regex>
+Now, open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_boost_spec.py" regex="boost.*0">search_with_boost_spec.py</walkthrough-editor-select-regex>
 
 
 In the initial request, the boost strength is set to zero: ```boost = 0.0```, so the boosting will **not affect** the order of the products in the response.
@@ -70,7 +70,7 @@ You can combine up to 10 boost specifications in one search request. In this way
 
 Feel free to test product boosting yourself right now in the Cloud Shell environment.
 
-Replace the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python-1/search/search_with_boost_spec.py" regex="condition = '.*'">condition</walkthrough-editor-select-regex> expression with something like this:
+Replace the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_boost_spec.py" regex="condition = '.*'">condition</walkthrough-editor-select-regex> expression with something like this:
 
 ```
 condition = '(categories: ANY("Office"))'
@@ -81,7 +81,7 @@ Or
 condition = '(attributes.material: ANY("Cotton", "Polyester")) AND (brands: ANY("Google"))'
 ```
 
-At the same time, you can test the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python-1/search/search_with_boost_spec.py" regex="boost = /D.*">boost strength</walkthrough-editor-select-regex> by setting any value from -1 to 1.
+At the same time, you can test the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_boost_spec.py" regex="boost = /D.*">boost strength</walkthrough-editor-select-regex> by setting any value from -1 to 1.
 
 ## Boosting. Error handling
 
@@ -94,7 +94,7 @@ To check the list of **text and numeric fields that support boosting**, use the 
 
 If you try to boost the search results and set a condition in the field which is **not supposed for boosting** (for example, the "name" field), you will get an error message.
 
-Change the variable <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python-1/search/search_with_boost_spec.py" regex="condition = '.*'">condition</walkthrough-editor-select-regex> value to the following:
+Change the variable <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_boost_spec.py" regex="condition = '.*'">condition</walkthrough-editor-select-regex> value to the following:
 ``` condition = '(name: ANY("some_random"))'```
 
 Run the code once again:
