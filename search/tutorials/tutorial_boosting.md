@@ -12,6 +12,30 @@ In this tutorial you will learn some examples of product boosting.
 
 **Time to complete**: About 4 minutes
 
+## Before you begin
+
+To run Python code samples from this tutorial, you need to set up your virtual environment.
+
+Run the following commands in a terminal:
+```bash
+pip install virtualenv
+```
+```bash
+virtualenv <your-env>
+```
+```bash
+source <your-env>/bin/activate
+```
+Next, install Google packages:
+```bash
+pip install google
+```
+```bash
+pip install google-cloud-retail
+```
+
+**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
+
 
 ## Boosting by one criterion. Condition and filtering expression 
 
@@ -36,8 +60,7 @@ or read about it in the [Retail API documentation](https://cloud.google.com/reta
 
 The field **```boost```** defines the strength of the condition boost, which should be in the range of -1 to 1. Negative boost means demotion.
 
-Now, open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python-1/search/search_with_boost_spec.py" regex="boost.*0">search_with_boost_spec.py</walkthrough-editor-select-regex>
-
+Now, open **search_with_boost_spec.py**
 
 In the initial request, the boost strength is set to zero: ```boost = 0.0```, so the boosting will **not affect** the order of the products in the response.
 
