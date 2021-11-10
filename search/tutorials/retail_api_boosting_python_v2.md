@@ -112,7 +112,25 @@ You should see the following error message:
 
 You have completed the tutorial! We **encourage** you to **test the boosting by yourself** and try different combinations of various filter expressions.
 
-<walkthrough-tutorial-link id="tutorial_query_expansion" title="What's next?  Search with query expansion tutorial" keepPrevious=true>
-Learn how to enable the query expansion feature using Retail API</walkthrough-tutorial-link>
+### Wat's next?
+
+<walkthrough-tutorial-card id="retail_api_querying_python_v2" title="Search simple query tutorial" keepPrevious=true>
+Learn how to search for products in a catalog using the Retail API</walkthrough-tutorial-card>
+
+<walkthrough-tutorial-card id="retail_api_pagination_python_v2" title="Search with pagination tutorial" keepPrevious=true>
+Learn how to navigate the search results using Retail API</walkthrough-tutorial-card>
+
+<walkthrough-tutorial-card id="retail_api_filtering_python_v2" title="Search with filtering tutorial" keepPrevious=true>
+Learn how to filter search results using the Retail API</walkthrough-tutorial-card>
+
+<walkthrough-tutorial-card id="retail_api_ordering_python_v2" title="Search with ordering tutorial" keepPrevious=true>
+Learn how to order search results using the Retail API</walkthrough-tutorial-card>
+
+<walkthrough-tutorial-card id="retail_api_boosting_python_v2" title="Search with boosting tutorial" keepPrevious=true>
+Learn how to prioritize products in the search response using the Retail API</walkthrough-tutorial-card>
+
+<walkthrough-tutorial-card id="retail_api_query_expansion_python_v2" title="Search with query expansion tutorial" keepPrevious=true>
+Learn how to enable the query expansion feature using the Retail API</walkthrough-tutorial-card>
+
 
 **Thank you for completing this tutorial!**
