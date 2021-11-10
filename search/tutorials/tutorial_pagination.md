@@ -67,7 +67,7 @@ After you have received a response at the previous step, you can request the nex
 You need to receive the ```next_page_token```, set it to a request field ```page_token```, and call the Search service again.
 To do it, find the comment "#PASTE CALL WITH NEXT PAGE TOKEN HERE:" and paste this piece of code:
 ```
-    next_page_token = search_response_first_page.page_token
+    next_page_token = search_response_first_page.next_page_token
     search_request_next_page = get_search_request("Hoodie", page_size, offset, next_page_token)
     search_response_next_page = get_search_service_client().search(search_request_next_page)
 

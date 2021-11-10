@@ -50,10 +50,10 @@ The boosting specification looks like this:
 
 To set the **```condition```**, you should use a filtering expression like the one below:
 
-```'(colorFamily: ANY("blue"))'``` 
+```'(colorFamily: ANY("Blue"))'``` 
 
 or  
-```'(rating: IN(4.0, 5.0))'```
+```'(price: IN(15.0, 30.0))'```
 
 You can learn how to use filters in the [Filtering Tutorial](tutorial_filtering.md) 
 or read about it in the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter) 

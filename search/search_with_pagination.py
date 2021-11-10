@@ -53,7 +53,7 @@ def search():
     offset = 0
     page_token = ""
 
-    search_request_first_page = get_search_request("nest_maxi", page_size, offset, page_token)
+    search_request_first_page = get_search_request("Hoodie", page_size, offset, page_token)
     search_response_first_page = get_search_service_client().search(search_request_first_page)
 
     print("---first page search results---")

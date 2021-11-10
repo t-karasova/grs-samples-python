@@ -14,6 +14,8 @@
 
 
 import time
+import random
+import string
 
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import ProductInlineSource, ProductInputConfig, \
@@ -24,7 +26,7 @@ from google.protobuf.field_mask_pb2 import FieldMask
 # TODO Define the project number here:
 project_number = ""
 
-endpoint = "test-retail.sandbox.googleapis.com:443"
+endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
 
 
@@ -52,8 +54,9 @@ def get_products():
 
     field_mask1 = FieldMask(paths=["title", "categories", "price_info", "color_info"])
 
-    # TO CHECK ERROR HANDLING COMMENT OUT THE PRODUCT NAME HERE:
+    # TO CHECK ERROR HANDLING COMMENT OUT THE PRODUCT TITLE HERE:
     product1.title = "#IamRemarkable Pen"
+    product1.id = ''.join(random.sample(string.ascii_lowercase, 8))
     product1.categories = ["Office"]
     product1.uri = "https://shop.googlemerchandisestore.com/Google+Redesign/Office/IamRemarkable+Pen"
     product1.brands = ["#IamRemarkable"]
@@ -79,6 +82,7 @@ def get_products():
     field_mask2 = FieldMask(paths=["title", "categories", "price_info", "color_info"])
 
     product2.title = "Android Embroidered Crewneck Sweater"
+    product2.id = ''.join(random.sample(string.ascii_lowercase, 8))
     product2.categories = ["Apparel"]
     product2.uri = "https://shop.googlemerchandisestore.com/Google+Redesign/Apparel/Android+Embroidered+Crewneck+Sweater"
     product2.brands = ["Android"]
@@ -103,7 +107,7 @@ def get_product_service_client():
 # [START get_import_products_inline_request]
 def get_import_products_inline_request(products_to_import):
     # TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE:
-    # default_catalog = "invalid catalog name"
+    # default_catalog = "invalid_catalog_name"
     inline_source = ProductInlineSource()
     inline_source.products = products_to_import
 
@@ -126,14 +130,20 @@ def import_products_from_inline_source():
     import_request = get_import_products_inline_request(get_products())
     import_operation = get_product_service_client().import_products(import_request)
 
+    print("---the operation was started:----")
     print(import_operation.operation.name)
 
     while not import_operation.done():
         print("---please wait till operation is done---")
-    time.sleep(5)
+        time.sleep(5)
 
     print("---import products operation is done---")
-    print(import_operation)
+    print("---number of successfully imported products---")
+    print(import_operation.metadata.success_count)
+    print("---number of failures during the importing---")
+    print(import_operation.metadata.failure_count)
+    print("---operation result:---")
+    print(import_operation.result())
     # [START import_products_from_inline_source]
 
 

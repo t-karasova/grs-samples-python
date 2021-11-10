@@ -48,7 +48,7 @@ def get_search_request(query: str, _filter: str, page_size=10):
 # [START search_for_products_with_filter]
 def search():
     # [TRY DIFFERENT FILTER EXPRESSIONS HERE:]
-    filter = '(colorFamily: ANY("black"))'
+    filter = '(colorFamily: ANY("Black"))'
 
     search_request = get_search_request("Tee", filter)
     search_response = get_search_service_client().search(search_request)

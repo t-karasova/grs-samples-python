@@ -19,7 +19,7 @@ from google.cloud.retail_v2 import ProductServiceClient, Product, UpdateProductR
     CustomAttribute
 
 # TODO Define the project number here:
-project_number = " "
+project_number = ""
 product_id = "GGOEAAEC172013"
 
 
@@ -52,16 +52,15 @@ def update_product(product_to_update_id):
 
     # Prepare the product attribute to be updated
     attribute = CustomAttribute()
-    attribute.indexable = "true"
-    attribute.searchable = "false"
-    attribute.text = ["Low-impact fabrics",
-                      "recycled fabrics",
+    attribute.indexable = True
+    attribute.searchable = True
+    attribute.text = ["recycled fabrics",
                       "recycled packaging",
                       "plastic-free packaging",
                       "ethically made"]
 
     # Set the attribute to the original product
-    product_to_update.attributes = attribute
+    product_to_update.attributes = {'ecofriendly' : attribute}
 
     # Update product
     updated_product = get_product_service_client().update_product(
@@ -72,6 +71,7 @@ def update_product(product_to_update_id):
 
     print('---Wait 5 minutes to be sure the catalog has been indexed after the changes---:')
     time.sleep(300)
+    print('---You can proceed with the search requests---')
     # [END update_product]
 
 

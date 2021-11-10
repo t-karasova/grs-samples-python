@@ -22,10 +22,10 @@ from google.cloud.retail_v2.types import product
 from setup_cleanup import create_product, delete_product
 
 # TODO Define the project number here:
-project_number = " "
+project_number = ""
 
 default_branch_name = "projects/" + project_number + "/locations/global/catalogs/default_catalog/branches/default_branch"
-endpoint = "retail.googleapis.com:443"
+endpoint = "retail.googleapis.com"
 generated_product_id = ''.join(random.sample(string.ascii_lowercase, 8))
 
 

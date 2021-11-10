@@ -16,7 +16,6 @@
 import time
 
 from google.api_core.client_options import ClientOptions
-from google.api_core.operations_v1.operations_client import OperationsClient
 from google.cloud.retail import BigQuerySource, ProductInputConfig, ProductServiceClient, \
     ImportProductsRequest
 
@@ -24,12 +23,12 @@ from google.cloud.retail import BigQuerySource, ProductInputConfig, ProductServi
 project_number = ""
 project_id = ""
 
-endpoint = "test-retail.sandbox.googleapis.com:443"
+endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
 dataset_id = "products"
-table_id = "products_for_import"
+#table_id = "import_tutorial"
 # TO CHECK ERROR HANDLING USE THE TABLE OF INVALID PRODUCTS
-#table_id = "products_for_import_some_invalid"
+table_id = "products_for_import_invalid"
 
 # [START product_client]
 def get_product_service_client():
@@ -38,16 +37,10 @@ def get_product_service_client():
     # [END product_client]
 
 
-# [START operation_client]
-def get_operation_service_client():
-    return OperationsClient
-    # [END operation_client]
-
-
 # [START get_import_products_big_query_request]
 def get_import_products_big_query_request(reconciliation_mode):
     # TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE:
-    # default_catalog = "invalid_catalog"
+    # default_catalog = "invalid_catalog_name"
     big_query_source = BigQuerySource()
     big_query_source.project_id = project_id
     big_query_source.dataset_id = dataset_id
@@ -77,16 +70,20 @@ def import_products_from_big_query():
     import_big_query_request = get_import_products_big_query_request(reconciliation_mode)
     big_query_operation = get_product_service_client().import_products(import_big_query_request)
 
+    print("---the operation was started:----")
     print(big_query_operation.operation.name)
 
-    operation_status = get_operation_service_client().get_operation(big_query_operation.operation.name)
-
-    while not operation_status:
+    while not big_query_operation.done():
         print("---please wait till operation is done---")
         time.sleep(5)
 
     print("---import products operation is done---")
-    # [END import_products_from_big_query]
+    print("---number of successfully imported products---")
+    print(big_query_operation.metadata.success_count)
+    print("---number of failures during the importing---")
+    print(big_query_operation.metadata.failure_count)
+    print("---operation result:---")
+    print(big_query_operation.result())
 
 
 import_products_from_big_query()
