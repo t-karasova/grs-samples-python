@@ -112,7 +112,7 @@ You should see the following error message:
 
 You have completed the tutorial! We **encourage** you to **test the boosting by yourself** and try different combinations of various filter expressions.
 
-### Wat's next?
+### What's next?
 
 <walkthrough-tutorial-card id="retail_api_querying_python_v2" title="Search simple query tutorial" keepPrevious=true>
 Learn how to search for products in a catalog using the Retail API</walkthrough-tutorial-card>
