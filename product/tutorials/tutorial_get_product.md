@@ -49,7 +49,7 @@ You can find the ```project_number``` in the **Home/Dashboard/Project Info card*
 
 Set the environment variable with a following command:
 ```bash
-export PROJECT_NUMBER="<YOUR_PROJECT_NUMBER>"
+export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
 ```
 
 ## Get a product
