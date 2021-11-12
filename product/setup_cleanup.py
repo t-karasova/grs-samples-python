@@ -12,25 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail_v2 import Product, ProductServiceClient, CreateProductRequest, DeleteProductRequest, PriceInfo
 from google.cloud.retail_v2.types import product
 
-# TODO Define the project number here:
-project_number = ""
+project_number = os.getenv('PROJECT_NUMBER')
 
 default_branch_name = "projects/" + project_number + "/locations/global/catalogs/default_catalog/branches/default_branch"
 endpoint = "retail.googleapis.com"
 
 
-# [START get_product_service_client]
 def get_product_service_client():
     client_options = ClientOptions(endpoint)
     return ProductServiceClient(client_options=client_options)
-    # [END get_product_service_client]
 
 
-# [START generate_product_to_create]
 def generate_product() -> Product:
     price_info = PriceInfo()
     price_info.price = 30.0
@@ -44,10 +42,8 @@ def generate_product() -> Product:
         price_info=price_info,
         availability="IN_STOCK",
     )
-    # [END generate_product_to_create]
 
 
-# [START create_product]
 def create_product(product_id: str) -> object:
     create_product_request = CreateProductRequest()
     create_product_request.product = generate_product()
@@ -60,15 +56,10 @@ def create_product(product_id: str) -> object:
 
     return created_product
 
-    # [END create_product]
 
-
-# [START delete_created_product]
 def delete_product(product_name: str):
     delete_product_request = DeleteProductRequest()
     delete_product_request.name = product_name
     get_product_service_client().delete_product(delete_product_request)
 
-    print("---product " + product_name +"was deleted:---")
-
-    # [END delete_created_product]
+    print("---product " + product_name + "was deleted:---")

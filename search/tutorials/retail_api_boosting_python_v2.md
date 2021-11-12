@@ -38,9 +38,19 @@ The field **```boost```** defines the strength of the condition boost, which sho
 
 Now, open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_boost_spec.py" regex="boost.*0">search_with_boost_spec.py</walkthrough-editor-select-regex>
 
-
 In the initial request, the boost strength is set to zero: ```boost = 0.0```, so the boosting will **not affect** the order of the products in the response.
 
+
+## Set the PROJECT_NUMBER environment variable
+
+As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
+
+You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+
+Set the environment variable with a following command:
+```bash
+export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
+```
 
 ## Boosting by one criterion. Boost results
 

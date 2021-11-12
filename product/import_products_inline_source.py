@@ -12,10 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-import time
+# [START retail_import_products_from_inline_source]
+# Import products into a catalog from inline source using Retail API
+#
+import os
 import random
 import string
+import time
 
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import ProductInlineSource, ProductInputConfig, \
@@ -23,14 +26,13 @@ from google.cloud.retail import ProductInlineSource, ProductInputConfig, \
     ProductServiceClient, FulfillmentInfo
 from google.protobuf.field_mask_pb2 import FieldMask
 
-# TODO Define the project number here:
-project_number = ""
+project_number = os.getenv('PROJECT_NUMBER')
 
 endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
 
 
-# [START prepare_product_to_import_as_inline_source]
+# prepare product to import as inline source
 def get_products():
     products = []
     product1 = Product()
@@ -94,17 +96,16 @@ def get_products():
     products.append(product1)
     products.append(product2)
     return products
-    # [START prepare_product_to_import_as_inline_source]
+    # [START retail_prepare_product_to_import_as_inline_source]
 
 
-# [START product_client]
+# get product service client
 def get_product_service_client():
     client_options = ClientOptions(endpoint)
     return ProductServiceClient(client_options=client_options)
-    # [END product_client]
 
 
-# [START get_import_products_inline_request]
+# get import products from inline source request
 def get_import_products_inline_request(products_to_import):
     # TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE:
     # default_catalog = "invalid_catalog_name"
@@ -122,10 +123,9 @@ def get_import_products_inline_request(products_to_import):
     print(import_request)
 
     return import_request
-    # [END get_import_products_inline_request]
 
 
-# [START import_products_from_inline_source]
+# call the Retail API to import products
 def import_products_from_inline_source():
     import_request = get_import_products_inline_request(get_products())
     import_operation = get_product_service_client().import_products(import_request)
@@ -144,7 +144,8 @@ def import_products_from_inline_source():
     print(import_operation.metadata.failure_count)
     print("---operation result:---")
     print(import_operation.result())
-    # [START import_products_from_inline_source]
 
 
 import_products_from_inline_source()
+
+# [END retail_import_products_from_inline_source]

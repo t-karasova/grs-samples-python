@@ -12,22 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# [START retail_search_for_products_with_query_expansion_specification]
+# Call Retail API to search for a products in a catalog,
+# enabling the query expansion feature to let the Google Retail Search build an automatic query expansion.
+#
+import os
 
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import SearchServiceClient, SearchRequest
 
-# TODO Define the project number here:
-project_number = ""
+project_number = os.getenv('PROJECT_NUMBER')
 
 
-# [START get_search_service_client]
+# get search service client
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
-    # [END get_search_service_client]
 
 
-# [START get_search_request_with_query_expansion_specification]
+# get search service request:
 def get_search_request(query: str, condition: SearchRequest.QueryExpansionSpec.Condition):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
@@ -44,10 +47,9 @@ def get_search_request(query: str, condition: SearchRequest.QueryExpansionSpec.C
     print(search_request)
 
     return search_request
-    # [END get_search_request_with_query_expansion_specification]
 
 
-# [START search_for_products_with_query_expansion_specification]
+# call the Retail Search:
 def search():
     # TRY DIFFERENT QUERY EXPANSION CONDITION HERE:
     condition = SearchRequest.QueryExpansionSpec.Condition.AUTO
@@ -57,7 +59,7 @@ def search():
 
     print("---query expansion search results---")
     print(search_response)
-    # [END search_for_products_with_query_expansion_specification]
 
 
 search()
+# [END retail_search_for_products_with_query_expansion_specification]

@@ -12,22 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# [START retail_search_for_products_with_page_size]
+# Call Retail API to search for a products in a catalog,
+# limit the number of the products per page and go to the next page using "next_page_token"
+# or jump to chosen page using "offset".
+#
+import os
 
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import SearchServiceClient, SearchRequest
 
-# TODO Define the project number here:
-project_number = ""
+project_number = os.getenv('PROJECT_NUMBER')
 
 
-# [START get_search_service_client]
+# get search service client
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
-    # [END get_search_service_client]
 
 
-# [START get_search_request_with_page_size]
+# get search service request:
 def get_search_request(query: str, page_size: int, offset: int, next_page_token: str):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
@@ -43,10 +47,9 @@ def get_search_request(query: str, page_size: int, offset: int, next_page_token:
     print(search_request)
 
     return search_request
-    # [END get_search_request_with_page_size]
 
 
-# [START search_for_products_with_page_size]
+# call the Retail Search:
 def search():
     # TRY DIFFERENT PAGINATION PARAMETERS HERE:
     page_size = 6
@@ -63,7 +66,6 @@ def search():
 
     # PASTE CALL WITH OFFSET HERE:
 
-    # [END search_for_products_with_page_size]
-
 
 search()
+# [END retail_search_for_products_with_page_size]

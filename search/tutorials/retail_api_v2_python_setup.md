@@ -19,24 +19,25 @@ Estimated time to complete:
 
 To get started, click **Start**.
 
-## Select your project
+## Select your project and enable the Retail API
 
 Google Cloud Platform organizes resources into projects. This allows you to
 collect all the related resources for a single application in one place.
 
-<walkthrough-project-setup billing="true"></walkthrough-project-setup>
+If you don't have a Google Cloud project yet, you can [create New Project](https://pantheon.corp.google.com/projectcreate)
 
-To learn how to enable the Retail API, click **Next**.
+After the project is created, set your PROJECT_ID to a ```project``` variable. 
+Run the following command in Terminal:
+```bash
+gcloud config set project <YOU_PROJECT_ID>
+```
 
-## Enable the Retail API
-
-Enable the Retail API by clicking **Enable APIs**:
-
-<walkthrough-enable-apis apis="retail.googleapis.com">
-    </walkthrough-enable-apis>
+Next, proceed with enabling the Retail API:
+```bash
+gcloud service enable retail
+```
 
 To learn how to set up your application, click **Next**.
-
 
 ## Set up authentication
 
@@ -65,6 +66,17 @@ To learn how to call the Retail API from the Cloud Shell code samples, click **N
 
 **Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
+## Set the PROJECT_NUMBER environment variable
+
+As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
+
+You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+
+Set the environment variable with a following command:
+```bash
+export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
+```
+
 ## Install Google Cloud Retail libraries
 
 To run Python code samples for Retail API tutorial, you need to set up your virtual environment.
@@ -87,15 +99,15 @@ pip install google
 pip install google-cloud-retail
 ```
 
-## Set the PROJECT_ID environment variable
+## Set the PROJECT_NUMBER environment variable
 
 As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
 
-You can find the ```project_id``` in the **Home/Dashboard/Project Info card**.
+You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
 
 Set the environment variable with a following command:
 ```bash
-export PROJECT_ID="<project_id>"
+export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
 ```
 
 

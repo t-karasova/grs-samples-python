@@ -43,6 +43,17 @@ python3 -m pip install google.cloud.retail
 
 **Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
+## Set the PROJECT_NUMBER environment variable
+
+As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
+
+You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+
+Set the environment variable with a following command:
+```bash
+export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
+```
+
 ## Update a product request
 
 To update a product you should send a **UpdateProductRequest** to Retail API with the following required fields specified:
@@ -55,7 +66,7 @@ To update a product you should send a **UpdateProductRequest** to Retail API wit
 
 When you run this code sample, first a product will be created in a catalog, then it will be updated using a prepared request.
 
-The **originaly created product** is the following:
+The **originally created product** is the following:
 ```py
 {
   "name": "projects/<PROJECT_NUMBER>/locations/global/catalogs/default_catalog/branches/default_branch/products/<PRODUCT_ID>",

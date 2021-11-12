@@ -47,6 +47,17 @@ python3 -m pip install google.cloud.retail
 **Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and
 run it.
 
+## Set the PROJECT_NUMBER environment variable
+
+As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
+
+You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+
+Set the environment variable with a following command:
+```bash
+export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
+```
+
 ## Import products from the inline source
 
 The only reconciliation mode available for inline importing is INCREMENTAL. That is, importing automatically creates new products and updates current products. Products already present in a catalog and missing from the imported JSON source will not change.

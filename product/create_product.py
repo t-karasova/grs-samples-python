@@ -12,6 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
+# [START retail_create_product]
+# Create product in a catalog using Retail API
+#
+import os
 import random
 import string
 
@@ -22,23 +27,19 @@ from google.cloud.retail_v2.types import product
 
 from setup_cleanup import delete_product
 
-# TODO Define the project number here:
-project_number = ""
-
+project_number = os.getenv('PROJECT_NUMBER')
 default_branch_name = "projects/" + project_number + "/locations/global/catalogs/default_catalog/branches/default_branch"
 endpoint = "retail.googleapis.com"
-
 generated_product_id = ''.join(random.sample(string.ascii_lowercase, 8))
 
 
-# [START get_product_service_client]
+# get product service client
 def get_product_service_client():
     client_options = ClientOptions(endpoint)
     return ProductServiceClient(client_options=client_options)
-    # [END get_product_service_client]
 
 
-# [START generate_product_to_create]
+# generate product to create
 def generate_product() -> Product:
     price_info = PriceInfo()
     price_info.price = 30.0
@@ -52,10 +53,9 @@ def generate_product() -> Product:
         price_info=price_info,
         availability="IN_STOCK",
     )
-    # [END generate_product_to_create]
 
 
-# [START get_create_product_request]
+# get create product request
 def get_create_product_request(product_to_create: Product, product_id: str) -> object:
     create_product_request = CreateProductRequest()
     create_product_request.product = product_to_create
@@ -66,22 +66,21 @@ def get_create_product_request(product_to_create: Product, product_id: str) -> o
     print(create_product_request)
 
     return create_product_request
-    # [END get_create_product_request]
 
 
-# [START create_product]
+# call the Retail API to create product
 def create_product(product_id: str):
-    # create product
     create_product_request = get_create_product_request(generate_product(), product_id)
     product_created = get_product_service_client().create_product(create_product_request)
 
     print("---created product:---")
     print(product_created)
     return product_created
-    # [END create_product]
 
 
-# CREATE A PRODUCT
+# create a product
 created_product = create_product(generated_product_id)
-# remove created product
+# delete created product
 delete_product(created_product.name)
+
+# [END retail_create_product]

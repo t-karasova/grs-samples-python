@@ -12,6 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
+# [START retail_delete_product]
+# Delete product from a catalog using Retail API
+#
+import os
 import random
 import string
 
@@ -20,24 +25,20 @@ from google.cloud.retail import ProductServiceClient, DeleteProductRequest
 
 from setup_cleanup import create_product
 
-# TODO Define the project number here:
-project_number = ""
+project_number = os.getenv('PROJECT_NUMBER')
 endpoint = "retail.googleapis.com"
-
 default_branch_name = "projects/" + project_number \
                       + "/locations/global/catalogs/default_catalog/branches/default_branch"
-
 product_id = ''.join(random.sample(string.ascii_lowercase, 8))
 
 
-# [START get_product_service_client]
+# get product service client
 def get_product_service_client():
     client_options = ClientOptions(endpoint)
     return ProductServiceClient(client_options=client_options)
-    # [END get_product_service_client]
 
 
-# [START get_delete_product_request]
+# get delete product request
 def get_delete_product_request(product_name: str):
     delete_product_request = DeleteProductRequest()
     delete_product_request.name = product_name
@@ -46,10 +47,9 @@ def get_delete_product_request(product_name: str):
     print(delete_product_request)
 
     return delete_product_request
-    # [END get_delete_product_request]
 
 
-# [START delete_product]
+# call the Retail API to delete product
 def delete_product(product_name: str):
     delete_product_request = get_delete_product_request(product_name)
     get_product_service_client().delete_product(delete_product_request)
@@ -58,5 +58,7 @@ def delete_product(product_name: str):
     print("---product was deleted:---")
 
 
-# DELETE PRODUCT
+# delete created product
 delete_product(create_product(product_id).name)
+
+# [END retail_delete_product]
