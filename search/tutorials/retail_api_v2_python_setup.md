@@ -30,10 +30,14 @@ To learn how to enable the Retail API, click **Next**.
 
 ## Enable the Retail API
 
-Enable the Retail API by clicking **Enable APIs**:
-
-<walkthrough-enable-apis apis="retail.googleapis.com">
-    </walkthrough-enable-apis>
+To enable the Retail API you should first to set your PROJECT_ID to a ```project``` variable:
+```bash
+gcloud config set project <YOU_PROJECT_ID>
+```
+Then enable the Retail API:
+```bash
+gcloud service enable retail
+```
 
 To learn how to set up your application, click **Next**.
 
