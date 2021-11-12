@@ -148,4 +148,4 @@ def import_products_from_inline_source():
 
 import_products_from_inline_source()
 
-# [START retail_import_products_from_inline_source]
+# [END retail_import_products_from_inline_source]

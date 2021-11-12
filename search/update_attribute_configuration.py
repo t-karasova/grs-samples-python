@@ -74,7 +74,7 @@ def update_product(product_to_update_id):
     print('---Wait 5 minutes to be sure the catalog has been indexed after the changes---:')
     time.sleep(300)
     print('---You can proceed with the search requests---')
-    # [START retail_update_attribute_config]
 
 
 update_product(product_id)
+# [END retail_update_attribute_config]

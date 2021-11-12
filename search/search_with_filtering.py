@@ -55,7 +55,7 @@ def search():
     search_response = get_search_service_client().search(search_request)
     print("---filtered search response---")
     print(search_response)
-    # [END retail_search_for_products_with_filter]
 
 
 search()
+# [END retail_search_for_products_with_filter]

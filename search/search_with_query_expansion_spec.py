@@ -59,7 +59,7 @@ def search():
 
     print("---query expansion search results---")
     print(search_response)
-    # [END retail_search_for_products_with_query_expansion_specification]
 
 
 search()
+# [END retail_search_for_products_with_query_expansion_specification]

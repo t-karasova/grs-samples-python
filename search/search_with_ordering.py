@@ -55,7 +55,7 @@ def search():
 
     print("---ordered search results---")
     print(search_response)
-    # [END retail_search_for_products_with_ordering]
 
 
 search()
+# [END retail_search_for_products_with_ordering]

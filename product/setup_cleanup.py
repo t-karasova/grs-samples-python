@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail_v2 import Product, ProductServiceClient, CreateProductRequest, DeleteProductRequest, PriceInfo
 from google.cloud.retail_v2.types import product
@@ -60,4 +62,4 @@ def delete_product(product_name: str):
     delete_product_request.name = product_name
     get_product_service_client().delete_product(delete_product_request)
 
-    print("---product " + product_name +"was deleted:---")
+    print("---product " + product_name + "was deleted:---")
