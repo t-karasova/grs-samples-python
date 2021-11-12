@@ -19,28 +19,25 @@ Estimated time to complete:
 
 To get started, click **Start**.
 
-## Select your project
+## Select your project and enable the Retail API
 
 Google Cloud Platform organizes resources into projects. This allows you to
 collect all the related resources for a single application in one place.
 
-<walkthrough-project-setup billing="true"></walkthrough-project-setup>
+If you don't have a Google Cloud project yet, you can [create New Project](https://pantheon.corp.google.com/projectcreate)
 
-To learn how to enable the Retail API, click **Next**.
-
-## Enable the Retail API
-
-To enable the Retail API you should first to set your PROJECT_ID to a ```project``` variable:
+After the project is created, set your PROJECT_ID to a ```project``` variable. 
+Run the following command in Terminal:
 ```bash
 gcloud config set project <YOU_PROJECT_ID>
 ```
-Then enable the Retail API:
+
+Next, proceed with enabling the Retail API:
 ```bash
 gcloud service enable retail
 ```
 
 To learn how to set up your application, click **Next**.
-
 
 ## Set up authentication
 
