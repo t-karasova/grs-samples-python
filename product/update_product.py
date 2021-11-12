@@ -12,6 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
+# [START retail_update_product]
+# Update product in a catalog using Retail API
+#
+import os
 import random
 import string
 
@@ -21,22 +26,19 @@ from google.cloud.retail_v2.types import product
 
 from setup_cleanup import create_product, delete_product
 
-# TODO Define the project number here:
-project_number = ""
-
+project_number = os.getenv('PROJECT_NUMBER')
 default_branch_name = "projects/" + project_number + "/locations/global/catalogs/default_catalog/branches/default_branch"
 endpoint = "retail.googleapis.com"
 generated_product_id = ''.join(random.sample(string.ascii_lowercase, 8))
 
 
-# [START get_product_service_client]
+# get product service client
 def get_product_service_client():
     client_options = ClientOptions(endpoint)
     return ProductServiceClient(client_options=client_options)
-    # [END get_product_service_client]
 
 
-# [START generate_product_for_update]
+# generate product for update
 def generate_product_for_update(product_id: str) -> Product:
     price_info = PriceInfo()
     price_info.price = 20.0
@@ -52,10 +54,10 @@ def generate_product_for_update(product_id: str) -> Product:
         availability="OUT_OF_STOCK",
         price_info=price_info,
     )
-    # [END generate_product_for_update]
+    # [END retail_generate_product_for_update]
 
 
-# [START update_product_request]
+# get update product request
 def get_update_product_request(product_to_update: Product):
     update_product_request = UpdateProductRequest()
     update_product_request.product = product_to_update
@@ -66,10 +68,9 @@ def get_update_product_request(product_to_update: Product):
     print(update_product_request)
 
     return update_product_request
-    # [END update_product_request]
 
 
-# [START update_product]
+# call the Retail API to update product
 def update_product(original_product: Product):
     # update product
     updated_product = get_product_service_client().update_product(
@@ -78,8 +79,6 @@ def update_product(original_product: Product):
     print('---updated product---:')
     print(updated_product)
 
-    # [END update_product]
-
 
 # create product
 created_product = create_product(generated_product_id)
@@ -87,3 +86,5 @@ created_product = create_product(generated_product_id)
 update_product(created_product)
 # delete product
 delete_product(created_product.name)
+
+# [END retail_update_product]

@@ -12,35 +12,37 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
+# [START retail_import_products_from_gcs]
+# Import products into a catalog from gcs using Retail API
+#
+import os
 import time
 
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import GcsSource, ProductInputConfig, ProductServiceClient, ImportErrorsConfig, \
     ImportProductsRequest
 
-# TODO Define the project number here:
-project_number = ""
+project_number = os.getenv('PROJECT_NUMBER')
 
 endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
 gcs_bucket = "gs://products_catalog"
 gcs_errors_bucket = "gs://products_catalog/error"
-#gcs_products_object = "products_for_search.json"
+# gcs_products_object = "products_for_search.json"
 # TO CHECK ERROR HANDLING USE THE JSON WITH INVALID PRODUCT
 gcs_products_object = "products_for_import_some_invalid.json"
 
-# [START product_client]
+
+# get product service client
 def get_product_service_client():
     client_options = ClientOptions(endpoint)
     return ProductServiceClient(client_options=client_options)
-    # [END product_client]
 
 
-# [START get_import_products_gcs_request]
+# get import products from gcs request
 def get_import_products_gcs_request(gcs_object_name: str):
     # TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE:
-    #default_catalog = "invalid_catalog_name"
+    # default_catalog = "invalid_catalog_name"
     gcs_source = GcsSource()
     gcs_source.input_uris = ["{0}/{1}".format(gcs_bucket, gcs_object_name)]
 
@@ -60,10 +62,9 @@ def get_import_products_gcs_request(gcs_object_name: str):
     print(import_request)
 
     return import_request
-    # [END get_import_products_gcs_request]
 
 
-# [START import_products_from_gcs]
+# call the Retail API to import products
 def import_products_from_gcs():
     import_gcs_request = get_import_products_gcs_request(gcs_products_object)
     gcs_operation = get_product_service_client().import_products(import_gcs_request)
@@ -83,7 +84,7 @@ def import_products_from_gcs():
     print("---operation result:---")
     print(gcs_operation.result())
 
-    # [END import_products_from_gcs]
-
 
 import_products_from_gcs()
+
+# [END retail_import_products_from_gcs]

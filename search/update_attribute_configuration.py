@@ -12,22 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
+# [START retail_update_attribute_config]
+# Update product in a catalog using Retail API to change the product attribute searchability and indexability.
+import os
 import time
 
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail_v2 import ProductServiceClient, Product, UpdateProductRequest, GetProductRequest, \
     CustomAttribute
 
-# TODO Define the project number here:
-project_number = ""
+project_number = os.getenv('PROJECT_NUMBER')
 product_id = "GGOEAAEC172013"
 
 
-# [START get_product_service_client]
+# get product service client
 def get_product_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return ProductServiceClient(client_options=client_options)
-    # [END get_product_service_client]
 
 
 def get_product(product_id):
@@ -45,7 +47,7 @@ def get_update_product_request(product_to_update: Product):
     return update_product_request
 
 
-# [START update_product]
+# update the product attribute
 def update_product(product_to_update_id):
     # Get a product from catalog
     product_to_update = get_product(product_to_update_id)
@@ -60,7 +62,7 @@ def update_product(product_to_update_id):
                       "ethically made"]
 
     # Set the attribute to the original product
-    product_to_update.attributes = {'ecofriendly' : attribute}
+    product_to_update.attributes = {'ecofriendly': attribute}
 
     # Update product
     updated_product = get_product_service_client().update_product(
@@ -72,7 +74,7 @@ def update_product(product_to_update_id):
     print('---Wait 5 minutes to be sure the catalog has been indexed after the changes---:')
     time.sleep(300)
     print('---You can proceed with the search requests---')
-    # [END update_product]
+    # [START retail_update_attribute_config]
 
 
 update_product(product_id)

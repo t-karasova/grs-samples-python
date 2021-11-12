@@ -46,13 +46,24 @@ python3 -m pip install google.cloud.retail
 
 **Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
+## Set the PROJECT_NUMBER environment variable
+
+As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
+
+You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+
+Set the environment variable with a following command:
+```bash
+export PROJECT_NUMBER="<YOUR_PROJECT_NUMBER>"
+```
+
 ## Import products from the BigQuery table
 
 Before you import products to your catalog, you need to upload the data to the BigQuery table first. There are two ways to do it:
 
  - Create an [empty BigQuery table](https://cloud.google.com/bigquery/docs/tables#creating_an_empty_table_with_a_schema_definition)
   using the Retail schema, and create products in it using SQL.
- - Create a BigQuery table using the prepared JSON file with products. You can define the Retail schema or
+ - Create a BigQuery table using the prepared JSON file with products. You can define the [Retail schema](https://cloud.google.com/retail/docs/catalog#expandable-1) or
   use an autodetect option.
 
 Then, import your data to the Retail API.

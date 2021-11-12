@@ -13,26 +13,28 @@
 # limitations under the License.
 
 
+# [START retail_search_with_filter_by_attribute]
+# Call Retail API to search for a products in a catalog, filter the results by the "product.attribute" field.
+#
+import os
+
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import SearchServiceClient, SearchRequest
 
-# TODO Define the project number here:
-project_number = ""
-default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
+project_number = os.getenv('PROJECT_NUMBER')
 
 
-# [START get_search_service_client
+# get search service client
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
-    # [END get_search_service_client
 
 
-# [START search_with_filter]
 def search():
+    default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
+    # get search service request:
     search_request = SearchRequest()
     search_request.placement = default_search_placement  # Placement is used to identify the Serving Config name.
-    # CHANGE THE QUERY HERE:
     search_request.query = "sweater"
     search_request.filter = '(attributes.ecofriendly: ANY("recycled packaging"))'
     search_request.page_size = 10
@@ -40,11 +42,11 @@ def search():
 
     print("---search_request:---")
     print(search_request)
-
+    # call the Retail Search:
     search_response = get_search_service_client().search(search_request)
     print("---search response---")
     print(search_response)
-    # [END search_with_filter]
 
 
 search()
+# [START retail_search_with_filter_by_attribute]

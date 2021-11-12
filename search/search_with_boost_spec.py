@@ -12,24 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# [START retail_search_product_with_boost_spec]
+# Call Retail API to search for a products in a catalog, rerank the
+# results boosting or burying the products that match defined condition.
+#
 import os
 
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import SearchServiceClient, SearchRequest
 
-# TODO Define the project number here:
-
-project_number = os.getenv('PROJECT_ID')
+project_number = os.getenv('PROJECT_NUMBER')
 
 
-# [START get_search_service_client]
+# get search service client
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
-    # [END get_search_service_client]
 
 
-# [START get_search_request_with_boost_specification]
+# get search service request:
 def get_search_request(query: str, condition: str, boost_strength: float):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
@@ -50,12 +51,11 @@ def get_search_request(query: str, condition: str, boost_strength: float):
     print(search_request)
 
     return search_request
-    # [END get_search_request_with_boost_specification]
 
 
-# [START search_product_with_boost_spec]
+# call the Retail Search:
 def search():
-    # Try different conditions here:
+    # TRY DIFFERENT CONDITIONS HERE:
     condition = '(colorFamily: ANY("Blue"))'
     boost = 0.0
 
@@ -63,7 +63,6 @@ def search():
     search_response = get_search_service_client().search(search_request)
     print("---boost search response---")
     print(search_response)
-    # [END search_product_with_boost_spec]
 
 
 search()

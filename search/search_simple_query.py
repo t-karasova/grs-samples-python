@@ -12,21 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# [START retail_search_for_products_with_query_parameter]
+# Call Retail API to search for a products in a catalog using only search query.
+#
+import os
+
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import SearchServiceClient, SearchRequest
 
-# TODO Define the project number here:
-project_number = ""
+project_number = os.getenv('PROJECT_NUMBER')
 
 
-# [START get_search_service_client]
+# get search service client
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
-    # [END get_search_service_client]
 
 
-# [START get_search_request_with_only_required_fields]
+# get search service request:
 def get_search_request(query: str):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
@@ -39,16 +42,15 @@ def get_search_request(query: str):
     print(search_request)
 
     return search_request
-    # [END get_search_request_with_only_required_fields]
 
 
-# [START search_for_products_with_query_parameter]
+# call the Retail Search:
 def search():
     search_response = get_search_service_client().search(get_search_request("Hoodie"))
 
     print("---search response---")
     print(search_response)
-    # [END search_for_products_with_query_parameter]
 
 
 search()
+# [END retail_search_for_products_with_query_parameter]

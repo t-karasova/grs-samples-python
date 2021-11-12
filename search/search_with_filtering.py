@@ -12,22 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# [START retail_search_for_products_with_filter]
+# Call Retail API to search for a products in a catalog, filter the results by different product fields.
+#
+import os
 
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import SearchServiceClient, SearchRequest
 
-# TODO Define the project number here:
-project_number = ""
+project_number = os.getenv('PROJECT_NUMBER')
 
 
-# [START get_search_service_client
+# get search service client
 def get_search_service_client():
     client_options = ClientOptions("retail.googleapis.com")
     return SearchServiceClient(client_options=client_options)
-    # [END get_search_service_client
 
 
-# [START get_sarch_request_with_filter]
+# get search service request:
 def get_search_request(query: str, _filter: str, page_size=10):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
@@ -42,19 +44,18 @@ def get_search_request(query: str, _filter: str, page_size=10):
     print(search_request)
 
     return search_request
-    # [END get_sarch_request_with_filter]
 
 
-# [START search_for_products_with_filter]
+# call the Retail Search:
 def search():
-    # [TRY DIFFERENT FILTER EXPRESSIONS HERE:]
+    # TRY DIFFERENT FILTER EXPRESSIONS HERE:
     filter = '(colorFamily: ANY("Black"))'
 
     search_request = get_search_request("Tee", filter)
     search_response = get_search_service_client().search(search_request)
     print("---filtered search response---")
     print(search_response)
-    # [END search_for_products_with_filter]
+    # [END retail_search_for_products_with_filter]
 
 
 search()
