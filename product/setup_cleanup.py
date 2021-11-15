@@ -15,7 +15,8 @@
 import os
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail_v2 import Product, ProductServiceClient, CreateProductRequest, DeleteProductRequest, PriceInfo
+from google.cloud.retail_v2 import Product, ProductServiceClient, CreateProductRequest, DeleteProductRequest, \
+    GetProductRequest, PriceInfo
 from google.cloud.retail_v2.types import product
 
 project_number = os.getenv('PROJECT_NUMBER')
@@ -62,4 +63,13 @@ def delete_product(product_name: str):
     delete_product_request.name = product_name
     get_product_service_client().delete_product(delete_product_request)
 
-    print("---product " + product_name + "was deleted:---")
+    print("---product " + product_name + " was deleted:---")
+
+
+def get_product(product_name: str):
+    get_product_request = GetProductRequest()
+    get_product_request.name = product_name
+    product = get_product_service_client().get_product(get_product_request)
+
+    print("---product:---")
+    print(product)

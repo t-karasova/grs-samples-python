@@ -42,29 +42,106 @@ python3 -m pip install google.cloud.retail
 
 **Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
-## Add fulfillment places 
+## Set the PROJECT_NUMBER environment variable
 
-Even if the product does not exist yet, the inventory information can be stored for when the product is eventually created.
-Then, after the product will be added to the catalog it will be associated with the latest fulfillment information. 
+As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
 
-Open **product/add_fulfillment.py** and check the AddFulfillmentPlacesRequest.
+You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
 
-To add tje fulfillment places, open terminal and run the command:
-
+Set the environment variable with a following command:
 ```bash
-python product/add_fulfillment.py
+export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
 ```
 
-## Create a product. 
+## Add fulfillment places 
 
-Now, when the fulfillment info is created let's create a product with the corresponding product_name and check the fulfillment information will be associated with this product.
+To send the AddFulfillmentPlacesRequest you need to set the following fields:
+ - ```product``` - the product name which inventory information you wnd to update,
+ - ```type``` - the fulfillment type, you may set commonly used types (such as pickup in store and same day delivery) or custom types,
+ - ```place_ids[]``` - the store IDs for each of the fulfillment type,
+ - ```add_time``` - the time when the fulfillment updates are issued, used to prevent out-of-order updates on fulfillment information. If not provided, the internal system time will be used,
+ - ```allow_missing``` - if set to true, and the Product is not found, the fulfillment information will still be processed and retained for at most 1 day and processed once the Product is created. 
 
+Open **product/add_remove_fulfillment.py** and check the AddFulfillmentPlacesRequest.
+
+To add the fulfillment places, open terminal and run the command:
+
+```bash
+python product/add_remove_fulfillment.py
+```
+
+Check the responses in the Terminal. As you can see, the product was initially created without the fulfillment information, 
+then check the get_product() response, the fulfillment places 'store1', 'store2', 'store3' was added to the fulfillment type 'pickup-in-store'.
+
+## Send out-of-order add_fulfillment_places request
+
+The AddFulfillmentPlaces method allows the caller to specify an update time for when the request is issued.
+This update time is compared against the latest update time recorded for the relevant inventory fields,
+and the update is committed if and only if the update time is strictly after the latest update time.
+
+Let's modify the ```add_fulfillment_request```, change the list of the **place_ids**.
+
+Change the ```request_time``` value, set now() - 1 day:
+```
+request_time = datetime.datetime.now() - datetime.timedelta(days=1)
+```
+
+Run the code once again:
+```bash
+python product/add_remove_fulfillment.py
+```
+
+Check the product printed out in the Terminal, the fulfillment places information was not updated.
+
+## Remove fulfillment places 
+
+The RemoveFulfillmentPlacesRequest is pretty match the same as AddFulfillmentPlacesRequest,
+
+Check the RemoveFulfillmentPlacesRequest in **product/add_remove_fulfillment.py**, get_remove_fulfillment_request() method.
+
+Next, comment out the lines:
+```
+create_product(product_id)
+add_fulfillment_places(product_name)
+```
+
+Uncomment **```remove_fulfillment_places(product_name)```**.
+
+Run the code sample again with the command:
+
+```bash
+python product/add_remove_fulfillment.py
+```
+
+Check the responses in the Terminal. The **'store1'**  was remover from the list of fulfillment places for type 'pickup-in-store'.
+
+## Send out-of-order remove_fulfillment_places request
+
+The RemoveFulfillmentPlaces method also allows to set an update time,
+if the value is strictly after the latest update time recorded for the relevant inventory fields, the update will be committed.
+
+Next, modify the ```remove_fulfillment_request```, change the list of the **place_ids**, 
+for example, you can add 'store3' value to the list in ```remove_fulfillment_request.place_ids```.
+
+Set ```request_time``` value to yesterday's date:
+```
+request_time = datetime.datetime.now() - datetime.timedelta(days=1)
+```
+
+Uncomment the line ```delete_product(product_name)``` to clean up after these exercises. 
+
+Run the code one more time:
+```bash
+python product/add_remove_fulfillment.py
+```
+
+Check the product printed out in the Terminal, the fulfillment places information was not updated.
 
 ## Congratulations
 
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-You have completed the tutorial! Now you know how to create a product in a catalog using Retail API. We encourage you to 
-practice in creating products right here, in Cloud Shell environment or in your oun Google Cloud Catalog.
+You have completed the tutorial! Now you know how to update the product fulfillment places using Retail API. We encourage you to 
+practice in updating fulfillment information right here, in Cloud Shell environment.
 
 **Thank you for completing this tutorial!**
