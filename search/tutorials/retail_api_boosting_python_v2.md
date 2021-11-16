@@ -12,6 +12,35 @@ In this tutorial you will learn some examples of product boosting.
 
 **Time to complete**: About 4 minutes
 
+## Before you begin
+
+### Clone the Retail code samples
+
+Let's clone the Git repository with all the code samples to learn the Retail features and check the in action.
+
+'#TODO change the repository link
+Run the following command in the Terminal:
+```bash
+git clone https://github.com/t-karasova/grs-samples-python.git
+```
+
+The code samples for each of the Retail services are stored in different directories.
+
+Go to the ```grs-samples-python``` directory, it will be our start point for further commands running.
+```bash
+cd grs-samples-python
+```
+
+### Set the PROJECT_NUMBER environment variable
+
+As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
+
+You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+
+Set the environment variable with a following command:
+```bash
+export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
+```
 
 ## Boosting by one criterion. Condition and filtering expression 
 
@@ -39,18 +68,6 @@ The field **```boost```** defines the strength of the condition boost, which sho
 Now, open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_boost_spec.py" regex="boost.*0">search_with_boost_spec.py</walkthrough-editor-select-regex>
 
 In the initial request, the boost strength is set to zero: ```boost = 0.0```, so the boosting will **not affect** the order of the products in the response.
-
-
-## Set the PROJECT_NUMBER environment variable
-
-As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
-
-You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
-
-Set the environment variable with a following command:
-```bash
-export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
-```
 
 ## Boosting by one criterion. Boost results
 
