@@ -12,65 +12,62 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# [START retail_import_products_from_big_query]
-# Import products into a catalog from big query table using Retail API
+# [START retail_import_user_events_from_big_query]
+# Import user events into a catalog from BigQuery using Retail API
 #
 import os
 import time
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import BigQuerySource, ProductInputConfig, ProductServiceClient, \
-    ImportProductsRequest
+from google.cloud.retail import BigQuerySource, UserEventInputConfig, UserEventServiceClient, \
+    ImportUserEventsRequest
 
 project_number = os.getenv('PROJECT_NUMBER')
+
 # TODO(developer) Define the project Id here:
 project_id = ""
 
 endpoint = "retail.googleapis.com"
-default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
-dataset_id = "products"
-table_id = "import_tutorial"
-# TO CHECK ERROR HANDLING USE THE TABLE OF INVALID PRODUCTS:
-# table_id = "products_for_import_invalid"
+default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(project_number)
+dataset_id = "user_events"
+#table_id = "import_tutorial"
+# TO CHECK ERROR HANDLING USE THE TABLE OF INVALID USER EVENTS:
+table_id = "import_tutorial_invalid"
 
 
-# get product service client
-def get_product_service_client():
+# get user events service client
+def get_user_events_service_client():
     client_options = ClientOptions(endpoint)
-    return ProductServiceClient(client_options=client_options)
+    return UserEventServiceClient(client_options=client_options)
 
 
-# get import products from big query request
-def get_import_products_big_query_request(reconciliation_mode):
+# get import user events from big query request
+def get_import_events_big_query_request():
     # TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE:
     # default_catalog = "invalid_catalog_name"
     big_query_source = BigQuerySource()
     big_query_source.project_id = project_id
     big_query_source.dataset_id = dataset_id
     big_query_source.table_id = table_id
-    big_query_source.data_schema = "product"
+    big_query_source.data_schema = "user_event"
 
-    input_config = ProductInputConfig()
+    input_config = UserEventInputConfig()
     input_config.big_query_source = big_query_source
 
-    import_request = ImportProductsRequest()
+    import_request = ImportUserEventsRequest()
     import_request.parent = default_catalog
-    import_request.reconciliation_mode = reconciliation_mode
     import_request.input_config = input_config
 
-    print("---import products from big query table request---")
+    print("---import user events from google cloud source request---")
     print(import_request)
 
     return import_request
 
 
-# call the Retail API to import products
-def import_products_from_big_query():
-    # TRY THE FULL RECONCILIATION MODE HERE:
-    reconciliation_mode = ImportProductsRequest.ReconciliationMode.FULL
-
-    import_big_query_request = get_import_products_big_query_request(reconciliation_mode)
-    big_query_operation = get_product_service_client().import_products(import_big_query_request)
+# call the Retail API to import user events
+def import_user_events_from_big_query():
+    import_big_query_request = get_import_events_big_query_request()
+    big_query_operation = get_user_events_service_client().import_user_events(import_big_query_request)
 
     print("---the operation was started:----")
     print(big_query_operation.operation.name)
@@ -79,8 +76,8 @@ def import_products_from_big_query():
         print("---please wait till operation is done---")
         time.sleep(5)
 
-    print("---import products operation is done---")
-    print("---number of successfully imported products---")
+    print("---import user events operation is done---")
+    print("---number of successfully imported events---")
     print(big_query_operation.metadata.success_count)
     print("---number of failures during the importing---")
     print(big_query_operation.metadata.failure_count)
@@ -88,6 +85,6 @@ def import_products_from_big_query():
     print(big_query_operation.result())
 
 
-import_products_from_big_query()
+import_user_events_from_big_query()
 
-# [END retail_import_products_from_big_query]
+# [END retail_import_user_events_from_big_query]
