@@ -58,8 +58,6 @@ def get_user_events():
 
 # get import user events from inline source request
 def get_import_events_inline_source_request(user_events_to_import):
-    # TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE:
-    # default_catalog = "invalid_catalog_name"
     inline_source = UserEventInlineSource()
     inline_source.user_events = user_events_to_import
 

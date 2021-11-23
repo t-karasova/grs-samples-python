@@ -30,9 +30,9 @@ project_id = ""
 endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(project_number)
 dataset_id = "user_events"
-#table_id = "import_tutorial"
+table_id = "import_tutorial"
 # TO CHECK ERROR HANDLING USE THE TABLE OF INVALID USER EVENTS:
-table_id = "import_tutorial_invalid"
+#table_id = "import_tutorial_invalid"
 
 
 # get user events service client

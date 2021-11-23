@@ -1,8 +1,8 @@
-# **Import User Events From the Big Query Table Tutorial**
+# **Import User Events From the BigQuery Table Tutorial**
 
 ## Let's get started
 
-Retail API offers you a convenient way to import user event data from previously loaded BigQuery table.
+The Retail API offers you a convenient way to import user event data from previously loaded BigQuery table.
 
 Using BigQuery table allows you to import massive amounts of user events data with no limits.
 
@@ -15,7 +15,7 @@ To find more information about different import types, their restrictions, and u
 
 To run Python code samples from this tutorial, you need to set up your virtual environment.
 
-To do that, run the following commands in a terminal:
+To do that, run the following commands in a Terminal:
 ```bash
 pip install virtualenv
 ```
@@ -33,12 +33,12 @@ pip install google
 pip install google-cloud-retail
 ```
 
-**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal to
+**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell Terminal to
 run it.
 
 ## Set the PROJECT_NUMBER environment variable
 
-As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
+As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable. It will be used in every request to the Retail API.
 
 You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
 
@@ -47,26 +47,63 @@ Set the environment variable with a following command:
 export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
 ```
 
-## Import user events from the BigQuery table
+## Upload user events data to the Cloud Storage bucket
 
-Before you import products to your catalog, you need to upload the data to the BigQuery table first. There are two ways to do it:
+We have prepared a JSON file with a bunch of valid user events in the "events" directory: 
 
- - Create an [empty BigQuery table](https://cloud.google.com/bigquery/docs/tables#creating_an_empty_table_with_a_schema_definition)
-  using the Retail schema, and create products in it using SQL.
- - Create a BigQuery table using the prepared JSON file with products. 
+**events/import_user_events_tutorial.json**
 
-Then, import your data to the Retail API.
+You can use this file in the tutorial, or, if you want to use your own data, you should update the names of a bucket and a JSON file in the code samples.
 
-For this tutorial we have already created a BigQuery table, so you can use it in your Retail API import request.
+You should remember that you can only import to Retail catalog events which are **NOT older than 90 days** otherwise the import will fail.
+
+To keep our historical user evens more recent let's update the timestamps in the import_user_events_tutorial.json. 
+Run this script in a Terminal, and you will get the user events with yesterday's date:
+
+```bash
+python  events/update_user_events_json.py
+```
+
+Now, your data are updated and ready to be deployed to the Cloud Storage.
+In your own Google Platform project go to the [Cloud Storage](pantheon.corp.google.com/storage/browser)
+
+Click "Create Bucket" button, give it a name **import_user_events**, and press "Create".
+
+  *You can use your own bucket, but you should then update all references to your data in code.
+
+Next, from the Cloud Shell Terminal run the following command:
+```
+gsutil cp events/import_user_events_tutorial.json gs://import_user_events
+```
+Now you can see the file is uploaded to the Cloud Storage bucket.
+
+## Create the BigQuery table with the user events data
+
+In your own Google Platform project go to the [BigQuery](pantheon.corp.google.com/bigquery)
+
+Click three dots icon near your project name in the "Explorer" panel, and chose **"Create dataset"** option. Set the Dataset Id as "user_events" and click "Create Dataset".
+
+In the newly created dataset click "Create Table" , chose **Google Cloud Source** option as the Source, select **"import_user_events"** bucket and  **"import_user_events_tutorial.json"** file, click "Select".
+
+Set the table name as **"import_tutorial"**
+
+Now, let's specify the table schema. In the Schema section turn on the "Edit as a text" option, copy the schema from the **"events_schema.json"** file and paste in the text field.
+Press Create.
+
+## Import user events to the Retail catalog from the BigQuery table
+
+You have already created a BigQuery table, so you can use it in your Retail API import request.
 
 To check the example of an import user events request, open **events/import_user_events_big_query.py**.
 
-The field **```parent```** contains a **catalog name** along with a branch number you are going to import your
+Set the ```project_id``` field, you can find the ```project_id``` in the **Home/Dashboard/Project Info card**.
+
+The **```parent```** field in the **ImportUserEventsRequest** contains a **catalog name** along with a branch number you are going to import your
 user events to.
 
-The field **```input_config```** defines the **BigQuerySource** as an import source.
+The **```input_config```** field defines the **BigQuerySource** as an import source.
 
-To perform the user events import, open terminal and run the command:
+To perform the user events import, open Terminal and run the command:
 
 ```bash
 python events/import_user_events_big_query.py
@@ -78,9 +115,9 @@ Once you have called the import user events method from the Retail API, the **im
 
 Importing may take some time depending on the size of your BigQuery table.
 
-The operation is completed when the field **```operation.done()```** is set to true. 
+The operation is completed when the **```operation.done()```** field is set to true. 
 
-Check the result, one of the following fields should be present:
+Check the result. One of the following fields should be present:
  - **```error```**, if the operation failed.
  - **```result```**, if the operation was successful.
 
@@ -106,11 +143,13 @@ import_summary {
 
 Now, let's try to import one invalid user event object and check the error message in the operation response. Note that in this case the operation itself is considered successful.
 
-The ```type``` field is required and should have one of defined values, so if you set some invalid value, you get the invalid user event objects. 
+The ```type``` field is required and should have one of [defined values](https://cloud.google.com/retail/docs/user-events#types). That is, if you set some invalid value, you get the invalid user event object. 
 
-There is a **```import_tutorial_invalid```** table in the BigQuery dataset that contains such invalid user events.
+You should create one more BigQuery table **```import_tutorial_invalid```** in the same dataset, dataset that contains such invalid user events.
 
-Let's use it for import to get an error message.
+Follow the instructions described in **Upload user events data to the Cloud Storage bucket** and **Create the BigQuery table with the user events data** steps, use the **events/import_user_events_invalid.json** as a source.
+
+Let's import from the table with one invalid user event to get an error message.
 
 Go to the code sample, assign a value of ```table_id``` to the table name:
 
@@ -126,11 +165,11 @@ If the operation is completed successfully, you can find a **```result```** fiel
 
 In this case, the operation is considered as successful, and the ```big_query_operation.metadata.success_count``` field contains the number of the successfully imported events, which is "3".
 
-There are one invalid user event in the input table, and the number of failures during the importing in the ```big_query_operation.metadata.failure_count``` field is also "1".
+There is one invalid user event in the input table, and the number of failures during the importing in the ```big_query_operation.metadata.failure_count``` field is also "1".
 
-The ```operation.result``` field points to the errors bucket where you can find a json file with all the importing errors.
+The ```operation.result``` field points to the errors bucket where you can find a JSON file with all the importing errors.
 
-The errors are the following: 
+The response is the following: 
 
 ```
 errors_config {
@@ -141,9 +180,9 @@ import_summary {
 }
 ```
 
-## Errors appeared due to invalid request
+## Errors appeared due to an invalid request
 
-Next, let's send invalid import request to check the error message. 
+Next, let's send an invalid import request to check the error message. 
 
 In the code sample, find the **```get_import_events_big_query_request()```** method, and add there a local variable ```default_catalog``` with some invalid catalog name.
 
@@ -157,6 +196,6 @@ google.api_core.exceptions.InvalidArgument: 400 Request contains an invalid argu
 
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-You have completed the tutorial! Now you know how to prepare the data for importing user events from the Big Query table.
+You have completed the tutorial! Now you know how to prepare the data for importing user events from the BigQuery table.
 
 **Thank you for completing this tutorial!**
