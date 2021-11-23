@@ -58,6 +58,9 @@ def get_add_fulfillment_request(product_name: str) -> AddFulfillmentPlacesReques
 def add_fulfillment_places(product_name: str):
     add_fulfillment_request = get_add_fulfillment_request(product_name)
     get_product_service_client().add_fulfillment_places(add_fulfillment_request)
+
+    # This is a long running operation and its result is not immediately present with get operations,
+    # thus we simulate wait with sleep method.
     print("---add fulfillment places, wait 10 seconds :---")
     time.sleep(10)
 
@@ -81,6 +84,9 @@ def get_remove_fulfillment_request(product_name: str) -> RemoveFulfillmentPlaces
 def remove_fulfillment_places(product_name: str):
     remove_fulfillment_request = get_remove_fulfillment_request(product_name)
     get_product_service_client().remove_fulfillment_places(remove_fulfillment_request)
+
+    # This is a long running operation and its result is not immediately present with get operations,
+    # thus we simulate wait with sleep method.
     print("---remove fulfillment places, wait 10 seconds:---")
     time.sleep(10)
 
