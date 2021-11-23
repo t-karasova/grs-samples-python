@@ -42,6 +42,33 @@ Set the environment variable with a following command:
 export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
 ```
 
+## Import catalog data
+
+### Upload catalog data to Cloud Storage
+We have prepared a JSON file with a bunch of valid product in the "search" directory:
+
+**search/products_for_search.json**
+
+You can use this file in the tutorial.
+ 
+In your own Google Platform project go to the Cloud Storage.
+Click "Create Bucket" button, give it a name **```products_catalog```**, and press "Create".
+
+Next, from the Cloud Shell Terminal run the following command:
+```bash
+gsutil cp search/products_for_search.json gs://products_catalog
+```
+
+Now you can see the file is uploaded to the Cloud Storage bucket.
+
+### Import products to the Retail Catalog
+
+To import the prepared products to a catalog, run the following command in the Terminal:
+
+```bash
+python product/import_products_gcs.py
+```
+
 ## Boosting by one criterion. Condition and filtering expression 
 
 The boosting specification looks like this:

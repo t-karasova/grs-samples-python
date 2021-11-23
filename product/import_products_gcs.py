@@ -28,9 +28,9 @@ endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
 gcs_bucket = "gs://products_catalog"
 gcs_errors_bucket = "gs://products_catalog/error"
-# gcs_products_object = "products_for_search.json"
+gcs_products_object = "products_for_search.json"
 # TO CHECK ERROR HANDLING USE THE JSON WITH INVALID PRODUCT
-gcs_products_object = "products_for_import_some_invalid.json"
+# gcs_products_object = "products_for_import_some_invalid.json"
 
 
 # get product service client
