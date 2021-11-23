@@ -35,7 +35,7 @@ def get_product_service_client():
 
 
 # product inventory info
-def get_product_inventory_info(product_name: str) -> Product:
+def get_product_with_inventory_info(product_name: str) -> Product:
     price_info = PriceInfo()
     price_info.price = 15.0
     price_info.original_price = 20.0
@@ -63,7 +63,7 @@ def get_set_inventory_request(product_name: str) -> SetInventoryRequest:
     # request_time = datetime.datetime.now() - datetime.timedelta(days=1)
 
     set_inventory_request = SetInventoryRequest()
-    set_inventory_request.inventory = get_product_inventory_info(product_name)
+    set_inventory_request.inventory = get_product_with_inventory_info(product_name)
     set_inventory_request.set_time = request_time
     set_inventory_request.allow_missing = True
 
@@ -78,6 +78,8 @@ def set_inventory(product_name: str):
     set_inventory_request = get_set_inventory_request(product_name)
     get_product_service_client().set_inventory(set_inventory_request)
 
+    # This is a long running operation and its result is not immediately present with get operations,
+    # thus we simulate wait with sleep method.
     print("---set inventory, wait 10 seconds:---")
     time.sleep(10)
 
