@@ -133,7 +133,7 @@ The errors are the following:
 
 ## Errors appeared due to invalid request
 
-Next, let's send invalid import request to make the operation fail. 
+Next, let's send invalid import request to check the error message. 
 
 In the code sample, find the **```get_import_products_gcs_request()```** method, and add there a local variable ```default_catalog``` with some invalid catalog name.
 
@@ -147,6 +147,6 @@ google.api_core.exceptions.InvalidArgument: 400 Request contains an invalid argu
 
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-You have completed the tutorial! Now you know how to prepare the data for importing andd import products from the Google Cloud Storage.
+You have completed the tutorial! Now you know how to prepare the data for importing and import products from the Google Cloud Storage.
 
 **Thank you for completing this tutorial!**
