@@ -56,9 +56,9 @@ We have prepared a JSON file with a bunch of valid user events in the "events" d
 
 You can use this file in the tutorial, or, if you want to use your own data, you should update the names of a bucket and a JSON file in the code samples.
 
-You should remember that you can only import to Retail catalog events which are **NOT older than 90 days** otherwise the import will fail.
+You can import events that are **NOT older than 90 days** into the Retail catalog. Otherwise, the import will fail.
 
-To keep our historical user evens more recent let's update the timestamps in the import_user_events_tutorial.json. 
+To keep our historical user evens more recent, update the timestamps in the **import_user_events_tutorial.json** file. 
 Run this script in a Terminal, and you will get the user events with yesterday's date:
 
 ```bash
