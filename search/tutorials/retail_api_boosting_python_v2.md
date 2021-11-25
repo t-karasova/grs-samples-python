@@ -16,6 +16,22 @@ In this tutorial you will learn some examples of product boosting.
 This step is required if this is the first Retail API Tutorial you run.
 Otherwise, you can skip it.
 
+### Select your project and enable the Retail API
+
+Google Cloud organizes resources into projects. This lets you
+collect all the related resources for a single application in one place.
+
+If you don't have a Google Cloud project yet, you can
+[create a new project](https://console.cloud.google.com/projectcreate).
+
+After the project is created, set your PROJECT_ID to a ```project``` variable.
+1. Run the following command in Terminal:
+    ```bash
+    gcloud config set project <YOUR_PROJECT_ID>
+    ```
+
+1. Check that the Retail API is enabled for your Project in the [Admine Console](https://console.cloud.google.com/ai/retail/).
+
 ### Set up authentication
 
 To run a code sample from the Cloud Shell, you need to authenticate. To do this, use the Application Default Credentials.
@@ -33,22 +49,6 @@ To run a code sample from the Cloud Shell, you need to authenticate. To do this,
 1. Run the code sample and check the Retail API in action.
 
 **Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
-
-### Select your project and enable the Retail API
-
-Google Cloud organizes resources into projects. This lets you
-collect all the related resources for a single application in one place.
-
-If you don't have a Google Cloud project yet, you can
-[create a new project](https://console.cloud.google.com/projectcreate).
-
-After the project is created, set your PROJECT_ID to a ```project``` variable.
-1. Run the following command in Terminal:
-    ```bash
-    gcloud config set project <YOUR_PROJECT_ID>
-    ```
-
-1. Check that the Retail API is enabled for your Project in the [Admine Console](https://console.cloud.google.com/ai/retail/).
 
 ### Set the PROJECT_NUMBER environment variable
 
@@ -120,7 +120,7 @@ To create the bucket and upload the JSON file run the following command in the T
 python product/create_gcs_bucket.py
 ```
 
-Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the file is uploaded.
+Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the files are uploaded.
 
 ### Import products to the Retail Catalog
 
@@ -143,10 +143,10 @@ The boosting specification looks like this:
 
 1. To set the **```condition```**, you should use a filtering expression like the following:
 
-    ```'(colorFamily: ANY("blue"))'```
+    ```'(colorFamily: ANY("Blue"))'```
 
-    or
-    ```'(rating: IN(4.0, 5.0))'```
+or  
+```'(price: IN(15.0, 30.0))'```
 
     <!-- TODO(ianan): change Filtering Tutorial link -->
     You can learn how to use filters in the [Filtering Tutorial](retail_api_v2_filtering_python.md)
@@ -160,6 +160,7 @@ The boosting specification looks like this:
     In the initial request, the boost strength is set to zero: ```boost = 0.0```,
     so the boosting will not affect the order of the   products in the response.
 
+## Boosting by one criterion. Boost results
 
 ## Boost by one criterion: Boost results
 
