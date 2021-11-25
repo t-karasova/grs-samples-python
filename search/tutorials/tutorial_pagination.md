@@ -121,8 +121,8 @@ You can use this file in the tutorial.
 1.  Click **Create bucket**, give it the name of your Project ID, and
     click **Create**.
 1.  From the Cloud Shell Terminal, run the following command:
-    ```bash gsutil cp
-    search/products_for_search.json gs://<YOUR_PROJECT_ID>`
+    ```bash
+    gsutil cp search/products_for_search.json gs://<YOUR_PROJECT_ID>`
     ```
 
 1.  Now you can see that the file is uploaded to the Cloud Storage bucket.
