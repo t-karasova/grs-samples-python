@@ -99,6 +99,7 @@ Clone the Git repository with all the code samples to learn the Retail features 
     ```bash
     cd grs-samples-python
     ```
+
 ## Import catalog data (optional)
 
 This step is required if this is the first Retail API Tutorial you run.
