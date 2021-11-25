@@ -66,6 +66,8 @@ def search():
 
     # PASTE CALL WITH OFFSET HERE:
 
+    return search_response_first_page
+
 
 search()
 # [END retail_search_for_products_with_page_size]

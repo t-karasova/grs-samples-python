@@ -30,14 +30,14 @@ def get_search_service_client():
 
 
 # get search service request:
-def get_search_request(query: str, _filter: str, page_size=10):
+def get_search_request(query: str, _filter: str):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
     search_request = SearchRequest()
     search_request.placement = default_search_placement  # Placement is used to identify the Serving Config name.
     search_request.query = query
     search_request.filter = _filter
-    search_request.page_size = page_size
+    search_request.page_size = 10
     search_request.visitor_id = "123456"  # A unique identifier to track visitors
 
     print("---search_request:---")
@@ -55,6 +55,7 @@ def search():
     search_response = get_search_service_client().search(search_request)
     print("---filtered search response---")
     print(search_response)
+    return search_response
 
 
 search()

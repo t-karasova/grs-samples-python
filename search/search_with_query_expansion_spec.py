@@ -42,6 +42,7 @@ def get_search_request(query: str, condition: SearchRequest.QueryExpansionSpec.C
     search_request.query = query
     search_request.visitor_id = "123456"  # A unique identifier to track visitors
     search_request.query_expansion_spec = query_expansion_spec
+    search_request.page_size = 10
 
     print("---search_request:---")
     print(search_request)
@@ -59,6 +60,7 @@ def search():
 
     print("---query expansion search results---")
     print(search_response)
+    return search_response
 
 
 search()

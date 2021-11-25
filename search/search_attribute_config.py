@@ -46,6 +46,7 @@ def search():
     search_response = get_search_service_client().search(search_request)
     print("---search response---")
     print(search_response)
+    return search_response
 
 
 search()
