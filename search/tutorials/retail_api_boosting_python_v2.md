@@ -16,6 +16,22 @@ In this tutorial you will learn some examples of product boosting.
 This step is required if this is the first Retail API Tutorial you run.
 Otherwise, you can skip it.
 
+### Select your project and enable the Retail API
+
+Google Cloud organizes resources into projects. This lets you
+collect all the related resources for a single application in one place.
+
+If you don't have a Google Cloud project yet, you can
+[create a new project](https://console.cloud.google.com/projectcreate).
+
+After the project is created, set your PROJECT_ID to a ```project``` variable.
+1. Run the following command in Terminal:
+    ```bash
+    gcloud config set project <YOUR_PROJECT_ID>
+    ```
+
+1. Check that the Retail API is enabled for your Project in the [Admine Console](https://console.cloud.google.com/ai/retail/).
+
 ### Set up authentication
 
 To run a code sample from the Cloud Shell, you need to authenticate. To do this, use the Application Default Credentials.
@@ -33,22 +49,6 @@ To run a code sample from the Cloud Shell, you need to authenticate. To do this,
 1. Run the code sample and check the Retail API in action.
 
 **Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
-
-### Select your project and enable the Retail API
-
-Google Cloud organizes resources into projects. This lets you
-collect all the related resources for a single application in one place.
-
-If you don't have a Google Cloud project yet, you can
-[create a new project](https://console.cloud.google.com/projectcreate).
-
-After the project is created, set your PROJECT_ID to a ```project``` variable.
-1. Run the following command in Terminal:
-    ```bash
-    gcloud config set project <YOUR_PROJECT_ID>
-    ```
-
-1. Check that the Retail API is enabled for your Project in the [Admine Console](https://console.cloud.google.com/ai/retail/).
 
 ### Set the PROJECT_NUMBER environment variable
 
@@ -111,7 +111,7 @@ We have prepared a JSON file with valid products in the `search` directory:
 You can use this file in the tutorial.
 
 1.  In your own Google Cloud project, go to Cloud Storage.
-1.  Click **Create bucket**, use your Project ID as a name, and
+1.  Click **Create bucket**, give your Project ID in the name, and
     click **Create**.
 1.  From the Cloud Shell Terminal, run the following command:
     ```bash
