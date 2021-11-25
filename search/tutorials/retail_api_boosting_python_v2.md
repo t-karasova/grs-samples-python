@@ -49,7 +49,6 @@ After the project is created, set your PROJECT_ID to a ```project``` variable.
     ```
 
 1. Check that the Retail API is enabled for your Project in the [Admine Console](https://console.cloud.google.com/ai/retail/).
-    ```
 
 ### Set the PROJECT_NUMBER environment variable
 
