@@ -48,6 +48,7 @@ After the project is created, set your PROJECT_ID to a ```project``` variable.
     ```
 
 1. Check that the Retail API is enabled for your Project in the [Admine Console](https://console.cloud.google.com/ai/retail/).
+    ```
 
 ### Set the PROJECT_NUMBER environment variable
 
@@ -110,7 +111,7 @@ We have prepared a JSON file with valid products in the `search` directory:
 You can use this file in the tutorial.
 
 1.  In your own Google Cloud project, go to Cloud Storage.
-1.  Click **Create bucket**, give your Project ID in the name, and
+1.  Click **Create bucket**, use your Project ID as a name, and
     click **Create**.
 1.  From the Cloud Shell Terminal, run the following command:
     ```bash
