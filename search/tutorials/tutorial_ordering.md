@@ -1,136 +1,219 @@
-# **Ordering Tutorial**
+# Ordering tutorial
 
-## Let's get started
+## Get started
 
-This tutorial shows you how to order items in a search response. 
+This tutorial shows you how to order items in a search response.
 
-You can apply ordering to most of the product fields. To find the complete list of available fields, check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#order)
-
+You can apply ordering to most of the product fields. To find the complete list of available fields, check the Retail API documentation.
 
 And now, let's see how the product ordering works.
 
-**Time to complete**: About 2 minutes
+<walkthrough-tutorial-duration duration="5"></walkthrough-tutorial-duration>
 
-## Before you begin
+## Get started with Google Cloud Retail (optional)
 
-To run Python code samples from this tutorial, you need to set up your virtual environment.
+This step is required if this is the first Retail API Tutorial you run.
+Otherwise, you can skip it.
 
-To do that, run the following commands in a terminal:
+### Set up authentication
+
+To run a code sample from the Cloud Shell, you need to authenticate. To do this, use the Application Default Credentials.
+
+1. Set your user credentials to authenticate your requests to the Retail API
+
+    ```bash
+    gcloud auth login
+    ```
+
+1. Type `Y` and press **Enter**. Click the link in Terminal. A browser window should appear asking you to log in using your Gmail account.
+
+1. Provide the Google Auth Library with access to your credentials and paste the code from the browser to the Terminal.
+
+1. Run the code sample and check the Retail API in action.
+
+**Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
+
+### Select your project and enable the Retail API
+
+Google Cloud organizes resources into projects. This lets you
+collect all the related resources for a single application in one place.
+
+If you don't have a Google Cloud project yet, you can
+[create a new project](https://console.cloud.google.com/projectcreate).
+
+After the project is created, set your PROJECT_ID to a ```project``` variable.
+1. Run the following command in Terminal:
+    ```bash
+    gcloud config set project <YOUR_PROJECT_ID>
+    ```
+
+1. Next, proceed with enabling the Retail API:
+    ```bash
+    gcloud services enable retail.googleapis.com
+    ```
+
+### Set the PROJECT_NUMBER environment variable
+
+Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** as an environment variable. It will be used in every request to the Retail API.
+
+1. You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+
+1. Set the environment variable with the following command:
+    ```bash
+    export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
+    ```
+
+### Install Google Cloud Retail libraries
+
+To run Python code samples for the Retail API tutorial, you need to set up your virtual environment.
+
+1. Run the following commands in a Terminal to create an isolated Python environment:
+    ```bash
+    pip install virtualenv
+    virtualenv myenv
+    source myenv/bin/activate
+    ```
+1. Next, install Google packages:
+    ```bash
+    pip install google
+    pip install google-cloud-retail
+    ```
+
+## Clone the Retail code samples (optional)
+
+This step is required if this is the first Retail API Tutorial you run.
+Otherwise, you can skip it.
+
+Clone the Git repository with all the code samples to learn the Retail features and check them in action.
+
+<!-- TODO(ianan): change the repository link -->
+1. Run the following command in the Terminal:
+    ```bash
+    git clone https://github.com/t-karasova/grs-samples-python.git
+    ```
+
+    The code samples for each of the Retail services are stored in different directories.
+
+1. Go to the ```grs-samples-python``` directory. It's our starting point to run more commands.
+    ```bash
+    cd grs-samples-python
+    ```
+
+## Import catalog data (optional)
+
+This step is required if this is the first Retail API Tutorial you run.
+Otherwise, you can skip it.
+
+### Upload catalog data to Cloud Storage
+
+We have prepared a JSON file with valid products in the `search` directory:
+
+**search/products_for_search.json**
+
+You can use this file in the tutorial.
+
+1.  In your own Google Cloud project, go to Cloud Storage.
+1.  Click **Create bucket**, give it the name of your Project ID, and
+    click **Create**.
+1.  From the Cloud Shell Terminal, run the following command:
+    ```bash gsutil cp
+    search/products_for_search.json gs://<YOUR_PROJECT_ID>`
+    ```
+
+1.  Now you can see that the file is uploaded to the Cloud Storage bucket.
+
+### Import products to the Retail Catalog
+
+To import the prepared products to a catalog, run the following command in the Terminal:
+
 ```bash
-pip install virtualenv
-```
-```bash
-virtualenv <your-env>
-```
-```bash
-source <your-env>/bin/activate
-```
-Next, install Google packages:
-```bash
-pip install google
-```
-```bash
-pip install google-cloud-retail
+python product/import_products_gcs.py
 ```
 
-**Tip**: Click the copy button beside the code box to paste the command in the Cloud Shell terminal and run it.
-
-## Set the PROJECT_NUMBER environment variable
-
-As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
-
-You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
-
-Set the environment variable with a following command:
-```bash
-export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
-```
-
-## Ordering by a single field. Ordering expression
+## Order by a single field: ordering expression
 
 To use the ordering feature, you need to specify the field and the ordering direction. You can order by both the text and numeric fields.
 
-First, let's order the search results by price when more expensive items come first. To do that, set the ordering expression as follows: 
+1. Open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_ordering.py" regex="TRY DIFFERENT ORDERING EXPRESSIONS HERE">search_with_ordering.py</walkthrough-editor-select-regex>.
 
-```order = 'price desc'```
- 
+1. Order the search results by price when more expensive items come first. To do that, set the ordering expression as follows:
 
-To see the whole request with ordering, open **search_with_ordering.py**
+    ```order = 'price desc'```
 
-Run the sample in a terminal using the following command:
-```bash
-python search_with_ordering.py
-```
 
-As you can see now, ```results[]``` are ordered by price descending.
+1. Run the sample in the Terminal using the following command:
+    ```bash
+    python search/search_with_ordering.py
+    ```
 
-## Ordering by a single field. Product sorting
+As you can see, the results are now ordered by descending price.
 
-Next, let's change the ordering direction to show the cheapest products first.
+## Order by a single field: product sorting
 
-To do that, find the comment 
+Next, change the ordering direction to show the cheapest products first.
 
-"#TRY DIFFERENT ORDERING EXPRESSIONS HERE:" 
+1. Change the condition under the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_ordering.py" regex="TRY DIFFERENT ORDERING EXPRESSIONS HERE">comment</walkthrough-editor-select-regex> to the following:
 
-and change the ordering expression to the following one:
+    ```order = 'price asc'``` or just ```order = 'price'```
+    Those are equivalent expressions because ascending is the default ordering direction.
 
-```order = 'price asc'``` or just ```order = 'price'``` - those are equivalent expressions since ascending is the default ordering direction.
+1. Run the sample in the Terminal using the command:
 
-Run the sample in a terminal using the command:
+    ```bash
+    python search/search_with_ordering.py
+    ```
 
-```bash
-python search_with_ordering.py
-```
+You have sorted the products by ascending price.
 
-You have sorted the products by price ascending.
+## Order by multiple fields
 
-## Ordering by multiple fields
+You can order items by multiple fields using the comma-separated fields in order of priority, with fields having higher priority coming first.
 
-You can order items by multiple fields using the comma-separated fields in order of priority (more prioritized come first). 
-
-To order items with equal values for higher priority fields, use the lower priority fields. 
+To order items with equal values for higher-priority fields, use the lower-priority fields.
 
 For example, **```price desc, discount desc```** orders items by their price first. The products with the same price will be ordered by a discount amount.
 
-To try that, change the ordering expression to the next one:
-```
-order = 'price desc, discount'
-```
+1. To try that, change the ordering expression to the next one:
+    ```
+    order = 'price desc, discount'
+    ```
 
-or
+    or
 
-```
-order = 'brands, attributes.collection desc'
-```
+    ```
+    order = 'brands, attributes.collection desc'
+    ```
 
-Run the code sample in a terminal using the command:
-```bash
-python search_with_ordering.py
-```
+1. Run the code sample in the Terminal using the command:
+    ```bash
+    python search/search_with_ordering.py
+    ```
 
-## Ordering. Error handling
+## Ordering: error handling
 
 In case of sending some invalid data or if any of the required fields is missing in the request, the Search Service responds with an error message.
-To find a complete list of the Search Request fields with their corresponding requirements, check the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
+To find a complete list of the Search Request fields with their corresponding requirements, check the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice).
 
-To check a list of **ordering fields**, use the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#order)
+To check a list of ordering fields, use the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#order).
 
-If you try to order the search results by the field that is **not intended for ordering** (for example, the "name" field), you will get an error message.
+If you try to order the search results by the field that is not intended for ordering (for example, the `name` field), you will get an error message.
 
-Change the variable "order" value to the following:
-```order = 'name desc'```
+1. Change the variable `order` value to the following:
+    ```order = 'name desc'```
 
-and run the code once again:
-```bash
-python search_with_ordering.py
-```
+1. Run the code again:
+    ```bash
+    python search/search_with_ordering.py
+    ```
 
-You should see the following error message:
+1. You should see the following error message:
 
-```google.api_core.exceptions.InvalidArgument: 400 Invalid orderBy syntax 'name desc'. Parsing orderBy failed with error: Unsupported field in orderBy: name. ```
+    ```google.api_core.exceptions.InvalidArgument: 400 Invalid orderBy syntax 'name desc'. Parsing orderBy failed with error: Unsupported field in orderBy: name. ```
 
-## Success 
+## Congratulations
 
-You have completed the tutorial! We **encourage** you to **test the ordering by yourself**, and try different combinations of various order expressions.
+<walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-**Thank you for completing this tutorial!**
+You have completed the tutorial! We encourage you to test the ordering by yourself, and try different combinations of various order expressions.
+
+<walkthrough-inline-feedback></walkthrough-inline-feedback>
