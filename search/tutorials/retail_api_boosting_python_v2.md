@@ -99,7 +99,6 @@ Clone the Git repository with all the code samples to learn the Retail features 
     ```bash
     cd grs-samples-python
     ```
-
 ## Import catalog data (optional)
 
 This step is required if this is the first Retail API Tutorial you run.
@@ -116,7 +115,11 @@ The bucket name must be unique, for convenience it can be named the same as your
 
 To create the bucket and upload the JSON file run the following command in the Terminal:
 
-1.  Now you can see that the file is uploaded to the Cloud Storage bucket.
+```bash
+python product/create_gcs_bucket.py
+```
+
+Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the file is uploaded.
 
 ### Import products to the Retail Catalog
 
