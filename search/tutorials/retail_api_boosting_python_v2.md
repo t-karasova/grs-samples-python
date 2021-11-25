@@ -23,7 +23,7 @@ To run a code sample from the Cloud Shell, you need to authenticate. To do this,
 1. Set your user credentials to authenticate your requests to the Retail API
 
     ```bash
-    gcloud auth login
+    gcloud auth application-default login
     ```
 
 1. Type `Y` and press **Enter**. Click the link in Terminal. A browser window should appear asking you to log in using your Gmail account.
@@ -48,10 +48,8 @@ After the project is created, set your PROJECT_ID to a ```project``` variable.
     gcloud config set project <YOUR_PROJECT_ID>
     ```
 
-1. Next, proceed with enabling the Retail API:
-    ```bash
-    gcloud services enable retail.googleapis.com
-    ```
+1. Check that the Retail API is enabled for your Project in the [Admine Console](https://console.cloud.google.com/ai/retail/).
+
 
 ### Set the PROJECT_NUMBER environment variable
 
