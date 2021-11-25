@@ -16,6 +16,24 @@ In this tutorial you will learn some examples of product boosting.
 This step is required if this is the first Retail API Tutorial you run.
 Otherwise, you can skip it.
 
+### Set up authentication
+
+To run a code sample from the Cloud Shell, you need to authenticate. To do this, use the Application Default Credentials.
+
+1. Set your user credentials to authenticate your requests to the Retail API
+
+    ```bash
+    gcloud auth login
+    ```
+
+1. Type `Y` and press **Enter**. Click the link in Terminal. A browser window should appear asking you to log in using your Gmail account.
+
+1. Provide the Google Auth Library with access to your credentials and paste the code from the browser to the Terminal.
+
+1. Run the code sample and check the Retail API in action.
+
+**Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
+
 ### Select your project and enable the Retail API
 
 Google Cloud organizes resources into projects. This lets you
@@ -30,25 +48,10 @@ After the project is created, set your PROJECT_ID to a ```project``` variable.
     gcloud config set project <YOUR_PROJECT_ID>
     ```
 
-1. Check that the Retail API is enabled for your Project in the [Admine Console](https://console.cloud.google.com/ai/retail/).
-
-### Set up authentication
-
-To run a code sample from the Cloud Shell, you need to authenticate. To do this, use the Application Default Credentials.
-
-1. Set your user credentials to authenticate your requests to the Retail API
-
+1. Next, proceed with enabling the Retail API:
     ```bash
-    gcloud auth application-default login
+    gcloud services enable retail.googleapis.com
     ```
-
-1. Type `Y` and press **Enter**. Click the link in Terminal. A browser window should appear asking you to log in using your Gmail account.
-
-1. Provide the Google Auth Library with access to your credentials and paste the code from the browser to the Terminal.
-
-1. Run the code sample and check the Retail API in action.
-
-**Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
 ### Set the PROJECT_NUMBER environment variable
 
@@ -160,7 +163,6 @@ or
     In the initial request, the boost strength is set to zero: ```boost = 0.0```,
     so the boosting will not affect the order of the   products in the response.
 
-## Boosting by one criterion. Boost results
 
 ## Boost by one criterion: Boost results
 
