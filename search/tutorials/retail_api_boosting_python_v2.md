@@ -1,65 +1,127 @@
-# **Search With Boosting Tutorial**
+# Search with boosting tutorial
 
-## Let's get started
+## Get started
 
-Boosting is a powerful and convenient feature that allows you to prioritize products that match certain condition.
+Boosting is a powerful and convenient feature that lets you prioritize products that match certain conditions.
 To specify a condition, you can use filtering expressions.
 
 A boosting specification can be based on a single field condition or on multiple fields. Also, you can combine several specifications into one boosting request.
 
 In this tutorial you will learn some examples of product boosting.
 
+<walkthrough-tutorial-duration duration="7"></walkthrough-tutorial-duration>
 
-**Time to complete**: About 4 minutes
+## Get started with Google Cloud Retail (optional)
 
-## Before you begin
+This step is required if this is the first Retail API Tutorial you run.
+Otherwise, you can skip it.
 
-### Clone the Retail code samples
+### Set up authentication
 
-Let's clone the Git repository with all the code samples to learn the Retail features and check the in action.
+To run a code sample from the Cloud Shell, you need to authenticate. To do this, use the Application Default Credentials.
 
-'#TODO change the repository link
-Run the following command in the Terminal:
-```bash
-git clone https://github.com/t-karasova/grs-samples-python.git
-```
+1. Set your user credentials to authenticate your requests to the Retail API
 
-The code samples for each of the Retail services are stored in different directories.
+    ```bash
+    gcloud auth login
+    ```
 
-Go to the ```grs-samples-python``` directory, it will be our start point for further commands running.
-```bash
-cd grs-samples-python
-```
+1. Type `Y` and press **Enter**. Click the link in Terminal. A browser window should appear asking you to log in using your Gmail account.
+
+1. Provide the Google Auth Library with access to your credentials and paste the code from the browser to the Terminal.
+
+1. Run the code sample and check the Retail API in action.
+
+**Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
+
+### Select your project and enable the Retail API
+
+Google Cloud organizes resources into projects. This lets you
+collect all the related resources for a single application in one place.
+
+If you don't have a Google Cloud project yet, you can
+[create a new project](https://console.cloud.google.com/projectcreate).
+
+After the project is created, set your PROJECT_ID to a ```project``` variable.
+1. Run the following command in Terminal:
+    ```bash
+    gcloud config set project <YOUR_PROJECT_ID>
+    ```
+
+1. Next, proceed with enabling the Retail API:
+    ```bash
+    gcloud services enable retail.googleapis.com
+    ```
 
 ### Set the PROJECT_NUMBER environment variable
 
-As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
+Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** as an environment variable. It will be used in every request to the Retail API.
 
-You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+1. You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
 
-Set the environment variable with a following command:
-```bash
-export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
-```
+1. Set the environment variable with the following command:
+    ```bash
+    export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
+    ```
 
-## Import catalog data
+### Install Google Cloud Retail libraries
+
+To run Python code samples for the Retail API tutorial, you need to set up your virtual environment.
+
+1. Run the following commands in a Terminal to create an isolated Python environment:
+    ```bash
+    pip install virtualenv
+    virtualenv myenv
+    source myenv/bin/activate
+    ```
+1. Next, install Google packages:
+    ```bash
+    pip install google
+    pip install google-cloud-retail
+    ```
+
+## Clone the Retail code samples (optional)
+
+This step is required if this is the first Retail API Tutorial you run.
+Otherwise, you can skip it.
+
+Clone the Git repository with all the code samples to learn the Retail features and check them in action.
+
+<!-- TODO(ianan): change the repository link -->
+1. Run the following command in the Terminal:
+    ```bash
+    git clone https://github.com/t-karasova/grs-samples-python.git
+    ```
+
+    The code samples for each of the Retail services are stored in different directories.
+
+1. Go to the ```grs-samples-python``` directory. It's our starting point to run more commands.
+    ```bash
+    cd grs-samples-python
+    ```
+
+## Import catalog data (optional)
+
+This step is required if this is the first Retail API Tutorial you run.
+Otherwise, you can skip it.
 
 ### Upload catalog data to Cloud Storage
-We have prepared a JSON file with a bunch of valid product in the "search" directory:
+
+We have prepared a JSON file with valid products in the `search` directory:
 
 **search/products_for_search.json**
 
 You can use this file in the tutorial.
- 
-In your own Google Platform project go to the Cloud Storage.
-Click "Create Bucket" button, give it a name **```products_catalog```**, and press "Create".
 
-Next, from the Cloud Shell Terminal run the following command:
-```bash
-gsutil cp search/products_for_search.json gs://products_catalog
-```
+1.  In your own Google Cloud project, go to Cloud Storage.
+1.  Click **Create bucket**, give it the name of your Project ID, and
+    click **Create**.
+1.  From the Cloud Shell Terminal, run the following command:
+    ```bash gsutil cp
+    search/products_for_search.json gs://<YOUR_PROJECT_ID>`
+    ```
 
-Now you can see the file is uploaded to the Cloud Storage bucket.
+1.  Now you can see that the file is uploaded to the Cloud Storage bucket.
 
 ### Import products to the Retail Catalog
 
@@ -69,56 +131,60 @@ To import the prepared products to a catalog, run the following command in the T
 python product/import_products_gcs.py
 ```
 
-## Boosting by one criterion. Condition and filtering expression 
+## Boost by one criterion: condition and filtering expression
 
 The boosting specification looks like this:
-  
-  ```
+
+```
   condition_boost_specs {
          condition: string
          boost: double [-1;1]
     }
 ```
 
-To set the **```condition```**, you should use a filtering expression like the one below:
+1. To set the **```condition```**, you should use a filtering expression like the following:
 
-```'(colorFamily: ANY("Blue"))'``` 
+    ```'(colorFamily: ANY("blue"))'```
 
-or  
-```'(price: IN(15.0, 30.0))'```
+    or
+    ```'(rating: IN(4.0, 5.0))'```
 
-You can learn how to use filters in the [Filtering Tutorial](tutorial_filtering.md) 
-or read about it in the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter) 
+    <!-- TODO(ianan): change Filtering Tutorial link -->
+    You can learn how to use filters in the [Filtering Tutorial](retail_api_v2_filtering_python.md)
+    or read about it in the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
 
-The field **```boost```** defines the strength of the condition boost, which should be in the range of -1 to 1. Negative boost means demotion.
+    The field **```boost```** defines the strength of the condition boost, which should be in the range of -1 to 1. Negative boost means demotion.
 
-Now, open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_boost_spec.py" regex="boost.*0">search_with_boost_spec.py</walkthrough-editor-select-regex>
+1. Now open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_boost_spec.py" regex="boost.*0">search_with_boost_spec.py</walkthrough-editor-select-regex>.
 
-In the initial request, the boost strength is set to zero: ```boost = 0.0```, so the boosting will **not affect** the order of the products in the response.
 
-## Boosting by one criterion. Boost results
+    In the initial request, the boost strength is set to zero: ```boost = 0.0```,
+    so the boosting will not affect the order of the   products in the response.
 
-Run the sample in a Terminal with the following command:
-```bash
-python cloudshell_open/grs-samples-python/search/search_with_boost_spec.py
-```
-Check the response to see the original order of products depending on their relevance to the query phrase.
 
-Next, let's change the value of the field **boost** and run the code sample once again:
-```boost = 1.0```
+## Boost by one criterion: Boost results
 
-Now you can check ```results[]```. The products corresponding to the boost condition became reranked. Now, blue products are **on the top** of the list.
+1. Run the sample in a terminal with the following command:
+    ```bash
+    python search/search_with_boost_spec.py
+    ```
+1. Check the response to see the original order of products depending on their relevance to the query phrase.
 
-If you set ```boost = -1.0```, blue products will appear **at the bottom** of the search result.
+1. Next, change the value of the field **boost** and run the code sample again:
+    ```boost = 1.0```
+
+1. Now you can check the results. The products corresponding to the boost condition became reranked. Now blue products are on the top of the list.
+
+1. If you set ```boost = -1.0```, blue products will appear at the bottom of the search result.
 
 ## Some notes about boosting
 
-Please note that setting the boost strength to 1.0 gives the item a strong promotion. However, it **does not necessarily mean that the boosted item will be the top result at all times**, nor that other items will be excluded. 
-Results could still be shown even when none of them matches the condition. 
+Setting the boost strength to 1.0 gives the item a strong promotion. However, it does not necessarily mean that the boosted item will be the top result at all times, nor that other items will be excluded.
+Results could still be shown even when none of them matches the condition.
 
-Also, results that are **significantly more relevant** to the search query can still trump your heavily favored but irrelevant items.
+Also, results that are significantly more relevant to the search query can still be ranked higher than your heavily favored but irrelevant items.
 
-You can combine up to 10 boost specifications in one search request. In this way, you may apply really sophisticated boosting rules to your search request.
+You can combine up to 10 boost specifications in one search request. In this way, you can apply really sophisticated boosting rules to your search request.
 
 ## Try different boosting conditions
 
@@ -135,56 +201,37 @@ Or
 condition = '(attributes.material: ANY("Cotton", "Polyester")) AND (brands: ANY("Google"))'
 ```
 
-At the same time, you can test the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_boost_spec.py" regex="boost = /D.*">boost strength</walkthrough-editor-select-regex> by setting any value from -1 to 1.
+At the same time, you can test the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_boost_spec.py" regex="boost = (\D)?\d.*">boost strength</walkthrough-editor-select-regex> by setting any value from -1 to 1.
 
-## Boosting. Error handling
+## Error handling
 
 In case of sending some invalid data or if any of the required fields is missing in the request, the Search Service responds with an error message.
-To find a complete list of the Search Request fields with their corresponding requirements, check the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
+To find a complete list of the Search Request fields with their corresponding requirements, check the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice).
 
-To check the list of **text and numeric fields that support boosting**, use the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
+To check the list of text and numeric fields that support boosting, use the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter).
 
-## Boosting. Error handling results
+## Error handling results
 
-If you try to boost the search results and set a condition in the field which is **not supposed for boosting** (for example, the "name" field), you will get an error message.
+If you try to boost the search results and set a condition in the field that is not supported for boosting (for example, the **name** field), you will get an error message.
 
-Change the variable <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_boost_spec.py" regex="condition = '.*'">condition</walkthrough-editor-select-regex> value to the following:
-``` condition = '(name: ANY("some_random"))'```
+1. Change the variable <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_boost_spec.py" regex="condition = '.*'">condition</walkthrough-editor-select-regex> value to the following:
+    ``` condition = '(name: ANY("some_random"))'```
 
-Run the code once again:
-```bash
-python cloudshell_open/grs-samples-python/search/search_with_boost_spec.py
-```
+1. Run the code again:
+    ```bash
+    python search/search_with_boost_spec.py
+    ```
 
-You should see the following error message:
+1. You should see the following error message:
 
-```google.api_core.exceptions.InvalidArgument: 400 Invalid filter syntax '(name: ANY("some_random"))'. Parsing filter failed with error: Unsupported field "name" on ":" operator.```
+    ```terminal
+    google.api_core.exceptions.InvalidArgument: 400 Invalid filter syntax '(name: ANY("some_random"))'. Parsing filter failed with error: Unsupported field "name" on ":" operator.
+    ```
 
 ## Congratulations
 
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-You have completed the tutorial! We **encourage** you to **test the boosting by yourself** and try different combinations of various filter expressions.
+You have completed the tutorial! We encourage you to test the boosting by yourself and try different combinations of various filter expressions.
 
-### What's next?
-
-<walkthrough-tutorial-card id="retail_api_querying_python_v2" title="Search simple query tutorial" keepPrevious=true>
-Learn how to search for products in a catalog using the Retail API</walkthrough-tutorial-card>
-
-<walkthrough-tutorial-card id="retail_api_pagination_python_v2" title="Search with pagination tutorial" keepPrevious=true>
-Learn how to navigate the search results using Retail API</walkthrough-tutorial-card>
-
-<walkthrough-tutorial-card id="retail_api_filtering_python_v2" title="Search with filtering tutorial" keepPrevious=true>
-Learn how to filter search results using the Retail API</walkthrough-tutorial-card>
-
-<walkthrough-tutorial-card id="retail_api_ordering_python_v2" title="Search with ordering tutorial" keepPrevious=true>
-Learn how to order search results using the Retail API</walkthrough-tutorial-card>
-
-<walkthrough-tutorial-card id="retail_api_boosting_python_v2" title="Search with boosting tutorial" keepPrevious=true>
-Learn how to prioritize products in the search response using the Retail API</walkthrough-tutorial-card>
-
-<walkthrough-tutorial-card id="retail_api_query_expansion_python_v2" title="Search with query expansion tutorial" keepPrevious=true>
-Learn how to enable the query expansion feature using the Retail API</walkthrough-tutorial-card>
-
-
-**Thank you for completing this tutorial!**
+<walkthrough-inline-feedback></walkthrough-inline-feedback>
