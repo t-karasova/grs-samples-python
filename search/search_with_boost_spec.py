@@ -46,6 +46,7 @@ def get_search_request(query: str, condition: str, boost_strength: float):
     search_request.query = query
     search_request.visitor_id = "123456"  # A unique identifier to track visitors
     search_request.boost_spec = boost_spec
+    search_request.page_size = 10
 
     print("---search request---")
     print(search_request)

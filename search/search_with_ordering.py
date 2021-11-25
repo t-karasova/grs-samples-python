@@ -38,6 +38,7 @@ def get_search_request(query: str, order: str):
     search_request.query = query
     search_request.order_by = order
     search_request.visitor_id = "123456"  # A unique identifier to track visitors
+    search_request.page_size = 10
 
     print("---search request---")
     print(search_request)
