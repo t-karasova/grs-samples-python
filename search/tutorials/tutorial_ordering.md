@@ -22,7 +22,7 @@ To run a code sample from the Cloud Shell, you need to authenticate. To do this,
 1. Set your user credentials to authenticate your requests to the Retail API
 
     ```bash
-    gcloud auth login
+    gcloud auth application-default login
     ```
 
 1. Type `Y` and press **Enter**. Click the link in Terminal. A browser window should appear asking you to log in using your Gmail account.
