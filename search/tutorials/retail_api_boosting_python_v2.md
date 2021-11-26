@@ -45,21 +45,19 @@ export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
 ## Import catalog data
 
 ### Upload catalog data to Cloud Storage
-We have prepared a JSON file with a bunch of valid product in the "search" directory:
 
-**search/products_for_search.json**
+There is a JSON file with a bunch of valid product prepared in the "product" directory: **product/products_for_search.json**.
 
-You can use this file in the tutorial.
- 
-In your own Google Platform project go to the Cloud Storage.
-Click "Create Bucket" button, give it a name **```products_catalog```**, and press "Create".
+In your own project you should create a Cloud Storage bucket and put the JSON file there.
+The bucket name must be unique, for convenience it can be named the same as your project ID.
 
-Next, from the Cloud Shell Terminal run the following command:
+To create the bucket and upload the JSON file run the following command in the Terminal:
+
 ```bash
-gsutil cp search/products_for_search.json gs://products_catalog
+python product/create_gcs_bucket.py
 ```
 
-Now you can see the file is uploaded to the Cloud Storage bucket.
+Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the file is uploaded.
 
 ### Import products to the Retail Catalog
 

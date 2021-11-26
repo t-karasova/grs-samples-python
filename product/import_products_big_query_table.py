@@ -21,17 +21,17 @@ import time
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import BigQuerySource, ProductInputConfig, ProductServiceClient, \
     ImportProductsRequest
+from setup_cleanup import get_project_id
 
 project_number = os.getenv('PROJECT_NUMBER')
-# TODO(developer) Define the project Id here:
-project_id = ""
+project_id = get_project_id()
 
 endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
 dataset_id = "products"
-table_id = "import_tutorial"
-# TO CHECK ERROR HANDLING USE THE TABLE OF INVALID PRODUCTS:
-# table_id = "products_for_import_invalid"
+table_id = "products"
+# TO CHECK ERROR HANDLING USE THE TABLE WITH INVALID PRODUCTS:
+# table_id = "products_some_invalid"
 
 
 # get product service client

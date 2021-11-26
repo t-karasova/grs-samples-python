@@ -50,6 +50,23 @@ Set the environment variable with a following command:
 export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
 ```
 
+### Upload catalog data to Cloud Storage
+
+There is a JSON file with a bunch of valid product prepared in the "product" directory: **product/products_for_search.json**.
+
+The other file, **product/products_for_search.json**, contains both valid and invalid products, you will use in to check the error handling.
+ 
+In your own project you should create a Cloud Storage bucket and put the JSON file there.
+The bucket name must be unique, for convenience it can be named the same as your project ID.
+
+To create the bucket and upload the JSON file run the following command in the Terminal:
+
+```bash
+python product/create_gcs_bucket.py
+```
+
+Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the file is uploaded.
+
 ## Import products from the Cloud Storage source
 
 The only reconciliation mode available for import from GCS is INCREMENTAL. That is, importing automatically creates new products and updates current products. Products already present in a catalog and missing from the import JSON source will not change.
