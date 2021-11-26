@@ -38,10 +38,9 @@ Next, install Google packages:
 
 ```bash
 python3 -m pip install google
-```
-
-```bash
 python3 -m pip install google.cloud.retail
+python3 -m pip install google.cloud.storage
+python3 -m pip install google.cloud.bigquery
 ```
 
 **Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.

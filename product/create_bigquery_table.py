@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from setup_cleanup import create_bq_dataset, create_bigquery_dataset, create_bq_table, upload_data_to_bq_table
+from setup_cleanup import create_bq_dataset, create_bq_table, upload_data_to_bq_table
 
 create_bq_dataset("products")
 create_bq_table("products", "products")

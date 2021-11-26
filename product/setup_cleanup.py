@@ -127,7 +127,7 @@ def upload_blob(source_file_name):
 
     storage_client = storage.Client()
     bucket = storage_client.bucket(get_project_id())
-    object_name = re.search('product/(.*?)\.json', source_file_name).group(1)
+    object_name = re.search('product/(.*?)$', source_file_name).group(1)
     blob = bucket.blob(object_name)
     blob.upload_from_filename(source_file_name)
 
