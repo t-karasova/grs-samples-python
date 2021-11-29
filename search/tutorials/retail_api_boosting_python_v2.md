@@ -77,6 +77,7 @@ To run Python code samples for the Retail API tutorial, you need to set up your 
     pip install google-cloud-retail
     pip install google.cloud.storage
     pip install google.cloud.bigquery
+
     ```
 
 ## Clone the Retail code samples (optional)
@@ -98,6 +99,7 @@ Clone the Git repository with all the code samples to learn the Retail features 
     ```bash
     cd grs-samples-python
     ```
+
 ## Import catalog data (optional)
 
 This step is required if this is the first Retail API Tutorial you run.
@@ -120,6 +122,7 @@ python product/create_gcs_bucket.py
 ```
 
 Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the files are uploaded.
+
 
 ### Import products to the Retail Catalog
 
@@ -144,8 +147,8 @@ The boosting specification looks like this:
 
     ```'(colorFamily: ANY("Blue"))'```
 
-or  
-```'(price: IN(15.0, 30.0))'```
+    or
+    ```'(price: IN(15.0, 30.0))'```
 
     <!-- TODO(ianan): change Filtering Tutorial link -->
     You can learn how to use filters in the [Filtering Tutorial](retail_api_v2_filtering_python.md)
