@@ -107,22 +107,21 @@ Otherwise, you can skip it.
 
 ### Upload catalog data to Cloud Storage
 
-There is a JSON file with valid products prepared in the "product" directory:
+There is a JSON file with valid products prepared in the `product` directory:
 **product/products.json**.
 
-The other file, **product/products_some_invalid.json**, contains both valid and invalid products, you will use in to check the error handling.
- 
-In your own project you should create a Cloud Storage bucket and put the JSON file there.
+Another file, **product/products_some_invalid.json**, contains both valid and invalid products, and you will use it to check the error handling.
+
+In your own project you need to create a Cloud Storage bucket and put the JSON file there.
 The bucket name must be unique, for convenience it can be named the same as your project ID.
 
-To create the bucket and upload the JSON file run the following command in the Terminal:
+1. To create the bucket and upload the JSON file run the following command in the Terminal:
 
 ```bash
 python product/create_gcs_bucket.py
 ```
 
 Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the files are uploaded.
-
 
 ### Import products to the Retail Catalog
 
