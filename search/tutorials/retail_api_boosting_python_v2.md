@@ -11,7 +11,7 @@ In this tutorial you will learn some examples of product boosting.
 
 <walkthrough-tutorial-duration duration="7"></walkthrough-tutorial-duration>
 
-## Get started with Google Cloud Retail (optional)
+## Get started with Google Cloud Retail
 
 This step is required if this is the first Retail API Tutorial you run.
 Otherwise, you can skip it.
@@ -21,7 +21,7 @@ Otherwise, you can skip it.
 Google Cloud organizes resources into projects. This lets you
 collect all the related resources for a single application in one place.
 
-If you don't have a Google Cloud project yet, you can
+If you don't have a Google Cloud project yet or you are not the Owner of existing one, you can
 [create a new project](https://console.cloud.google.com/projectcreate).
 
 After the project is created, set your PROJECT_ID to a ```project``` variable.
@@ -80,7 +80,7 @@ To run Python code samples for the Retail API tutorial, you need to set up your 
 
     ```
 
-## Clone the Retail code samples (optional)
+## Clone the Retail code samples
 
 This step is required if this is the first Retail API Tutorial you run.
 Otherwise, you can skip it.
@@ -100,7 +100,7 @@ Clone the Git repository with all the code samples to learn the Retail features 
     cd grs-samples-python
     ```
 
-## Import catalog data (optional)
+## Import catalog data
 
 This step is required if this is the first Retail API Tutorial you run.
 Otherwise, you can skip it.
