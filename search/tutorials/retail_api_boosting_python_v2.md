@@ -121,7 +121,7 @@ To create the bucket and upload the JSON file run the following command in the T
 python product/create_gcs_bucket.py
 ```
 
-Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the files are uploaded.
+Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the files are uploaded.
 
 
 ### Import products to the Retail Catalog
