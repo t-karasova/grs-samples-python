@@ -106,9 +106,10 @@ Otherwise, you can skip it.
 
 ### Upload catalog data to Cloud Storage
 
-There is a JSON file with a bunch of valid product prepared in the "product" directory: **product/products_for_search.json**.
+There is a JSON file with valid products prepared in the "product" directory:
+**product/products.json**.
 
-The other file, **product/products_for_search.json**, contains both valid and invalid products, you will use in to check the error handling.
+The other file, **product/products_some_invalid.json**, contains both valid and invalid products, you will use in to check the error handling.
  
 In your own project you should create a Cloud Storage bucket and put the JSON file there.
 The bucket name must be unique, for convenience it can be named the same as your project ID.
