@@ -12,14 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from setup_cleanup import get_project_id, create_bucket, list_buckets, upload_blob
+from setup_cleanup import get_project_id, create_bucket, upload_blob
 #
 get_project_id()
-# create_gcs_bucket()
-# upload_data_to_gcs_bucket("product/products.json")
-# upload_data_to_gcs_bucket("product/products_some_invalid.json")
-# get_buckets_list()
-
 create_bucket()
 upload_blob("product/products.json")
 upload_blob("product/products_some_invalid.json")
