@@ -38,10 +38,9 @@ Next, install Google packages:
 
 ```bash
 python3 -m pip install google
-```
-
-```bash
 python3 -m pip install google.cloud.retail
+python3 -m pip install google.cloud.storage
+python3 -m pip install google.cloud.bigquery
 ```
 
 **Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
@@ -57,7 +56,7 @@ Set the environment variable with a following command:
 export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
 ```
 
-## Import products from the BigQuery table
+## Create the BigQuery table and upload products
 
 Before you import products to your catalog, you need to upload the data to the BigQuery table first. There are two ways to do it:
 
@@ -65,10 +64,21 @@ Before you import products to your catalog, you need to upload the data to the B
   using the Retail schema, and create products in it using SQL.
  - Create a BigQuery table using the prepared JSON file with products. You can define the [Retail schema](https://cloud.google.com/retail/docs/catalog#expandable-1) or
   use an autodetect option.
+   
+To upload the data to the BigQuery table you need to create a dataset first, then create table with specific Retail data schema. 
+Next, upload data to the table from prepared JSON file. The data in the file should correspond the Retail schema as well.
 
-Then, import your data to the Retail API.
+There is a **product/products.json** with valid products. You should upload it to the **```products```** dataset, **```products```** table.
 
-For this tutorial we have already created a BigQuery table, so you can use it in your Retail API import request.
+Also, there is a **product/products_some_invalid.json** containing some invalid products along with valid ones. You should uploadt it to the **```products```** dataset, **```products_some_invalid```** table. This table will be used to demonstrate the error handling.
+
+Run the following code in the Terminal to create tables and import data:
+```bash
+python product/create_bigquery_table.py
+```
+The dataset "products" with both tables are created, check them in [Cloud Console](https://console.corp.google.com/bigquery)
+
+## Import products from the BigQuery table
 
 Open **product/import_products_big_query_table.py** and look at the example of the import product request.
 
@@ -134,15 +144,14 @@ If the operation is completed successfully, you can find a **```result```** fiel
 
 In this case, the operation is considered as successful, and the ```big_query_operation.metadata.success_count``` field contains the number of the successfully imported products, which is "2".
 
-There are two invalid products in the BigQuery table, and the number of failures during the product import in the ```big_query_operation.metadata.failure_count``` field is also "2".
+There are two invalid products in the BigQuery table, and the number of failures during the product import in the ```big_query_operation.metadata.failure_count``` field is "1".
 
 The ```operation.result``` field points to the errors bucket where you can find a json file with all the importing errors.
 
-The errors are the following: 
+The error is the following: 
 
 ```json
 {"code":3,"message":"Invalid value at 'availability' (type.googleapis.com/google.cloud.retail.v2main.Product.Availability): \"INVALID_VALUE\"","details":[{"@type":"type.googleapis.com/google.protobuf.Struct","value":{"line_number":1}}]}
-{"code":3,"message":"The string in \"product.title\" is a required field, but no value is found.","details":[{"@type":"type.googleapis.com/google.protobuf.Struct","value":{"line_number":4}}]}
 ```
 
 ## Errors appeared due to invalid request

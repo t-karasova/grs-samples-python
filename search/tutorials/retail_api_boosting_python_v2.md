@@ -75,6 +75,9 @@ To run Python code samples for the Retail API tutorial, you need to set up your 
     ```bash
     pip install google
     pip install google-cloud-retail
+    pip install google.cloud.storage
+    pip install google.cloud.bigquery
+
     ```
 
 ## Clone the Retail code samples (optional)
@@ -104,21 +107,22 @@ Otherwise, you can skip it.
 
 ### Upload catalog data to Cloud Storage
 
-We have prepared a JSON file with valid products in the `search` directory:
+There is a JSON file with valid products prepared in the "product" directory:
+**product/products.json**.
 
-**search/products_for_search.json**
+The other file, **product/products_some_invalid.json**, contains both valid and invalid products, you will use in to check the error handling.
+ 
+In your own project you should create a Cloud Storage bucket and put the JSON file there.
+The bucket name must be unique, for convenience it can be named the same as your project ID.
 
-You can use this file in the tutorial.
+To create the bucket and upload the JSON file run the following command in the Terminal:
 
-1.  In your own Google Cloud project, go to Cloud Storage.
-1.  Click **Create bucket**, give your Project ID in the name, and
-    click **Create**.
-1.  From the Cloud Shell Terminal, run the following command:
-    ```bash
-    gsutil cp search/products_for_search.json gs://<YOUR_PROJECT_ID>
-    ```
+```bash
+python product/create_gcs_bucket.py
+```
 
-1.  Now you can see that the file is uploaded to the Cloud Storage bucket.
+Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the files are uploaded.
+
 
 ### Import products to the Retail Catalog
 
@@ -141,10 +145,10 @@ The boosting specification looks like this:
 
 1. To set the **```condition```**, you should use a filtering expression like the following:
 
-    ```'(colorFamily: ANY("blue"))'```
+    ```'(colorFamily: ANY("Blue"))'```
 
     or
-    ```'(rating: IN(4.0, 5.0))'```
+    ```'(price: IN(15.0, 30.0))'```
 
     <!-- TODO(ianan): change Filtering Tutorial link -->
     You can learn how to use filters in the [Filtering Tutorial](retail_api_v2_filtering_python.md)

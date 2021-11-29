@@ -56,6 +56,7 @@ def search():
 
     print("---ordered search results---")
     print(search_response)
+    return search_response
 
 
 search()

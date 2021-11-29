@@ -17,20 +17,32 @@
 #
 import os
 import time
+import re
+import shlex
+import subprocess
 
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import GcsSource, ProductInputConfig, ProductServiceClient, ImportErrorsConfig, \
     ImportProductsRequest
 
-project_number = os.getenv('PROJECT_NUMBER')
 
+def get_project_id():
+    get_project_command = "gcloud config get-value project --format json"
+    config = subprocess.check_output(shlex.split(get_project_command))
+    project_id = re.search('\"(.*?)\"', str(config)).group(1)
+    return project_id
+
+
+project_number = os.getenv('PROJECT_NUMBER')
+project_id = get_project_id()
 endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
-gcs_bucket = "gs://products_catalog"
-gcs_errors_bucket = "gs://products_catalog/error"
-gcs_products_object = "products_for_search.json"
+
+gcs_bucket = "gs://{}".format(project_id)
+gcs_errors_bucket = "gs://{}/error".format(project_id)
+gcs_products_object = "products.json"
 # TO CHECK ERROR HANDLING USE THE JSON WITH INVALID PRODUCT
-# gcs_products_object = "products_for_import_some_invalid.json"
+# gcs_products_object = "products_some_invalid.json"
 
 
 # get product service client
@@ -83,6 +95,10 @@ def import_products_from_gcs():
     print(gcs_operation.metadata.failure_count)
     print("---operation result:---")
     print(gcs_operation.result())
+
+     # The imported products needs to be indexed in the catalog before they become available for search.
+    print("Wait till products become indexed in the catalog, after that they will be available for search")
+    time.sleep(120)
 
 
 import_products_from_gcs()

@@ -51,6 +51,7 @@ def search():
 
     print("---search response---")
     print(search_response)
+    return search_response
 
 
 search()

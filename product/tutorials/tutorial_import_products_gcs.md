@@ -30,11 +30,11 @@ Next, install Google packages:
 
 ```bash
 python3 -m pip install google
+python3 -m pip install google.cloud.retail
+python3 -m pip install google.cloud.storage
+python3 -m pip install google.cloud.bigquery
 ```
 
-```bash
-python3 -m pip install google.cloud.retail
-```
 
 **Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal to
 run it.
@@ -49,6 +49,25 @@ Set the environment variable with a following command:
 ```bash
 export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
 ```
+
+### Upload catalog data to Cloud Storage
+
+There is a JSON file with valid products prepared in the "product" directory: 
+
+**product/products.json**.
+
+The other file, **product/products_some_invalid.json**, contains both valid and invalid products, you will use in to check the error handling.
+ 
+In your own project you should create a Cloud Storage bucket and put the JSON file there.
+The bucket name must be unique, for convenience it can be named the same as your project ID.
+
+To create the bucket and upload the JSON file run the following command in the Terminal:
+
+```bash
+python product/create_gcs_bucket.py
+```
+
+Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the file is uploaded.
 
 ## Import products from the Cloud Storage source
 
@@ -120,15 +139,14 @@ If the operation is completed successfully, you can find a **```result```** fiel
 
 In this case, the operation is considered as successful, and the ```gcs_operation.metadata.success_count``` field contains the number of the successfully imported products, which is "2".
 
-There are two invalid products in the input JSON file, and the number of failures during the product import in the ```gcs_operation.metadata.failure_count``` field is also "2".
+There are two invalid products in the input JSON file, and the number of failures during the product import in the ```gcs_operation.metadata.failure_count``` field is "1".
 
 The ```operation.result``` field points to the errors bucket where you can find a json file with all the importing errors.
 
-The errors are the following: 
+The error is the following: 
 
 ```json
 {"code":3,"message":"Invalid value at 'availability' (type.googleapis.com/google.cloud.retail.v2main.Product.Availability): \"INVALID_VALUE\"","details":[{"@type":"type.googleapis.com/google.protobuf.Struct","value":{"line_number":1}}]}
-{"code":3,"message":"The string in \"product.title\" is a valid UTF-8 string, but only contains space characters, control characters or non-characters. The invalid field value is:  .","details":[{"@type":"type.googleapis.com/google.protobuf.Struct","value":{"line_number":2}}]}
 ```
 
 ## Errors appeared due to invalid request

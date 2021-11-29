@@ -60,6 +60,7 @@ def search():
 
     print("---query expansion search results---")
     print(search_response)
+    return search_response
 
 
 search()

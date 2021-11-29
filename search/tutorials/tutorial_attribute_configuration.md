@@ -130,7 +130,7 @@ Check the result: it should be empty.
 
 ## Make the attribute searchable
 
-Next, open the **search/search_attribute_config.py** and change the value of  **attribute.searchable** to "true":
+Next, open the **search/update_attribute_configuration.py** and change the value of  **attribute.searchable** to "true":
 
 ```py
  attribute.searchable = "true"

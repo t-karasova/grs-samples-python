@@ -64,7 +64,7 @@ def search():
     search_response = get_search_service_client().search(search_request)
     print("---boost search response---")
     print(search_response)
-
+    return search_response
 
 search()
 # [END retail_search_product_with_boost_spec]

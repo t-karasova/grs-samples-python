@@ -55,7 +55,7 @@ def update_product(product_to_update_id):
     # Prepare the product attribute to be updated
     attribute = CustomAttribute()
     attribute.indexable = True
-    attribute.searchable = True
+    attribute.searchable = False
     attribute.text = ["recycled fabrics",
                       "recycled packaging",
                       "plastic-free packaging",
@@ -72,8 +72,9 @@ def update_product(product_to_update_id):
     print(updated_product)
 
     print('---Wait 5 minutes to be sure the catalog has been indexed after the changes---:')
-    time.sleep(300)
+    time.sleep(60)
     print('---You can proceed with the search requests---')
+    return updated_product
 
 
 update_product(product_id)
