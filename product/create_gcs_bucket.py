@@ -12,9 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime
+
 from setup_cleanup import get_project_id, create_bucket, upload_blob
-#
-get_project_id()
-create_bucket()
-upload_blob("product/products.json")
-upload_blob("product/products_some_invalid.json")
+
+timestamp_ = datetime.datetime.now().timestamp().__round__()
+bucket_name = "{}_{}".format(get_project_id(), timestamp_)
+
+create_bucket(bucket_name)
+upload_blob(bucket_name, "product/products.json")
+upload_blob(bucket_name, "product/products_some_invalid.json")
+
+print("\nThe gcs bucket {} was created".format(bucket_name))
