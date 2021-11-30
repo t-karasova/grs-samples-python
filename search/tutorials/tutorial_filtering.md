@@ -1,186 +1,275 @@
-# **Filtering Tutorial**
+# Filtering tutorial
 
-## Let's get started
+## Get started
 
-Filtering in the Retail Service is a powerful and convenient search feature. It lets you fine-tune search requests according to your or your customer's needs.
+Filtering in the Retail Service is a powerful and convenient search feature.
+It lets you fine-tune search requests according to your or your customer's needs.
 
 - You can filter by single or multiple fields.
-- You can filter by text or numeric fields, or both. 
+- You can filter by text or numeric fields, or both.
 - You can use an expression language to construct a predicate for each field.
 - You can combine different expressions using logical operators.
 
-See, the possibilities are impressive.
+In this tutorial you will learn some examples of product filtering.
 
-Let's try them.
+<walkthrough-tutorial-duration duration="7"></walkthrough-tutorial-duration>
 
-**Time to complete**: About 4 minutes
+## Get started with Google Cloud Retail
 
-## Before you begin
+This step is required if this is the first Retail API Tutorial you run.
+Otherwise, you can skip it.
 
-To run Python code samples from this tutorial, you need to set up your virtual environment.
+### Select your project and enable the Retail API
 
-To do that, run the following commands in a terminal:
+Google Cloud organizes resources into projects. This lets you
+collect all the related resources for a single application in one place.
+
+If you don't have a Google Cloud project yet or you are not the Owner of existing one, you can
+[create a new project](https://console.cloud.google.com/projectcreate).
+
+After the project is created, set your PROJECT_ID to a ```project``` variable.
+1. Run the following command in Terminal:
+    ```bash
+    gcloud config set project <YOUR_PROJECT_ID>
+    ```
+
+1. Check that the Retail API is enabled for your Project in the [Admin Console](https://console.cloud.google.com/ai/retail/).
+
+### Set up authentication
+
+To run a code sample from the Cloud Shell, you need to authenticate. To do this, use the Application Default Credentials.
+
+1. Set your user credentials to authenticate your requests to the Retail API
+
+    ```bash
+    gcloud auth application-default login
+    ```
+
+1. Type `Y` and press **Enter**. Click the link in Terminal. A browser window should appear asking you to log in using your Gmail account.
+
+1. Provide the Google Auth Library with access to your credentials and paste the code from the browser to the Terminal.
+
+1. Run the code sample and check the Retail API in action.
+
+**Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
+
+### Set the PROJECT_NUMBER environment variable
+
+Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** as an environment variable. It will be used in every request to the Retail API.
+
+1. You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+
+1. Set the environment variable with the following command:
+    ```bash
+    export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
+    ```
+
+### Install Google Cloud Retail libraries
+
+To run Python code samples for the Retail API tutorial, you need to set up your virtual environment.
+
+1. Run the following commands in a Terminal to create an isolated Python environment:
+    ```bash
+    pip install virtualenv
+    virtualenv myenv
+    source myenv/bin/activate
+    ```
+1. Next, install Google packages:
+    ```bash
+    pip install google
+    pip install google-cloud-retail
+    pip install google.cloud.storage
+    pip install google.cloud.bigquery
+
+    ```
+
+## Clone the Retail code samples
+
+This step is required if this is the first Retail API Tutorial you run.
+Otherwise, you can skip it.
+
+Clone the Git repository with all the code samples to learn the Retail features and check them in action.
+
+<!-- TODO(ianan): change the repository link -->
+1. Run the following command in the Terminal:
+    ```bash
+    git clone https://github.com/t-karasova/grs-samples-python.git
+    ```
+
+    The code samples for each of the Retail services are stored in different directories.
+
+1. Go to the ```grs-samples-python``` directory. It's our starting point to run more commands.
+    ```bash
+    cd grs-samples-python
+    ```
+
+## Import catalog data
+
+This step is required if this is the first Retail API Tutorial you run.
+Otherwise, you can skip it.
+
+### Upload catalog data to Cloud Storage
+
+There is a JSON file with valid products prepared in the `product` directory:
+**product/products.json**.
+
+Another file, **product/products_some_invalid.json**, contains both valid and invalid products, and you will use it to check the error handling.
+
+In your own project you need to create a Cloud Storage bucket and put the JSON file there.
+The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT_ID>_<TIMESTAMP>.
+
+1. To create the bucket and upload the JSON file run the following command in the Terminal:
+
+    ```bash
+    python product/create_gcs_bucket.py
+    ```
+
+    Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the files are uploaded.
+
+1. The name of the created GRS bucket is printed in the Terminal. Copy the name and set it as the environment variable BUCKET_NAME:
+
+    ```bash
+    export BUCKET_NAME=<YOUR_BUCKET_NAME>
+    ```
+
+### Import products to the Retail Catalog
+
+To import the prepared products to a catalog, run the following command in the Terminal:
+
 ```bash
-pip install virtualenv
-```
-```bash
-virtualenv <your-env>
-```
-```bash
-source <your-env>/bin/activate
-```
-Next, install Google packages:
-```bash
-pip install google
-```
-```bash
-pip install google-cloud-retail
+python product/import_products_gcs.py
 ```
 
-**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal to run it.
-
-## Set the PROJECT_NUMBER environment variable
-
-As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
-
-You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
-
-Set the environment variable with a following command:
-```bash
-export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
-```
-
-## Filtering by text field. Filtering expression
+## Filtering by text field: filtering expression
 
 You can write a simple expression that applies to the text field and looks like this:
 
 ```(textual_field,":", "ANY", "(",literal,{",",literal},")"```
 
-Function "ANY" returns true if the field contains any of the literals.
+Function `ANY` returns true if the field contains any literals.
 
-The example of such expression is 
+The example of such expression is
 
-```'(colorFamily: ANY("Black"))'``` 
+```'(colorFamily: ANY("Black"))'```
 
-To see the whole request with the filtering applied, open **search_with_filtering.py**
+1. To see the whole request with the filtering applied, open
+<walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_filtering.py" regex="TRY DIFFERENT FILTER EXPRESSIONS HERE">search_with_filtering.py</walkthrough-editor-select-regex>.
 
-Run it in a terminal along with the command:
-```bash
-python search_with_filtering.py
-```
+1. Run the following command in Terminal:
+    ```bash
+    python search/search_with_filtering.py
+    ```
 
-As you can see now, ```results[]``` contains only items that satisfy the filtering expression.
+1. As you can see now, the results contain only items that satisfy the filtering expression.
 
-## Filtering by text field. Use case
+## Filtering by text field: Use case
 
-Now, you can try filtering by a text field yourself, right here in the Cloud Shell environment.
+Now, you can try filtering by a text field yourself in the Cloud Shell environment.
 
-To do that, find the comment: 
+1. To do that, replace the condition under the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_filtering.py" regex="TRY DIFFERENT FILTER EXPRESSIONS HERE">comment</walkthrough-editor-select-regex> with one of the samples below:
+    ```
+    filter = '(brands: ANY("YouTube"))'
+    ```
 
-"#TRY DIFFERENT FILTER EXPRESSIONS HERE:" 
-
-and replace the filtering expression with something like this:
-
-```
-filter = '(brands: ANY("YouTube"))'
-```
-
-Or
-```
-filter = '(colorFamily: ANY("White","Gray"))'
-```
+    Or
+    ```
+    filter = '(colorFamily: ANY("White","Gray"))'
+    ```
+1. Run the following command in Terminal:
+    ```bash
+    python search/search_with_filtering.py
+    ```
 
 Please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter) to see the complete list of the text fields you can apply the filters to.
 
-## Filtering by a numeric field. IN range
+## Filtering by a numeric field: IN range
 
 To filter by a numeric field, you can write the filtering expression in two ways:
-- To check whether the field value is within a range, use the function **"IN"**
-- To compare a field value with a double value, use operators **<=**,  **<**,  **>=**, **>**, **=**.
+- To check whether the field value is within a range, use the function `IN`
+- To compare a field value with a double value, use operators `<=`,  `<`,  `>=`, `>`, `=`.
 
-Let's use the function "IN" to search for products with the price exceeding $15 and less than $30.
+1. Use the function `IN` to search for products with the price exceeding $15 and less than $30.
 
-Please use the same request as in the previous step. Open **search_with_filtering.py** if you have closed it, and change the filter expression to the following:
+1. Change the filter expression to the following:
 
-```
-filter = 'price: IN(15.0, 45.0)'
-```
+    ```
+    filter = 'price: IN(15.0, 45.0)'
+    ```
 
-Run the code sample in a terminal using the next command:
-```bash
-python search_with_filtering.py
-```
+1. Run the following command in Terminal:
+    ```bash
+    python search/search_with_filtering.py
+    ```
 
-Check the search response. Now, it contains only items with prices in the range of $15 to $45.
+1. Check the search response. Now it contains only items with prices in the range of $15 to $45.
 
 Please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter) to see the complete list of the numeric fields you can apply the filters to.
 
-## Filtering by a numeric field. Comparison operators
+## Filtering by a numeric field: comparison operators
 
-All comparison operators **<=**,  **<**,  **>=**, **>**, **=** are available for filtering expressions.
+All comparison operators `<=`,  `<`,  `>=*`, `>`, `=` are available for filtering expressions.
 
-Like in the previous step, use **search_with_filtering.py** to modify the filter expression.
+1. Change the filter expression to the following:
+    ```
+    filter = 'price >= 15.0 AND price < 45.0'
+    ```
 
-Try the following expression which is equivalent to the one you have used in the previous step:
-```
-filter = 'price >= 15.0 AND price < 45.0'
-```
+1. Run the following command in Terminal:
+    ```bash
+    python search/search_with_filtering.py
+    ```
 
-Run the code sample in a terminal using the command:
-```bash
-python search_with_filtering.py
-```
-
-Check the search response. Now, it contains only items with prices in the range between $15 and $45.
+1. Check the search response. Now it contains only items with prices in the range between $15 and $45.
 
 ## Filtering by multiple fields
 
-To filter the search results by multiple fields, you can combine the expressions with **"AND"** or **"OR"** operators.
+To filter the search results by multiple fields, you can combine the expressions with `AND` or `OR` operators:
 
-**```filter = expression, { " AND " | "OR", expression };```**
+```filter = expression, { " AND " | "OR", expression };```
 
-Like in the previous step, use **search_with_filtering.py** to modify the filter expression.
+1. Change the filter expression to the following:
+    ```
+    filter = '(categories: ANY("Apparel")) AND (price: IN(30.0, *))'
+    ```
 
-Try the following expression to see how you can combine different filtering conditions: 
-```
-filter = '(categories: ANY("Apparel")) AND (price: IN(30.0, *))'
-```
+1. Run the following command in Terminal:
+    ```bash
+    python search/search_with_filtering.py
+    ```
 
-Run the code sample in a terminal using the next command:
-```bash
-python search_with_filtering.py
-```
+1. Check the search response. Now it contains only items from `Apparel` category with prices more than $30.
 
-## Filtering. Error handling
+## Error handling
 
 In case of sending some invalid data or if any of the required fields is missing in the request, the Search Service responds with an error message.
 
 To find a complete list of the Search Request fields with their corresponding requirements, check the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
 
-To check a list of **text and numeric fields that support filtering**, use the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
+To check a list of text and numeric fields that support filtering, use the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
 
-If you try to filter the search results by the field that is **not intended for filtering** (for example, the "name" field), you will get an error message.
+If you try to filter the search results by the field that is not intended for filtering, e.g. the `name` field, you will get an error message.
 
-Change the variable "filter" value to the following:
-``` filter = '(name: ANY("some_random"))'```
+1. Change the variable `filter` value to the following:
 
-and run the code once again:
-```bash
-python search_with_filtering.py
-```
+    ```
+    filter = '(name: ANY("some_random"))'
+    ```
 
-You should see the following error message:
+1. Run the following command in Terminal:
+    ```bash
+    python search/search_with_filtering.py
+    ```
 
-```google.api_core.exceptions.InvalidArgument: 400 Invalid filter syntax '(name: ANY("some_randome"))'. Parsing filter failed with error: Unsupported field "name" on ":" operator.```
+1. You should see the following error message:
 
+    ```terminal
+    google.api_core.exceptions.InvalidArgument: 400 Invalid filter syntax '(name: ANY("some_randome"))'. Parsing filter failed with error: Unsupported field "name" on ":" operator.
+    ```
 
-## Success 
+## Congratulations
 
-You have completed the tutorial! We **encourage** you to **test the filtering by yourself** and try different combinations of various filter expressions.
+<walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-**Thank you for completing this tutorial!**
+You have completed the tutorial! We encourage you to test the filtering by yourself and try different combinations of various filter expressions.
 
-
-
-
-
+<walkthrough-inline-feedback></walkthrough-inline-feedback>
