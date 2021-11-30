@@ -47,7 +47,12 @@ def get_search_request(query: str):
 
 # call the Retail Search:
 def search():
-    search_response = get_search_service_client().search(get_search_request("Hoodie"))
+     # TRY DIFFERENT QUERY PHRASES HERE:
+    query_phrase = "Hoodie" 
+
+    search_request = get_search_request(query_phrase)
+    search_response = get_search_service_client().search(search_request)
+    search_response = get_search_service_client().search(get_search_request(query_phrase))
 
     print("---search response---")
     print(search_response)
