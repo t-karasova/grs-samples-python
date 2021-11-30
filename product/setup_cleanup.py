@@ -87,9 +87,8 @@ def get_project_id():
     return project_id
 
 
-def create_bucket():
+def create_bucket(bucket_name:str):
     """Create a new bucket in Cloud Storage"""
-    bucket_name = get_project_id()
     print("bucket name:" + bucket_name)
     buckets_in_your_project = str(list_buckets())
     if bucket_name in buckets_in_your_project:
@@ -120,13 +119,13 @@ def list_buckets():
     return bucket_list
 
 
-def upload_blob(source_file_name):
+def upload_blob(bucket_name, source_file_name):
     """Uploads a file to the bucket."""
     # The path to your file to upload
     # source_file_name = "local/path/to/file"
 
     storage_client = storage.Client()
-    bucket = storage_client.bucket(get_project_id())
+    bucket = storage_client.bucket(bucket_name)
     object_name = re.search('product/(.*?)$', source_file_name).group(1)
     blob = bucket.blob(object_name)
     blob.upload_from_filename(source_file_name)

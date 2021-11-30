@@ -59,15 +59,21 @@ There is a JSON file with valid products prepared in the "product" directory:
 The other file, **product/products_some_invalid.json**, contains both valid and invalid products, you will use in to check the error handling.
  
 In your own project you should create a Cloud Storage bucket and put the JSON file there.
-The bucket name must be unique, for convenience it can be named the same as your project ID.
+The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT_ID>_<TIMESTAMP>.
 
 To create the bucket and upload the JSON file run the following command in the Terminal:
 
 ```bash
 python product/create_gcs_bucket.py
 ```
-
 Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the file is uploaded.
+
+The **name of the created GRS bucket** is printed in the Terminal, copy the name and set it as the environment variable BUCKET_NAME:
+
+```bash
+export BUCKET_NAME=<YOUR_BUCKET_NAME>
+```
+
 
 ## Import products from the Cloud Storage source
 
