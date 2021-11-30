@@ -123,7 +123,7 @@ python product/create_gcs_bucket.py
 
 Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the files are uploaded.
 
-The **name of the created GRS bucket** is printed in the Terminal, copy the name and set it as the environment variable BUCKET_NAME:
+1. The name of the created GRS bucket is printed in the Terminal. Copy the name and set it as the environment variable BUCKET_NAME:
 
 ```bash
 export BUCKET_NAME=<YOUR_BUCKET_NAME>
