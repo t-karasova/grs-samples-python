@@ -1,4 +1,4 @@
-# Filtering tutorial
+# Filter tutorial
 
 ## Get started
 
@@ -24,7 +24,7 @@ Otherwise, you can skip it.
 Google Cloud organizes resources into projects. This lets you
 collect all the related resources for a single application in one place.
 
-If you don't have a Google Cloud project yet or you are not the Owner of existing one, you can
+If you don't have a Google Cloud project yet or you're not the Owner of an existing one, you can
 [create a new project](https://console.cloud.google.com/projectcreate).
 
 After the project is created, set your PROJECT_ID to a ```project``` variable.
@@ -111,14 +111,14 @@ Otherwise, you can skip it.
 ### Upload catalog data to Cloud Storage
 
 There is a JSON file with valid products prepared in the `product` directory:
-**product/products.json**.
+`product/products.json`.
 
-Another file, **product/products_some_invalid.json**, contains both valid and invalid products, and you will use it to check the error handling.
+Another file, `product/products_some_invalid.json`, contains both valid and invalid products, and you use it to check the error handling.
 
 In your own project you need to create a Cloud Storage bucket and put the JSON file there.
-The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT_ID>_<TIMESTAMP>.
+The bucket name must be unique. For convenience, you can name it as <YOUR_PROJUCT_ID>_<TIMESTAMP>.
 
-1. To create the bucket and upload the JSON file run the following command in the Terminal:
+1. To create the bucket and upload the JSON file, run the following command in the Terminal:
 
     ```bash
     python product/create_gcs_bucket.py
@@ -140,7 +140,7 @@ To import the prepared products to a catalog, run the following command in the T
 python product/import_products_gcs.py
 ```
 
-## Filtering by text field: filtering expression
+## Filter by text field: filtering expression
 
 You can write a simple expression that applies to the text field and looks like this:
 
@@ -148,8 +148,7 @@ You can write a simple expression that applies to the text field and looks like 
 
 Function `ANY` returns true if the field contains any literals.
 
-The example of such expression is
-
+An example of such an expression is
 ```'(colorFamily: ANY("Black"))'```
 
 1. To see the whole request with the filtering applied, open
@@ -160,18 +159,18 @@ The example of such expression is
     python search/search_with_filtering.py
     ```
 
-1. As you can see now, the results contain only items that satisfy the filtering expression.
+1. Note that the results contain only items that satisfy the filtering expression.
 
-## Filtering by text field: Use case
+## Filter by text field: Use case
 
-Now, you can try filtering by a text field yourself in the Cloud Shell environment.
+Now you can try filtering by a text field yourself in the Cloud Shell environment.
 
-1. To do that, replace the condition under the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_filtering.py" regex="TRY DIFFERENT FILTER EXPRESSIONS HERE">comment</walkthrough-editor-select-regex> with one of the samples below:
+1. To do that, replace the condition under the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_filtering.py" regex="TRY DIFFERENT FILTER EXPRESSIONS HERE">comment</walkthrough-editor-select-regex> with one of the following samples:
     ```
     filter = '(brands: ANY("YouTube"))'
     ```
 
-    Or
+    or
     ```
     filter = '(colorFamily: ANY("White","Gray"))'
     ```
@@ -180,17 +179,16 @@ Now, you can try filtering by a text field yourself in the Cloud Shell environme
     python search/search_with_filtering.py
     ```
 
-Please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter) to see the complete list of the text fields you can apply the filters to.
+For a complete list of the text fields you can apply the filters to, see the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter).
 
-## Filtering by a numeric field: IN range
+## Filter by a numeric field: IN range
 
 To filter by a numeric field, you can write the filtering expression in two ways:
-- To check whether the field value is within a range, use the function `IN`
-- To compare a field value with a double value, use operators `<=`,  `<`,  `>=`, `>`, `=`.
+- To check whether the field value is within a range, use the function `IN`.
+- To compare a field value with a double value, use operators `<=`,  `<`,  `>=`, `>` and `=`.
 
-1. Use the function `IN` to search for products with the price exceeding $15 and less than $30.
+1. To use the function `IN` to search for products with a price between $15 and $45, change the filter expression to the following:
 
-1. Change the filter expression to the following:
 
     ```
     filter = 'price: IN(15.0, 45.0)'
@@ -203,11 +201,11 @@ To filter by a numeric field, you can write the filtering expression in two ways
 
 1. Check the search response. Now it contains only items with prices in the range of $15 to $45.
 
-Please check the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter) to see the complete list of the numeric fields you can apply the filters to.
+To see the complete list of the numeric fields you can apply the filters to, see the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter).
 
-## Filtering by a numeric field: comparison operators
+## Filter by a numeric field: comparison operators
 
-All comparison operators `<=`,  `<`,  `>=*`, `>`, `=` are available for filtering expressions.
+All comparison operators (`<=`,  `<`,  `>=*`, `>` and `=`) are available for filtering expressions.
 
 1. Change the filter expression to the following:
     ```
@@ -221,11 +219,11 @@ All comparison operators `<=`,  `<`,  `>=*`, `>`, `=` are available for filterin
 
 1. Check the search response. Now it contains only items with prices in the range between $15 and $45.
 
-## Filtering by multiple fields
+## Filter by multiple fields
 
 To filter the search results by multiple fields, you can combine the expressions with `AND` or `OR` operators:
 
-```filter = expression, { " AND " | "OR", expression };```
+```filter = expression { " AND " | " OR " } expression```
 
 1. Change the filter expression to the following:
     ```
@@ -237,7 +235,7 @@ To filter the search results by multiple fields, you can combine the expressions
     python search/search_with_filtering.py
     ```
 
-1. Check the search response. Now it contains only items from `Apparel` category with prices more than $30.
+1. Check the search response. Now it contains only items from the `Apparel` category with prices more than $30.
 
 ## Error handling
 
@@ -247,7 +245,7 @@ To find a complete list of the Search Request fields with their corresponding re
 
 To check a list of text and numeric fields that support filtering, use the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter)
 
-If you try to filter the search results by the field that is not intended for filtering, e.g. the `name` field, you will get an error message.
+If you try to filter the search results by a field that is not intended for filtering, for example, the `name` field, you will get an error message.
 
 1. Change the variable `filter` value to the following:
 
