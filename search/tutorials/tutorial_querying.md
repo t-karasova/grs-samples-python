@@ -1,4 +1,4 @@
-# Querying tutorial
+# Query tutorial
 
 ## Get started
 
@@ -17,7 +17,7 @@ Otherwise, you can skip it.
 Google Cloud organizes resources into projects. This lets you
 collect all the related resources for a single application in one place.
 
-If you don't have a Google Cloud project yet or you are not the Owner of existing one, you can
+If you don't have a Google Cloud project yet or you're not the Owner of an existing one, you can
 [create a new project](https://console.cloud.google.com/projectcreate).
 
 After the project is created, set your PROJECT_ID to a ```project``` variable.
@@ -104,12 +104,12 @@ Otherwise, you can skip it.
 ### Upload catalog data to Cloud Storage
 
 There is a JSON file with valid products prepared in the `product` directory:
-**product/products.json**.
+`product/products.json`.
 
-Another file, **product/products_some_invalid.json**, contains both valid and invalid products, and you will use it to check the error handling.
+Another file, `product/products_some_invalid.json`, contains both valid and invalid products, and you use it to check the error handling.
 
 In your own project you need to create a Cloud Storage bucket and put the JSON file there.
-The bucket name must be unique, for convenience it can be named the same as your project ID.
+The bucket name must be unique. For convenience, you can name it the same as your project ID.
 
 1. To create the bucket and upload the JSON file run the following command in the Terminal:
 
@@ -117,7 +117,13 @@ The bucket name must be unique, for convenience it can be named the same as your
     python product/create_gcs_bucket.py
     ```
 
-Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the files are uploaded.
+    Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the files are uploaded.
+
+1. The name of the created GRS bucket is printed in the Terminal. Copy the name and set it as the environment variable `BUCKET_NAME`:
+
+    ```bash
+    export BUCKET_NAME=<YOUR_BUCKET_NAME>
+    ```
 
 ### Import products to the Retail Catalog
 
@@ -130,9 +136,9 @@ python product/import_products_gcs.py
 ## Simple query request
 
 The simple search request contains only the following required fields:
-- `placement` - a resource name of the search engine placement.
-- `visitor_id` - a unique identifier to track visitors.
-- `query` - a raw search query or search phrase.
+- `placement`&mdash.a resource name of the search engine placement.
+- `visitor_id`&mdash.a unique identifier to track visitors.
+- `query`&mdash.a raw search query or search phrase.
 
 To check the results right away, you need to run a request on a products catalog.
 
@@ -144,7 +150,7 @@ To check the results right away, you need to run a request on a products catalog
     python search/search_simple_query.py
     ```
 
-1. As you can see now, the results contain a list of matched items returned by the Retail Search service.
+1. Notee that the results contain a list of matched items returned by the Retail Search service.
 
     - `total_size` is the estimated total count of matched items.
 
@@ -156,13 +162,13 @@ To check the results right away, you need to run a request on a products catalog
 
 Next, try to experiment with the query phrases.
 
-1. Find the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_simple_query.py" regex="TRY DIFFERENT QUERY PHRASES HERE">comment</walkthrough-editor-select-regex> and replace the value of `query_phrase` with the samples below:
+1. Find the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_simple_query.py" regex="TRY DIFFERENT QUERY PHRASES HERE">comment</walkthrough-editor-select-regex> and replace the value of `query_phrase` with the following samples:
 
     ```
     query_phrase= "Zip Hoodie"
     ```
 
-    AND
+    and
     ```
     query_phrase= "Unisex Zip Hoodie"
     ```
@@ -172,16 +178,16 @@ Next, try to experiment with the query phrases.
     python search/search_simple_query.py
     ```
 
-Adding one more word to the query phrase makes your request more accurate. You can expect less products in the response, and the most relevant products will appear on the top of the response list.
+Adding one more word to the query phrase makes your request more accurate. You can expect fewer products in the response, and the most relevant products will appear on the top of the response list.
 
 ## Error handling
 
 In case of sending some invalid data or if any of the required fields is missing in the request, the Search Service responds with an error message.
 To find a complete list of the Search Request fields with their corresponding requirements, check the [Search Service references](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#searchservice)
 
-In this tutorial, you will get an error message when trying to request the Search Service without setting the `visitorId` which is a required field.
+In this tutorial, you will get an error message when trying to request the Search Service without setting the `visitorId`, which is a required field.
 
-1. To check it, comment out a <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_simple_query.py" regex="123456">line</walkthrough-editor-select-regex> `search_request.visitor_id = "123456"`.
+1. To check it, comment out a <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_simple_query.py" regex="123456">line</walkthrough-editor-select-regex> `search_request.visitor_id = "123456"`:
 
 1. Run the following command in Terminal:
     ```bash
