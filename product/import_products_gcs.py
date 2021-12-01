@@ -24,7 +24,6 @@ import subprocess
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import GcsSource, ProductInputConfig, ProductServiceClient, ImportErrorsConfig, \
     ImportProductsRequest
-from setup_cleanup import get_bucket_name
 
 
 def get_project_id():
@@ -34,14 +33,15 @@ def get_project_id():
     return project_id
 
 
+# Read the project number from the environment variable
 project_number = os.getenv('PROJECT_NUMBER')
 project_id = get_project_id()
 endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
 
-#gcs_bucket = "gs://{}".format(project_id)
+# Read bucket name from the environment variable
 gcs_bucket = "gs://{}".format(os.getenv("BUCKET_NAME"))
-gcs_errors_bucket = "gs://{}/error".format(gcs_bucket)
+gcs_errors_bucket = "{}/error".format(gcs_bucket)
 gcs_products_object = "products.json"
 # TO CHECK ERROR HANDLING USE THE JSON WITH INVALID PRODUCT
 # gcs_products_object = "products_some_invalid.json"
