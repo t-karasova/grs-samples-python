@@ -21,7 +21,7 @@ Otherwise, you can skip it.
 Google Cloud organizes resources into projects. This lets you
 collect all the related resources for a single application in one place.
 
-If you don't have a Google Cloud project yet or you are not the Owner of existing one, you can
+If you don't have a Google Cloud project yet or you're not the Owner of an existing one, you can
 [create a new project](https://console.cloud.google.com/projectcreate).
 
 After the project is created, set your PROJECT_ID to a ```project``` variable.
@@ -30,7 +30,7 @@ After the project is created, set your PROJECT_ID to a ```project``` variable.
     gcloud config set project <YOUR_PROJECT_ID>
     ```
 
-1. Check that the Retail API is enabled for your Project in the [Admine Console](https://console.cloud.google.com/ai/retail/).
+1. Check that the Retail API is enabled for your Project in the [Admin Console](https://console.cloud.google.com/ai/retail/).
 
 ### Set up authentication
 
@@ -108,12 +108,12 @@ Otherwise, you can skip it.
 ### Upload catalog data to Cloud Storage
 
 There is a JSON file with valid products prepared in the `product` directory:
-**product/products.json**.
+`product/products.json`.
 
-Another file, **product/products_some_invalid.json**, contains both valid and invalid products, and you will use it to check the error handling.
+Another file, `product/products_some_invalid.json`, contains both valid and invalid products, and you will use it to check the error handling.
 
 In your own project you need to create a Cloud Storage bucket and put the JSON file there.
-The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT_ID>_<TIMESTAMP>.
+The bucket name must be unique. For convenience, you can name it <YOUR_PROJECT_ID>_<TIMESTAMP>.
 
 1. To create the bucket and upload the JSON file run the following command in the Terminal:
 
@@ -121,9 +121,9 @@ The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT
     python product/create_gcs_bucket.py
     ```
 
-Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the files are uploaded.
+    Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the files are uploaded.
 
-1. The name of the created GRS bucket is printed in the Terminal. Copy the name and set it as the environment variable BUCKET_NAME:
+1. The name of the created GRS bucket is printed in the Terminal. Copy the name and set it as the environment variable `BUCKET_NAME`:
 
     ```bash
     export BUCKET_NAME=<YOUR_BUCKET_NAME>
@@ -150,10 +150,10 @@ The boosting specification looks like this:
 
 1. To set the **```condition```**, you should use a filtering expression like the following:
 
-    ```'(colorFamily: ANY("Blue"))'```
+    ```'(colorFamily: ANY("blue"))'```
 
     or
-    ```'(price: IN(15.0, 30.0))'```
+    ```'(rating: IN(4.0, 5.0))'```
 
     <!-- TODO(ianan): change Filtering Tutorial link -->
     You can learn how to use filters in the [Filtering Tutorial](retail_api_v2_filtering_python.md)
