@@ -136,9 +136,9 @@ python product/import_products_gcs.py
 ## Simple query request
 
 The simple search request contains only the following required fields:
-- `placement`&mdash.a resource name of the search engine placement.
-- `visitor_id`&mdash.a unique identifier to track visitors.
-- `query`&mdash.a raw search query or search phrase.
+- `placement` — a resource name of the search engine placement.
+- `visitor_id` — a unique identifier to track visitors.
+- `query` — a raw search query or search phrase.
 
 To check the results right away, you need to run a request on a products catalog.
 
