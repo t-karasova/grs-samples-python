@@ -54,7 +54,6 @@ def generate_product_for_update(product_id: str) -> Product:
         availability="OUT_OF_STOCK",
         price_info=price_info,
     )
-    # [END retail_generate_product_for_update]
 
 
 # get update product request
