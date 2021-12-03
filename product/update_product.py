@@ -26,6 +26,8 @@ from google.cloud.retail_v2.types import product
 # from google.protobuf.field_mask_pb2 import FieldMask
 
 from setup_cleanup import create_product, delete_product
+# from google.protobuf.field_mask_pb2 import FieldMask
+
 
 project_number = os.getenv('PROJECT_NUMBER')
 default_branch_name = "projects/" + project_number + "/locations/global/catalogs/default_catalog/branches/default_branch"
@@ -78,6 +80,7 @@ def update_product(original_product: Product):
 
     print('---updated product---:')
     print(updated_product)
+    return updated_product
 
 
 # create product

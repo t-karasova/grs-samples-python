@@ -23,6 +23,7 @@ from google.cloud.retail_v2 import Product, ProductServiceClient, CreateProductR
 from google.cloud.retail_v2.types import product
 from google.cloud import storage
 from google.cloud import bigquery
+from google.api_core.exceptions import NotFound
 
 project_number = os.getenv('PROJECT_NUMBER')
 
@@ -74,10 +75,18 @@ def delete_product(product_name: str):
 def get_product(product_name: str):
     get_product_request = GetProductRequest()
     get_product_request.name = product_name
-    product = get_product_service_client().get_product(get_product_request)
-
-    print("---product:---")
-    print(product)
+    # product = get_product_service_client().get_product(get_product_request)
+    #
+    # print("---product:---")
+    # print(product)
+    try:
+        product = get_product_service_client().get_product(get_product_request)
+        print("---product:---")
+        print(product)
+        return product
+    except NotFound as e:
+        print(e.message)
+        return e.message
 
 
 def get_project_id():

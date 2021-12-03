@@ -45,7 +45,7 @@ def get_add_fulfillment_request(product_name: str) -> AddFulfillmentPlacesReques
     add_fulfillment_request.product = product_name
     add_fulfillment_request.type_ = 'pickup-in-store'
     add_fulfillment_request.place_ids = ['store1', 'store2', 'store3']
-    add_fulfillment_request.add_time = request_time
+    add_fulfillment_request.add_time = request_time - datetime.timedelta(minutes=1)
     add_fulfillment_request.allow_missing = True
 
     print("---add fulfillment request---")
@@ -61,8 +61,8 @@ def add_fulfillment_places(product_name: str):
 
     # This is a long running operation and its result is not immediately present with get operations,
     # thus we simulate wait with sleep method.
-    print("---add fulfillment places, wait 10 seconds :---")
-    time.sleep(10)
+    print("---add fulfillment places, wait 30 seconds :---")
+    time.sleep(30)
 
 
 # remove fulfillment request
@@ -87,8 +87,8 @@ def remove_fulfillment_places(product_name: str):
 
     # This is a long running operation and its result is not immediately present with get operations,
     # thus we simulate wait with sleep method.
-    print("---remove fulfillment places, wait 10 seconds:---")
-    time.sleep(10)
+    print("---remove fulfillment places, wait 30 seconds:---")
+    time.sleep(30)
 
 # [END add_remove_fulfillment_places]
 
@@ -97,4 +97,4 @@ create_product(product_id)
 add_fulfillment_places(product_name)
 #remove_fulfillment_places(product_name)
 get_product(product_name)
-#delete_product(product_name)
+delete_product(product_name)

@@ -80,8 +80,8 @@ def set_inventory(product_name: str):
 
     # This is a long running operation and its result is not immediately present with get operations,
     # thus we simulate wait with sleep method.
-    print("---set inventory, wait 10 seconds:---")
-    time.sleep(10)
+    print("---set inventory, wait 30 seconds:---")
+    time.sleep(30)
 
 
 create_product(product_id)
