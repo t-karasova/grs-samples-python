@@ -23,6 +23,7 @@ import string
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail_v2 import Product, ProductServiceClient, UpdateProductRequest, PriceInfo
 from google.cloud.retail_v2.types import product
+# from google.protobuf.field_mask_pb2 import FieldMask
 
 from setup_cleanup import create_product, delete_product
 
@@ -61,7 +62,7 @@ def get_update_product_request(product_to_update: Product):
     update_product_request = UpdateProductRequest()
     update_product_request.product = product_to_update
     update_product_request.allow_missing = True
-    # PASTE UPDATE MASK HERE:
+    # PASTE UPDATE MASK HERE: # the import FieldMask from google.protobuf.field_mask_pb2 is required
 
     print("---update product request---")
     print(update_product_request)
