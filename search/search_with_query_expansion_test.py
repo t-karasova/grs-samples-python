@@ -15,7 +15,18 @@
 # [START retail_search_for_products_with_query_parameter]
 # Call Retail API to search for a products in a catalog using only search query.
 #
+import re
+import subprocess
+
 from search_with_query_expansion_spec import search
+
+def test_search_with_query_expansion_spec_pass():
+    output = str(subprocess.check_output('python search/search_with_query_expansion_spec.py', shell=True))
+
+    assert re.match('.*search request.*', output)
+    assert re.match('.*search response.*', output)
+    # check the response contains some products
+    assert re.match('.*results.*id.*', output)
 
 
 def test_search_with_query_expansion_spec():
@@ -24,5 +35,4 @@ def test_search_with_query_expansion_spec():
     assert len(response.results) == 10
     assert response.results[0].product.title == 'Google Youth Hero Tee Grey'
     assert response.results[2].product.title != 'Google Youth Hero Tee Grey'
-    assert response.total_size == 34
     assert response.query_expansion_info.expanded_query == True

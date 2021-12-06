@@ -40,7 +40,7 @@ def search():
     search_request.page_size = 10
     search_request.visitor_id = "123456"  # A unique identifier to track visitors
 
-    print("---search_request:---")
+    print("---search request:---")
     print(search_request)
     # call the Retail Search:
     search_response = get_search_service_client().search(search_request)

@@ -16,8 +16,18 @@
 # Call Retail API to search for a products in a catalog using only search query.
 #
 import re
+import subprocess
 
 from search_with_filtering import search
+
+
+def test_search_with_filtering_pass():
+    output = str(subprocess.check_output('python search/search_with_filtering.py', shell=True))
+
+    assert re.match('.*search request.*', output)
+    assert re.match('.*search response.*', output)
+    # check the response contains some products
+    assert re.match('.*results.*id.*', output)
 
 
 def test_search_with_filtering():

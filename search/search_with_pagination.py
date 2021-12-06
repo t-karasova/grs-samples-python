@@ -43,7 +43,7 @@ def get_search_request(query: str, page_size: int, offset: int, next_page_token:
     search_request.offset = offset
     search_request.page_token = next_page_token
 
-    print("---search_request:---")
+    print("---search request:---")
     print(search_request)
 
     return search_request
@@ -59,7 +59,7 @@ def search():
     search_request_first_page = get_search_request("Hoodie", page_size, offset, page_token)
     search_response_first_page = get_search_service_client().search(search_request_first_page)
 
-    print("---first page search results---")
+    print("---search response---")
     print(search_response_first_page)
 
     # PASTE CALL WITH NEXT PAGE TOKEN HERE:

@@ -16,8 +16,18 @@
 # Call Retail API to search for a products in a catalog using only search query.
 #
 import re
+import subprocess
 
 from search_with_pagination import search
+
+
+def test_search_with_pagination_pass():
+    output = str(subprocess.check_output('python search/search_with_pagination.py', shell=True))
+
+    assert re.match('.*search request.*', output)
+    assert re.match('.*search response.*', output)
+    # check the response contains some products
+    assert re.match('.*results.*id.*', output)
 
 
 def test_search_with_pagination():
@@ -26,4 +36,3 @@ def test_search_with_pagination():
     product_title = response.results[0].product.title
     assert re.match('.*Hoodie', product_title)
     assert len(response.results) == 6
-    assert response.total_size == 51

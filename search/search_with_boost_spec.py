@@ -62,7 +62,7 @@ def search():
 
     search_request = get_search_request("Tee", condition, boost)
     search_response = get_search_service_client().search(search_request)
-    print("---boost search response---")
+    print("---search response---")
     print(search_response)
     return search_response
 
