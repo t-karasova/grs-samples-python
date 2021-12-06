@@ -2,13 +2,14 @@
 
 ## Get started
 
-Filtering in the Retail Service is a powerful and convenient search feature.
+Filtering in the Retail service is a powerful and convenient search feature.
 It lets you fine-tune search requests according to your or your customer's needs.
+You can:
 
-- You can filter by single or multiple fields.
-- You can filter by text or numeric fields, or both.
-- You can use an expression language to construct a predicate for each field.
-- You can combine different expressions using logical operators.
+- Filter by single or multiple fields.
+- Filter by text or numeric fields, or both.
+- Use an expression language to construct a predicate for each field.
+- Combine different expressions using logical operators.
 
 In this tutorial you will learn some examples of product filtering.
 
@@ -24,7 +25,7 @@ Otherwise, you can skip it.
 Google Cloud organizes resources into projects. This lets you
 collect all the related resources for a single application in one place.
 
-If you don't have a Google Cloud project yet or you're not the Owner of an existing one, you can
+If you don't have a Google Cloud project yet or you're not the owner of an existing one, you can
 [create a new project](https://console.cloud.google.com/projectcreate).
 
 After the project is created, set your PROJECT_ID to a ```project``` variable.
@@ -115,8 +116,8 @@ There is a JSON file with valid products prepared in the `product` directory:
 
 Another file, `product/resources/products_some_invalid.json`, contains both valid and invalid products, and you use it to check the error handling.
 
-In your own project you need to create a Cloud Storage bucket and put the JSON file there.
-The bucket name must be unique. For convenience, you can name it as <YOUR_PROJUCT_ID>_<TIMESTAMP>.
+In your own project, create a Cloud Storage bucket and put the JSON file there.
+The bucket name must be unique. For convenience, you can name it `<YOUR_PROJECT_ID>_<TIMESTAMP>`.
 
 1. To create the bucket and upload the JSON file, run the following command in the Terminal:
 
@@ -126,7 +127,7 @@ The bucket name must be unique. For convenience, you can name it as <YOUR_PROJUC
 
     Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the files are uploaded.
 
-1. The name of the created GRS bucket is printed in the Terminal. Copy the name and set it as the environment variable BUCKET_NAME:
+1. The name of the created Cloud Storage bucket is printed in the Terminal. Copy the name and set it as the environment variable BUCKET_NAME:
 
     ```bash
     export BUCKET_NAME=<YOUR_BUCKET_NAME>
@@ -179,7 +180,7 @@ Now you can try filtering by a text field yourself in the Cloud Shell environmen
     python search/search_with_filtering.py
     ```
 
-For a complete list of the text fields you can apply the filters to, see the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter).
+For a complete list of the text fields you can apply filters to, see the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter).
 
 ## Filter by a numeric field: IN range
 
@@ -187,7 +188,7 @@ To filter by a numeric field, you can write the filtering expression in two ways
 - To check whether the field value is within a range, use the function `IN`.
 - To compare a field value with a double value, use operators `<=`,  `<`,  `>=`, `>` and `=`.
 
-1. To use the function `IN` to search for products with a price between $15 and $45, change the filter expression to the following:
+1. To use the function `IN` to search for products with a price between $15 and $45, change the filter expression under the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_filtering.py" regex="TRY DIFFERENT FILTER EXPRESSIONS HERE">comment</walkthrough-editor-select-regex> to the following:
 
 
     ```
@@ -201,13 +202,13 @@ To filter by a numeric field, you can write the filtering expression in two ways
 
 1. Check the search response. Now it contains only items with prices in the range of $15 to $45.
 
-To see the complete list of the numeric fields you can apply the filters to, see the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter).
+To see the complete list of the numeric fields you can apply filters to, see the [Retail API documentation](https://cloud.google.com/retail/docs/filter-and-order#filter).
 
 ## Filter by a numeric field: comparison operators
 
-All comparison operators (`<=`,  `<`,  `>=*`, `>` and `=`) are available for filtering expressions.
+All comparison operators (`<=`,  `<`,  `>=`, `>` and `=`) are available for filtering expressions.
 
-1. Change the filter expression to the following:
+1. Change the filter expression under the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_filtering.py" regex="TRY DIFFERENT FILTER EXPRESSIONS HERE">comment</walkthrough-editor-select-regex> to the following:
     ```
     filter = 'price >= 15.0 AND price < 45.0'
     ```
@@ -225,7 +226,7 @@ To filter the search results by multiple fields, you can combine the expressions
 
 ```filter = expression { " AND " | " OR " } expression```
 
-1. Change the filter expression to the following:
+1. Change the filter expression under the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_filtering.py" regex="TRY DIFFERENT FILTER EXPRESSIONS HERE">comment</walkthrough-editor-select-regex> to the following:
     ```
     filter = '(categories: ANY("Apparel")) AND (price: IN(30.0, *))'
     ```
@@ -247,7 +248,7 @@ To check a list of text and numeric fields that support filtering, use the [Reta
 
 If you try to filter the search results by a field that is not intended for filtering, for example, the `name` field, you will get an error message.
 
-1. Change the variable `filter` value to the following:
+1. Change the variable `filter` value under the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_filtering.py" regex="TRY DIFFERENT FILTER EXPRESSIONS HERE">comment</walkthrough-editor-select-regex> to the following:
 
     ```
     filter = '(name: ANY("some_random"))'
@@ -261,7 +262,7 @@ If you try to filter the search results by a field that is not intended for filt
 1. You should see the following error message:
 
     ```terminal
-    google.api_core.exceptions.InvalidArgument: 400 Invalid filter syntax '(name: ANY("some_randome"))'. Parsing filter failed with error: Unsupported field "name" on ":" operator.
+    google.api_core.exceptions.InvalidArgument: 400 Invalid filter syntax '(name: ANY("some_random"))'. Parsing filter failed with error: Unsupported field "name" on ":" operator.
     ```
 
 ## Congratulations
