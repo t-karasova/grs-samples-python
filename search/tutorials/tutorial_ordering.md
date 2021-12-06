@@ -20,7 +20,7 @@ Otherwise, you can skip it.
 Google Cloud organizes resources into projects. This lets you
 collect all the related resources for a single application in one place.
 
-If you don't have a Google Cloud project yet or you're not the Owner of an existing one, you can
+If you don't have a Google Cloud project yet or you're not the owner of an existing one, you can
 [create a new project](https://console.cloud.google.com/projectcreate).
 
 After the project is created, set your PROJECT_ID to a ```project``` variable.
@@ -111,10 +111,10 @@ There is a JSON file with valid products prepared in the `product` directory:
 
 Another file, `product/products_some_invalid.json`, contains both valid and invalid products, and you will use it to check the error handling.
 
-In your own project you need to create a Cloud Storage bucket and put the JSON file there.
-The bucket name must be unique. For convenience, you can name it <YOUR_PROJECT_ID>_<TIMESTAMP>.
+In your own project, create a Cloud Storage bucket and put the JSON file there.
+The bucket name must be unique. For convenience, you can name it `<YOUR_PROJECT_ID>_<TIMESTAMP>`.
 
-1. To create the bucket and upload the JSON file run the following command in the Terminal:
+1. To create the bucket and upload the JSON file, run the following command in the Terminal:
 
     ```bash
     python product/create_gcs_bucket.py
@@ -122,7 +122,7 @@ The bucket name must be unique. For convenience, you can name it <YOUR_PROJECT_I
 
     Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the files are uploaded.
 
-1. The name of the created GRS bucket is printed in the Terminal. Copy the name and set it as the environment variable `BUCKET_NAME`:
+1. The name of the created Cloud Storage bucket is printed in the Terminal. Copy the name and set it as the environment variable `BUCKET_NAME`:
 
     ```bash
     export BUCKET_NAME=<YOUR_BUCKET_NAME>
@@ -171,7 +171,7 @@ To order items with equal values for higher-priority fields, use the lower-prior
 
 For example, **```price desc, discount desc```** orders items by their price first. The products with the same price will be ordered by a discount amount.
 
-1. To try that, change the ordering expression to the next one:
+1. To try that, change the ordering expression to the next one under the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_ordering.py" regex="TRY DIFFERENT ORDERING EXPRESSIONS HERE">comment</walkthrough-editor-select-regex>:
     ```
     order = 'price desc, discount'
     ```
@@ -196,7 +196,7 @@ To check a list of ordering fields, use the [Retail API documentation](https://c
 
 If you try to order the search results by the field that is not intended for ordering (for example, the `name` field), you will get an error message.
 
-1. Change the variable `order` value to the following:
+1. Change the variable `order` value under the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_ordering.py" regex="TRY DIFFERENT ORDERING EXPRESSIONS HERE">comment</walkthrough-editor-select-regex> to the following:
     ```order = 'name desc'```
 
 1. Run the code again:
