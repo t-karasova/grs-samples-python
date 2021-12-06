@@ -1,108 +1,194 @@
-# **Redirect Control Tutorial**
+# Redirect control tutorial
 
-## Let's get started
+## Get started
 
-Redirect Control lets you specify a URL to redirect the users to when they search for a specific query. 
-Since we are not able to check its effect on the Evaluate page, we will test it in the Cloud Shell 
-using our Python code samples. Make sure that you have created and attached the Redirect Control
-to the serving config. You can find the step-by-step instruction on how to do it in the Creating and Managing Controls video tutorial.
+The redirect control lets you specify a URL to redirect users to when they search for a specific query.
+Since we are not able to check its effect on the [Evaluate page](https://console.cloud.google.com/ai/retail/catalogs/default_catalog/evaluate), we will test it in the Cloud Shell. Make sure that you've created and attached the redirect control to the serving config. You can find the step-by-step instruction on how to do it in the [Creating and Managing Controls tutorial](https://cloud.google.com/retail/docs/manage-controls).
 
-**Time to complete**: About 4 minutes
 
-## Before you begin
+<walkthrough-tutorial-duration duration="7"></walkthrough-tutorial-duration>
 
-To run Python code samples from this tutorial, you need to set up your virtual environment.
+## Get started with Google Cloud Retail
 
-To do that, run the following commands in a terminal:
+This step is required if this is the first Retail API Tutorial you run.
+Otherwise, you can skip it.
+
+### Select your project and enable the Retail API
+
+Google Cloud organizes resources into projects. This lets you
+collect all the related resources for a single application in one place.
+
+If you don't have a Google Cloud project yet or you're not the owner of an existing one, you can
+[create a new project](https://console.cloud.google.com/projectcreate).
+
+After the project is created, set your PROJECT_ID to a ```project``` variable.
+1. Run the following command in Terminal:
+    ```bash
+    gcloud config set project <YOUR_PROJECT_ID>
+    ```
+
+1. Check that the Retail API is enabled for your Project in the [Admin Console](https://console.cloud.google.com/ai/retail/).
+
+### Set up authentication
+
+To run a code sample from the Cloud Shell, you need to authenticate. To do this, use the Application Default Credentials.
+
+1. Set your user credentials to authenticate your requests to the Retail API
+
+    ```bash
+    gcloud auth application-default login
+    ```
+
+1. Type `Y` and press **Enter**. Click the link in Terminal. A browser window should appear asking you to log in using your Gmail account.
+
+1. Provide the Google Auth Library with access to your credentials and paste the code from the browser to the Terminal.
+
+1. Run the code sample and check the Retail API in action.
+
+**Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
+
+### Set the PROJECT_NUMBER environment variable
+
+Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** as an environment variable. It will be used in every request to the Retail API.
+
+1. You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+
+1. Set the environment variable with the following command:
+    ```bash
+    export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
+    ```
+
+### Install Google Cloud Retail libraries
+
+To run Python code samples for the Retail API tutorial, you need to set up your virtual environment.
+
+1. Run the following commands in a Terminal to create an isolated Python environment:
+    ```bash
+    pip install virtualenv
+    virtualenv myenv
+    source myenv/bin/activate
+    ```
+1. Next, install Google packages:
+    ```bash
+    pip install google
+    pip install google-cloud-retail
+    pip install google.cloud.storage
+    pip install google.cloud.bigquery
+
+    ```
+
+## Clone the Retail code samples
+
+This step is required if this is the first Retail API Tutorial you run.
+Otherwise, you can skip it.
+
+Clone the Git repository with all the code samples to learn the Retail features and check them in action.
+
+<!-- TODO(ianan): change the repository link -->
+1. Run the following command in the Terminal:
+    ```bash
+    git clone https://github.com/t-karasova/grs-samples-python.git
+    ```
+
+    The code samples for each of the Retail services are stored in different directories.
+
+1. Go to the ```grs-samples-python``` directory. It's our starting point to run more commands.
+    ```bash
+    cd grs-samples-python
+    ```
+
+## Import catalog data
+
+This step is required if this is the first Retail API Tutorial you run.
+Otherwise, you can skip it.
+
+### Upload catalog data to Cloud Storage
+
+There is a JSON file with valid products prepared in the `product` directory:
+`product/products.json`.
+
+Another file, `product/products_some_invalid.json`, contains both valid and invalid products, and you will use it to check the error handling.
+
+In your own project you need to create a Cloud Storage bucket and put the JSON file there.
+The bucket name must be unique. For convenience, you can name it `<YOUR_PROJECT_ID>_<TIMESTAMP>`.
+
+1. To create the bucket and upload the JSON file, run the following command in the Terminal:
+
+    ```bash
+    python product/create_gcs_bucket.py
+    ```
+
+    Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the files are uploaded.
+
+1. The name of the created Cloud Storage bucket is printed in the Terminal. Copy the name and set it as the environment variable `BUCKET_NAME`:
+
+    ```bash
+    export BUCKET_NAME=<YOUR_BUCKET_NAME>
+    ```
+
+### Import products to the Retail Catalog
+
+To import the prepared products to a catalog, run the following command in the Terminal:
+
 ```bash
-pip install virtualenv
-```
-```bash
-virtualenv <your-env>
-```
-```bash
-source <your-env>/bin/activate
-```
-Next, install Google packages:
-```bash
-pip install google
-```
-```bash
-pip install google-cloud-retail
+python product/import_products_gcs.py
 ```
 
-**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal to run it.
+## Configuring search to use redirect control
 
+1. Open
+<walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_simple_query.py" regex="TRY DIFFERENT QUERY PHRASES HERE">search_simple_query.py</walkthrough-editor-select-regex> to review the request.
 
-## Set the PROJECT_NUMBER environment variable
+1. Change the query variable to match the one you configured as query term in your redirect Control:
 
-As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
-
-You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
-
-Set the environment variable with a following command:
-```bash
-export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
-```
-
-## Configuring search to use Redirect Control
-
-Open Editor to see all the code samples and choose **search_simple_query.py**. 
-
-Now you need to change the query variable to match the one you configured as query term in
-your Redirect Control:
-
-```title_query = "<YOUR_QUERY_TERM>"```
+    ```query_phrase = "<YOUR_QUERY_TERM>"```
 
 Next step is to configure the Search Service to use the serving config that has the redirect control attached.
 
 ## Configuring search to use serving config
 
-In the code sample, find `default_search_placement` variable.
+1. In the code sample, find the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_simple_query.py" regex="default_search_placement">variable</walkthrough-editor-select-regex>.
 
-Before applying the changes, it should look like this:
+    Before applying the changes, it should look like this:
 
-```default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"```
+    ```
+    default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
+    ```
 
-You need to replace the `default_search` part to the ID of your serving config.
+1. Replace the `default_search` part to the ID of your serving config.
 
-After applying the changes, it should look like this:
+1. After applying the changes, it should look like this:
 
-```default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/<YOUR_SERVING_CONFIG_ID>"```
+    ```
+    default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/<YOUR_SERVING_CONFIG_ID>"
+    ```
 
-## Redirect control console output
+## Redirect control: testing
 
-We want to check the effect of the Redirect Control printed in our console. 
+We want to check the effect of the redirect Control printed in our console.
 
-Let's go to the bottom of the code sample and find a following code fragment:
+1. Go to the bottom of the code sample and find a following code fragment:
 
-```print("---search response---")```
+    ```
+    print("---search response---")
+    ```
 
-Add the following piece of code below:
+1. Add the following piece of code below:
 
-```print("redurect uri: " + search_response.redirect_uri)```
+    ```
+    print("redurect uri: " + search_response.redirect_uri)
+    ```
 
-Great! We're done in the editor. Let's go  back to the Terminal.
+1. To execute our code sample, run the following command in the Terminal:
+    ```bash
+    python search/search_simple_query.py
+    ```
+1. You should see the redirect URL printed in the Terminal.
 
-## Authentication
+## Congratulations
 
-To run a code sample from the Cloud Shell, you need to authenticate. Luckily, Google Cloud
-makes it easy to use the Application Default Credentials. Open Terminal and run the following command:
-```bash
-gcloud auth application-default login
-```
+<walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-Type 'Y' and press Enter. Click on the link in Terminal. A browser window should open asking you to login using your gmail account.
-Provide the Google Auth Library with access to your credentials and paste the code from the browser to the Terminal.
+You have completed the tutorial! We encourage you to test the redirecting controls by yourself.
 
-Now we can run the code sample and check the Redirect Control in action.
-
-## Testing the Redirect Control
-
-To execute our code sample, run the following command:
-```bash
-python cloudshell_open/grs-samles-python/search_simple_query.py
-```
-You should see the redirect URL printed in the Terminal.
-
-**Thank you for completing this tutorial!**
+<walkthrough-inline-feedback></walkthrough-inline-feedback>
