@@ -16,8 +16,18 @@
 # Call Retail API to search for a products in a catalog using only search query.
 #
 import re
+import subprocess
 
 from search_with_boost_spec import search
+
+
+def test_search_with_boost_spec_pass():
+    output = str(subprocess.check_output('python search/search_with_boost_spec.py', shell=True))
+
+    assert re.match('.*search request.*', output)
+    assert re.match('.*search response.*', output)
+    # check the response contains some products
+    assert re.match('.*results.*id.*', output)
 
 
 def test_search_with_boost_spec():
@@ -26,4 +36,3 @@ def test_search_with_boost_spec():
     assert len(response.results) == 10
     product_title = response.results[0].product.title
     assert re.match('.*Tee.*', product_title)
-    assert response.total_size == 129

@@ -16,15 +16,22 @@
 # Call Retail API to search for a products in a catalog using only search query.
 #
 import re
+import subprocess
 
 from search_with_ordering import search
+
+
+def test_search_with_ordering_pass():
+    output = str(subprocess.check_output('python search/search_with_ordering.py', shell=True))
+
+    assert re.match('.*search request.*', output)
+    assert re.match('.*search response.*', output)
+    # check the response contains some products
+    assert re.match('.*results.*id.*', output)
 
 
 def test_search_with_ordering():
     response = search()
 
     assert len(response.results) == 10
-    product_title = response.results[0].product.title
-    assert re.match('.*Hoodie', product_title)
     assert response.results[0].product.price_info.price == 39
-    assert response.total_size == 51
