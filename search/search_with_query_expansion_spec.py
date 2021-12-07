@@ -44,7 +44,7 @@ def get_search_request(query: str, condition: SearchRequest.QueryExpansionSpec.C
     search_request.query_expansion_spec = query_expansion_spec
     search_request.page_size = 10
 
-    print("---search_request:---")
+    print("---search request:---")
     print(search_request)
 
     return search_request
@@ -58,7 +58,7 @@ def search():
     search_request = get_search_request("Google Youth Hero Tee Grey", condition)
     search_response = get_search_service_client().search(search_request)
 
-    print("---query expansion search results---")
+    print("---search response---")
     print(search_response)
     return search_response
 

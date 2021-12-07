@@ -16,14 +16,23 @@
 # Call Retail API to search for a products in a catalog using only search query.
 #
 import re
+import subprocess
 
 from search_simple_query import search
 
 
-def test_search_simple_query():
+def test_search_simple_query_pass():
+    output = str(subprocess.check_output('python search/search_simple_query.py', shell=True))
+
+    assert re.match('.*search request.*', output)
+    assert re.match('.*search response.*', output)
+    # check the response contains some products
+    assert re.match('.*results.*id.*', output)
+
+
+def test_search_simple_query_response():
     response = search()
 
     assert len(response.results) == 10
     product_title = response.results[0].product.title
     assert re.match('.*Hoodie.*', product_title)
-    assert response.total_size == 51

@@ -72,8 +72,6 @@ def update_product(product_to_update_id):
     print(updated_product)
 
     print('---Wait 2 minutes to be sure the catalog has been indexed after the changes---:')
-    time.sleep(120)
-    print('---You can proceed with the search requests---')
     return updated_product
 
 

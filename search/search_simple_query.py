@@ -39,7 +39,7 @@ def get_search_request(query: str):
     search_request.visitor_id = "123456"  # A unique identifier to track visitors
     search_request.page_size = 10
 
-    print("---search_request:---")
+    print("---search request:---")
     print(search_request)
 
     return search_request
@@ -52,7 +52,6 @@ def search():
 
     search_request = get_search_request(query_phrase)
     search_response = get_search_service_client().search(search_request)
-    search_response = get_search_service_client().search(get_search_request(query_phrase))
 
     print("---search response---")
     print(search_response)

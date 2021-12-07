@@ -54,7 +54,7 @@ def search():
     search_request = get_search_request("Hoodie", order)
     search_response = get_search_service_client().search(search_request)
 
-    print("---ordered search results---")
+    print("---search response---")
     print(search_response)
     return search_response
 

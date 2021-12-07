@@ -16,6 +16,7 @@
 # Call Retail API to search for a products in a catalog using only search query.
 #
 import re
+import subprocess
 
 from search_attribute_config import search
 from update_attribute_configuration import update_product
@@ -28,6 +29,15 @@ def test_update_attribute_config():
 
     assert product.id == product_id
     assert 'ecofriendly' in product.attributes.keys()
+
+
+def test_update_attribute_config_pass():
+    output = str(subprocess.check_output('python search/search_attribute_config.py', shell=True))
+
+    assert re.match('.*search request.*', output)
+    assert re.match('.*search response.*', output)
+    # check the response contains some products
+    assert re.match('.*results.*id.*', output)
 
 
 def test_search_attribute_config():
