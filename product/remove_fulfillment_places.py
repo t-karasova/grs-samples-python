@@ -18,13 +18,13 @@ import os
 import time
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import ProductServiceClient, AddFulfillmentPlacesRequest, RemoveFulfillmentPlacesRequest
+from google.cloud.retail import ProductServiceClient, RemoveFulfillmentPlacesRequest
 
 from setup_cleanup import create_product, get_product, delete_product
 
 project_number = os.getenv('PROJECT_NUMBER')
 endpoint = "retail.googleapis.com"
-product_id = "fulfillment_test_product_id"
+product_id = "remove_fulfillment_test_product_id"
 product_name = 'projects/' + project_number + '/locations/global/catalogs/default_catalog/branches/default_branch/products/' + product_id
 
 # The request timestamp
@@ -39,38 +39,12 @@ def get_product_service_client():
     return ProductServiceClient(client_options=client_options)
 
 
-# add fulfillment request
-def get_add_fulfillment_request(product_name: str) -> AddFulfillmentPlacesRequest:
-    add_fulfillment_request = AddFulfillmentPlacesRequest()
-    add_fulfillment_request.product = product_name
-    add_fulfillment_request.type_ = 'pickup-in-store'
-    add_fulfillment_request.place_ids = ['store1', 'store2', 'store3']
-    add_fulfillment_request.add_time = request_time - datetime.timedelta(minutes=1)
-    add_fulfillment_request.allow_missing = True
-
-    print("---add fulfillment request---")
-    print(add_fulfillment_request)
-
-    return add_fulfillment_request
-
-
-# add fulfillment places to product
-def add_fulfillment_places(product_name: str):
-    add_fulfillment_request = get_add_fulfillment_request(product_name)
-    get_product_service_client().add_fulfillment_places(add_fulfillment_request)
-
-    # This is a long running operation and its result is not immediately present with get operations,
-    # thus we simulate wait with sleep method.
-    print("---add fulfillment places, wait 30 seconds :---")
-    time.sleep(30)
-
-
 # remove fulfillment request
 def get_remove_fulfillment_request(product_name: str) -> RemoveFulfillmentPlacesRequest:
     remove_fulfillment_request = RemoveFulfillmentPlacesRequest()
     remove_fulfillment_request.product = product_name
     remove_fulfillment_request.type_ = 'pickup-in-store'
-    remove_fulfillment_request.place_ids = ['store1']
+    remove_fulfillment_request.place_ids = ['store0']
     remove_fulfillment_request.remove_time = request_time
     remove_fulfillment_request.allow_missing = True
 
@@ -94,7 +68,7 @@ def remove_fulfillment_places(product_name: str):
 
 
 create_product(product_id)
-add_fulfillment_places(product_name)
-#remove_fulfillment_places(product_name)
+time.sleep(30)
+remove_fulfillment_places(product_name)
 get_product(product_name)
-delete_product(product_name)
+#delete_product(product_name)

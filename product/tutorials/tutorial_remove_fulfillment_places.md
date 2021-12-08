@@ -1,4 +1,4 @@
-# **Update Inventory. Add Fulfillment Places**
+# **Update Inventory. Remove Fulfillment Places**
 
 ## Let's get started
 
@@ -53,53 +53,58 @@ Set the environment variable with a following command:
 export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
 ```
 
-## Add fulfillment places 
+## Remove fulfillment places 
 
-To send the ```AddFulfillmentPlacesRequest```, you need to set the following fields:
+To send the ```RemoveFulfillmentPlacesRequest```, you need to set the following fields:
  - ```product``` - the product name whose inventory information you wnd to update,
  - ```type``` - the fulfillment type. You may set one of the [supported values](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#addfulfillmentplacesrequest),
  - ```place_ids[]``` - the store IDs for each of the fulfillment types,
- - ```add_time``` - the time when the fulfillment updates are pushed. It is used to prevent out-of-order updates on the fulfillment information. If not provided, the internal system time will be used,
- - ```allow_missing``` - if set to true and the Product is not found, the fulfillment information will still be processed and retained for up to 24 hours and processed once the Product is created. 
+ - ```remove_time``` - the time when the fulfillment updates are pushed. It is used to prevent out-of-order updates on the fulfillment information. If not provided, the internal system time will be used,
+ - ```allow_missing``` - if set to true, and the Product is not found, the fulfillment information will still be processed and retained for up to 24 hours and processed once the Product is created.
 
-Open **product/add_fulfillment_places.py** and check the ```AddFulfillmentPlacesRequest```.
 
-To add the fulfillment places, open terminal and run the following command:
+Open **product/remove_fulfillment_places.py**, find a ```get_remove_fulfillment_request()``` method, and check the ```RemoveFulfillmentPlacesRequest``` request.
+
+
+Run the code sample with the command:
 
 ```bash
-python product/add_fulfillment_places.py
+python product/remove_fulfillment_places.py
 ```
-
+ 
 Check the responses in the Terminal. As you can see, the product was initially created with fulfillment places 'store0' and 'store1'. 
-Then, check the ```get_product()``` response, the fulfillment places 'store2', 'store3', 'store4' was added to the 'pickup-in-store' fulfillment type.
+Then, check the ```get_product()``` response, the **'store0'**  place was removed from the list of fulfillment places for 'pickup-in-store' type.
 
-## Send out-of-order add_fulfillment_places request
+## Send out-of-order remove_fulfillment_places request
 
-The ```AddFulfillmentPlaces``` method allows you to specify the update time when the request is sent.
-The Retail API compares the update time you've specified with the latest recorded for the relevant inventory fields. The update happens only if the specified update time value is greater than the latest update time value.
+The RemoveFulfillmentPlaces method allows to set an update time.
+If its value is greater than the latest update time value recorded for the relevant inventory fields, the update proceeds.
 
-Let's modify the ```add_fulfillment_request```: change the list of the **place_ids**.
+Next, modify the ```remove_fulfillment_request```: change the place_id to "store1":
 
-To change the ```request_time``` value, set now() - 1 day:
+```remove_fulfillment_request.place_ids = ['store1']```
+
+Set ```request_time``` value to yesterday:
 ```
 request_time = datetime.datetime.now() - datetime.timedelta(days=1)
 ```
+
 Next, before you run the same code sample again, comment out the line ```create_product(product_id)``` to avoid the error message "Product already exists" appears.
 
-Uncomment the ```#delete_product(product_name)``` line to clean up after the code sample run.
+Uncomment the line ```delete_product(product_name)``` to clean up after these exercises. 
 
-Run the code once again:
+Run the code one more time:
 ```bash
-python product/add_fulfillment_places.py
+python product/add_remove_fulfillment.py
 ```
 
-Check the product printed out in the Terminal. The fulfillment places information has no updates.
+Check the product printed out in the Terminal. The fulfillment places information was not updated.
 
 ## Congratulations
 
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-You have completed the tutorial! Now you know how to add the product fulfillment places using the Retail API. We encourage you to 
+You have completed the tutorial! Now you know how to remove the product fulfillment places using the Retail API. We encourage you to 
 practice in updating fulfillment information right here in Cloud Shell environment.
 
 **Thank you for completing this tutorial!**

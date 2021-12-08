@@ -15,18 +15,21 @@
 import re
 import subprocess
 import pytest
+import os
+from setup_cleanup import delete_product
 
 
 #@pytest.mark.flaky(max_runs=10, min_passes=1)
 @pytest.mark.flaky(reruns=10)
 def test_add_fulfillment():
-    output = str(subprocess.check_output('python product/add_remove_fulfillment.py', shell=True))
+    project_number = os.getenv('PROJECT_NUMBER')
+    product_name = 'projects/' + project_number + '/locations/global/catalogs/default_catalog/branches/default_branch/products/remove_fulfillment_test_product_id'
+    output = str(subprocess.check_output('python product/remove_fulfillment_places.py', shell=True))
 
     assert re.match('.*product is created.*', output)
-    assert re.match('.*add fulfillment request.*', output)
-    assert re.match('.*add fulfillment places.*', output)
-    assert re.match('.*get product response.*', output)
+    assert re.match('.*remove fulfillment request.*', output)
+    assert re.match('.*remove fulfillment places.*', output)
     assert re.match('.*get product response.*?fulfillment_info.*type_: "pickup-in-store".*?place_ids: "store1".*', output)
-    assert re.match('.*get product response.*?fulfillment_info.*type_: "pickup-in-store".*?place_ids: "store2".*', output)
-    assert re.match('.*get product response.*?fulfillment_info.*type_: "pickup-in-store".*?place_ids: "store3".*', output)
-    assert re.match('.*product.*was deleted.*', output)
+
+    delete_product(product_name)
+

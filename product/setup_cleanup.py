@@ -19,7 +19,7 @@ import subprocess
 
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail_v2 import Product, ProductServiceClient, CreateProductRequest, DeleteProductRequest, \
-    GetProductRequest, PriceInfo
+    GetProductRequest, PriceInfo, FulfillmentInfo
 from google.cloud.retail_v2.types import product
 from google.cloud import storage
 from google.cloud import bigquery
@@ -41,12 +41,16 @@ def generate_product() -> Product:
     price_info.price = 30.0
     price_info.original_price = 35.5
     price_info.currency_code = "USD"
+    fulfillment_info = FulfillmentInfo()
+    fulfillment_info.type_ = "pickup-in-store"
+    fulfillment_info.place_ids = ["store0", "store1"]
     return product.Product(
         title='Nest Mini',
         type_=product.Product.Type.PRIMARY,
         categories=['Speakers and displays'],
         brands=['Google'],
         price_info=price_info,
+        fulfillment_info = [fulfillment_info],
         availability="IN_STOCK",
     )
 
