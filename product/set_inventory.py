@@ -20,6 +20,8 @@ import time
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import ProductServiceClient, SetInventoryRequest, PriceInfo, FulfillmentInfo
 from google.cloud.retail_v2 import Product
+from google.protobuf.field_mask_pb2 import FieldMask
+
 
 from setup_cleanup import create_product, get_product, delete_product
 
@@ -27,6 +29,7 @@ project_number = os.getenv('PROJECT_NUMBER')
 endpoint = "retail.googleapis.com"
 product_id = "inventory_test_product_id"
 product_name = 'projects/' + project_number + '/locations/global/catalogs/default_catalog/branches/default_branch/products/' + product_id
+
 
 # get product service client
 def get_product_service_client():
@@ -61,11 +64,13 @@ def get_set_inventory_request(product_name: str) -> SetInventoryRequest:
     request_time = datetime.datetime.now()
     # The out-of-order request timestamp
     # request_time = datetime.datetime.now() - datetime.timedelta(days=1)
+    set_mask = FieldMask(paths=['price_info', 'availability', 'fulfillment_info', 'available_quantity'])
 
     set_inventory_request = SetInventoryRequest()
     set_inventory_request.inventory = get_product_with_inventory_info(product_name)
     set_inventory_request.set_time = request_time
     set_inventory_request.allow_missing = True
+    set_inventory_request.set_mask = set_mask
 
     print("---set inventory request---")
     print(set_inventory_request)
@@ -80,8 +85,8 @@ def set_inventory(product_name: str):
 
     # This is a long running operation and its result is not immediately present with get operations,
     # thus we simulate wait with sleep method.
-    print("---set inventory, wait 10 seconds:---")
-    time.sleep(10)
+    print("---set inventory, wait 30 seconds:---")
+    time.sleep(50)
 
 
 create_product(product_id)

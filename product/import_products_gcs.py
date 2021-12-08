@@ -101,8 +101,7 @@ def import_products_from_gcs():
     print(gcs_operation.result())
 
      # The imported products needs to be indexed in the catalog before they become available for search.
-    print("Wait till products become indexed in the catalog, after that they will be available for search")
-    time.sleep(120)
+    print("Wait 2 -5 minutes till products become indexed in the catalog, after that they will be available for search")
 
 
 import_products_from_gcs()

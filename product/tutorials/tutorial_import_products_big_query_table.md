@@ -78,6 +78,46 @@ python product/create_bigquery_table.py
 ```
 The dataset "products" with both tables are created, check them in [Cloud Console](https://console.corp.google.com/bigquery)
 
+## Create the BigQuery table and upload products from UI admin console
+
+In case if you do not have permissions to run the ```bq``` command and performing the previous step you have got "Permission denied" error, you can try the other way to create the table and upload your data.
+
+### Upload catalog data to Cloud Storage
+
+There is a JSON file with valid products prepared in the "product" directory: 
+
+**product/products.json**.
+
+The other file, **product/products_some_invalid.json**, contains both valid and invalid products, you will use in to check the error handling.
+ 
+In your own project you should create a Cloud Storage bucket and put the JSON file there.
+The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT_ID>_<TIMESTAMP>.
+
+To create the bucket and upload the JSON file run the following command in the Terminal:
+
+```bash
+python product/create_gcs_bucket.py
+```
+Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the file is uploaded.
+
+The **name of the created GRS bucket** is printed in the Terminal, save it somewhere, you will need it om the next step
+
+### Create the BigQuery table and upload products
+
+Go to the [BigQuery in Cloud Console](https://console.corp.google.com/bigquery).
+
+1. In the Explorer panel you see the list of your projects. 
+2. Click the "three dot" icon next to current project name and chose **Create Dataset** option.
+   Set the Dataset Id and click **Create**.
+3. Click "three dots" icon next to your new dataset and chose **Create Table**.
+   3.1 Set the **Source**: in the field **Create table from** chose **Google Cloud Storage** option.
+   Click **Browse** in the **Select file from GCS bucket** and chose the bucket you have created on the previous step. Chose the **products.json**, click Select.
+   3.2 Set the **Destination** field **Table** with a value **```products```**
+   3.3 Next, provide a table **Schema**. Click **Edit as a text** and paste in the field the schema which you can find in the **producе/product_schema.json** file.
+   Then, click **Create table**.
+   
+As a result the BigQuery table is created. You can proceed and import products to the catalog.
+
 ## Import products from the BigQuery table
 
 Open **product/import_products_big_query_table.py** and look at the example of the import product request.

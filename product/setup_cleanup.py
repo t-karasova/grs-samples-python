@@ -19,10 +19,11 @@ import subprocess
 
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail_v2 import Product, ProductServiceClient, CreateProductRequest, DeleteProductRequest, \
-    GetProductRequest, PriceInfo
+    GetProductRequest, PriceInfo, FulfillmentInfo
 from google.cloud.retail_v2.types import product
 from google.cloud import storage
 from google.cloud import bigquery
+from google.api_core.exceptions import NotFound
 
 project_number = os.getenv('PROJECT_NUMBER')
 
@@ -40,12 +41,16 @@ def generate_product() -> Product:
     price_info.price = 30.0
     price_info.original_price = 35.5
     price_info.currency_code = "USD"
+    fulfillment_info = FulfillmentInfo()
+    fulfillment_info.type_ = "pickup-in-store"
+    fulfillment_info.place_ids = ["store0", "store1"]
     return product.Product(
         title='Nest Mini',
         type_=product.Product.Type.PRIMARY,
         categories=['Speakers and displays'],
         brands=['Google'],
         price_info=price_info,
+        fulfillment_info = [fulfillment_info],
         availability="IN_STOCK",
     )
 
@@ -74,10 +79,18 @@ def delete_product(product_name: str):
 def get_product(product_name: str):
     get_product_request = GetProductRequest()
     get_product_request.name = product_name
-    product = get_product_service_client().get_product(get_product_request)
-
-    print("---product:---")
-    print(product)
+    # product = get_product_service_client().get_product(get_product_request)
+    #
+    # print("---product:---")
+    # print(product)
+    try:
+        product = get_product_service_client().get_product(get_product_request)
+        print("---get product response:---")
+        print(product)
+        return product
+    except NotFound as e:
+        print(e.message)
+        return e.message
 
 
 def get_project_id():

@@ -36,7 +36,7 @@ def search():
     search_request = SearchRequest()
     search_request.placement = default_search_placement  # Placement is used to identify the Serving Config name.
     search_request.query = "sweater"
-    search_request.filter = '(attributes.ecofriendly: ANY("recycled packaging"))'
+    search_request.filter = 'attributes.ecofriendly: ANY("recycled packaging")'
     search_request.page_size = 10
     search_request.visitor_id = "123456"  # A unique identifier to track visitors
 
