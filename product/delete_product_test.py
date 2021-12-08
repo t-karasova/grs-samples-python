@@ -12,22 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
-import string
-import os
 import re
-
-from delete_product import delete_product
-from setup_cleanup import create_product, get_product
+import subprocess
 
 
 def test_delete_product():
-    generated_product_id = ''.join(random.sample(string.ascii_lowercase, 8))
-    generated_product_name = "projects/{}/locations/global/catalogs/default_catalog/branches/0/products/{}".format(os.getenv('PROJECT_NUMBER'), generated_product_id)
+    output = str(subprocess.check_output('python product/delete_product.py', shell=True))
 
-    product = create_product(generated_product_id)
-
-    delete_product(product.name)
-
-    message = get_product(product.name)
-    assert re.match(".*Product with name \"{}\" does not exist".format(generated_product_name), message)
+    assert re.match('.*delete product request.*', output)
+    assert re.match('.*name: "projects/.+/locations/global/catalogs/default_catalog/branches/0/products/.*', output)
+    assert re.match('.*deleting product projects/.+/locations/global/catalogs/default_catalog/branches/0/products/.*',
+                    output)
+    assert re.match('.*product was deleted.*', output)

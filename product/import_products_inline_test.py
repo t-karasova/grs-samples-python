@@ -16,11 +16,11 @@ import re
 import subprocess
 
 
-def test_create_product():
-    output = str(subprocess.check_output('python product/create_product.py', shell=True))
+def test_import_products_gcs():
+    output = str(subprocess.check_output('python product/import_products_inline_source.py', shell=True))
 
-    assert re.match('.*create product request.*', output)
-    assert re.match('.*created product.*', output)
-    assert re.match('.*name: "projects/.+/locations/global/catalogs/default_catalog/branches/0/products/.*', output)
-    assert re.match('.*title: "Nest Mini".*', output)
-    assert re.match('.*product.*was deleted.*', output)
+    assert re.match('.*import products from inline source request.*', output)
+    assert re.match('.*the operation was started.*', output)
+    assert re.match('.*projects/.*/locations/global/catalogs/default_catalog/branches/1/operations/import-products.*', output)
+
+    assert re.match('.*number of successfully imported products.*2.*', output)

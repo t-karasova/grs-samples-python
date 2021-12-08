@@ -54,7 +54,7 @@ def update_product(product_to_update_id):
 
     # Prepare the product attribute to be updated
     attribute = CustomAttribute()
-    attribute.indexable = True
+    attribute.indexable = False
     attribute.searchable = False
     attribute.text = ["recycled fabrics",
                       "recycled packaging",

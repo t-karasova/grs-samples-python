@@ -12,22 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
-import string
-import os
+import subprocess
 import re
-
-from get_product import get_product
-from setup_cleanup import create_product, delete_product
 
 
 def test_get_product():
-    generated_product_id = ''.join(random.sample(string.ascii_lowercase, 8))
-    generated_product_name = "projects/{}/locations/global/catalogs/default_catalog/branches/0/products/{}".format(os.getenv('PROJECT_NUMBER'), generated_product_id)
+    output = str(subprocess.check_output('python product/get_product.py', shell=True))
 
-    created_product = create_product(generated_product_id)
-
-    received_product = get_product(created_product.name)
-    assert received_product.name == created_product.name
-
-    delete_product(created_product.name)
+    assert re.match('.*get product request.*', output)
+    assert re.match('.*get product response.*', output)
+    assert re.match('.*get product response.*?name.*?projects/.*/locations/global/catalogs/default_catalog/branches/0/products/.*', output)
+    assert re.match('.*get product response.*?title.*?Nest Mini.*', output)
+    assert re.match('.*product.*was deleted.*', output)

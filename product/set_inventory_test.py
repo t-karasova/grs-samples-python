@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import random
-import string
+import subprocess
 import os
 import re
 import pytest
@@ -23,24 +23,16 @@ from set_inventory import set_inventory
 from setup_cleanup import create_product, delete_product, get_product
 
 
-@pytest.mark.flaky(reruns=5)
-def test_add_fulfillment():
-    generated_product_id = ''.join(random.sample(string.ascii_lowercase, 8))
-    generated_product_name = "projects/{}/locations/global/catalogs/default_catalog/branches/0/products/{}".format(
-        os.getenv('PROJECT_NUMBER'), generated_product_id)
-
-    product = create_product(generated_product_id)
-
-    set_inventory(product.name)
-    #wait for the product inventory information updated to take effect to reduce the frequency of failure
-    time.sleep(30)
-    product_with_added_placements = get_product(product.name)
-
-    assert product_with_added_placements.fulfillment_info[0].type_ == "pickup-in-store"
-    assert sorted(product_with_added_placements.fulfillment_info[0].place_ids) == ['store1', 'store2']
-
-    delete_product(product.name)
-
-    message = get_product(product.name)
-    assert re.match(".*Product with name \"{}\" does not exist".format(generated_product_name), message)
-
+#@pytest.mark.flaky(max_runs=10, min_passes=1)
+@pytest.mark.flaky(reruns=10)
+def test_set_inventory():
+    output = str(subprocess.check_output('python product/set_inventory.py', shell=True))
+    print(output)
+    assert re.match('.*product is created.*', output)
+    assert re.match('.*name: "projects/.*/locations/global/catalogs/default_catalog/branches/0/products/inventory_test_product_id".*', output)
+    assert re.match('.*set inventory request.*', output)
+    assert re.match('.*get product response.*?fulfillment_info.*type_: "pickup-in-store".*?place_ids: "store1".*',
+                    output)
+    assert re.match('.*get product response.*?fulfillment_info.*type_: "pickup-in-store".*?place_ids: "store2".*',
+                    output)
+    assert re.match('.*product projects/.*/locations/global/catalogs/default_catalog/branches/default_branch/products/inventory_test_product_id was deleted.*', output)

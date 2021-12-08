@@ -12,21 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-
-from import_products_gcs import import_products_from_gcs
-from setup_cleanup import get_product
+import re
+import subprocess
 
 
-def test_create_product():
-    os.environ["BUCKET_NAME"] = "products"
-    gcs_bucket = "gs://{}".format(os.getenv("BUCKET_NAME"))
-    print(gcs_bucket)
-    # The productId of an existent product in the GRS source
-    product_id = 'GGCOGOAC101259'
-    product_name = "projects/{}/locations/global/catalogs/default_catalog/branches/1/products/{}".format(
-        os.getenv('PROJECT_NUMBER'), product_id)
+def test_import_products_gcs():
+    output = str(subprocess.check_output('python product/import_products_gcs.py', shell=True))
 
-    import_products_from_gcs()
+    assert re.match('.*import products from google cloud source request.*', output)
+    assert re.match('.*input_uris: "gs://.*/products.json".*', output)
+    assert re.match('.*the operation was started.*', output)
+    assert re.match('.*projects/.*/locations/global/catalogs/default_catalog/branches/1/operations/import-products.*', output)
 
-    assert get_product(product_name).name == product_name
+    assert re.match('.*number of successfully imported products.*316.*', output)

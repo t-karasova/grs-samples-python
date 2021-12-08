@@ -81,7 +81,7 @@ def get_product(product_name: str):
     # print(product)
     try:
         product = get_product_service_client().get_product(get_product_request)
-        print("---product:---")
+        print("---get product response:---")
         print(product)
         return product
     except NotFound as e:

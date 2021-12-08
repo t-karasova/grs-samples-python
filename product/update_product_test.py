@@ -12,26 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
-import string
-import os
 import re
-
-from update_product import update_product
-from setup_cleanup import create_product, delete_product, get_product
+import subprocess
 
 
-def test_update_product():
-    generated_product_id = ''.join(random.sample(string.ascii_lowercase, 8))
-    generated_product_name = "projects/{}/locations/global/catalogs/default_catalog/branches/0/products/{}".format(os.getenv('PROJECT_NUMBER'), generated_product_id)
+def test_add_fulfillment():
+    output = str(subprocess.check_output('python product/update_product.py', shell=True))
 
-    product = create_product(generated_product_id)
-
-    updated_product = update_product(product)
-    assert updated_product.name == product.name
-    assert product.title != updated_product.title
-    assert updated_product.title == 'Updated Nest Mini'
-    delete_product(updated_product.name)
-
-    message = get_product(product.name)
-    assert re.match(".*Product with name \"{}\" does not exist".format(generated_product_name), message)
+    assert re.match('.*product is created.*', output)
+    assert re.match('.*updated product.*', output)
+    assert re.match('.*updated product.*?title.*?Updated Nest Mini.*', output)
+    assert re.match('.*updated product.*?brands.*?Updated Google.*', output)
+    assert re.match('.*updated product.*?price.*?20.*', output)
+    assert re.match('.*product.*was deleted.*', output)
