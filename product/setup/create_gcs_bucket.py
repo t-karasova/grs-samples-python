@@ -12,10 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from setup_cleanup import create_bq_dataset, create_bq_table, upload_data_to_bq_table
+import datetime
 
-create_bq_dataset("products")
-create_bq_table("products", "products")
-upload_data_to_bq_table("products", "products", "product/products.json")
-create_bq_table("products", "products_some_invalid")
-upload_data_to_bq_table("products", "products_some_invalid", "product/products_some_invalid.json")
+from setup_cleanup import get_project_id, create_bucket, upload_blob
+
+timestamp_ = datetime.datetime.now().timestamp().__round__()
+bucket_name = "{}_{}".format(get_project_id(), timestamp_)
+
+create_bucket(bucket_name)
+upload_blob(bucket_name, "product/resources/products.json")
+upload_blob(bucket_name, "product/resources/products_some_invalid.json")
+
+print("\nThe gcs bucket {} was created".format(bucket_name))

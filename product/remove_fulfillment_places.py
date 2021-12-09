@@ -20,7 +20,7 @@ import time
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import ProductServiceClient, RemoveFulfillmentPlacesRequest
 
-from setup_cleanup import create_product, get_product, delete_product
+from setup.setup_cleanup import create_product, get_product
 
 project_number = os.getenv('PROJECT_NUMBER')
 endpoint = "retail.googleapis.com"
