@@ -21,7 +21,7 @@ Otherwise, you can skip it.
 Google Cloud organizes resources into projects. This lets you
 collect all the related resources for a single application in one place.
 
-If you don't have a Google Cloud project yet or you're not the Owner of an existing one, you can
+If you don't have a Google Cloud project yet or you're not the owner of an existing one, you can
 [create a new project](https://console.cloud.google.com/projectcreate).
 
 After the project is created, set your PROJECT_ID to a ```project``` variable.
@@ -54,7 +54,7 @@ To run a code sample from the Cloud Shell, you need to authenticate. To do this,
 
 Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** as an environment variable. It will be used in every request to the Retail API.
 
-1. You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+1. You can find the ```project_number``` in the Project Info card displayed on **Home/Dashboard**.
 
 1. Set the environment variable with the following command:
     ```bash
@@ -112,10 +112,10 @@ There is a JSON file with valid products prepared in the `product` directory:
 
 Another file, `product/resources/products_some_invalid.json`, contains both valid and invalid products, and you will use it to check the error handling.
 
-In your own project you need to create a Cloud Storage bucket and put the JSON file there.
-The bucket name must be unique. For convenience, you can name it <YOUR_PROJECT_ID>_<TIMESTAMP>.
+In your own project, create a Cloud Storage bucket and put the JSON file there.
+The bucket name must be unique. For convenience, you can name it `<YOUR_PROJECT_ID>_<TIMESTAMP>`.
 
-1. To create the bucket and upload the JSON file run the following command in the Terminal:
+1. To create the bucket and upload the JSON file, run the following command in the Terminal:
 
     ```bash
     python product/setup/create_gcs_bucket.py
@@ -123,7 +123,7 @@ The bucket name must be unique. For convenience, you can name it <YOUR_PROJECT_I
 
     Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the files are uploaded.
 
-1. The name of the created GRS bucket is printed in the Terminal. Copy the name and set it as the environment variable `BUCKET_NAME`:
+1. The name of the created Retail Search bucket is printed in the Terminal. Copy the name and set it as the environment variable `BUCKET_NAME`:
 
     ```bash
     export BUCKET_NAME=<YOUR_BUCKET_NAME>
