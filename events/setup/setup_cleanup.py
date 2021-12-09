@@ -18,9 +18,10 @@
 #
 import datetime
 import time
+import os
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import UserEvent, UserEventServiceClient, \
-    WriteUserEventRequest, PurgeUserEventsRequest
+    WriteUserEventRequest, PurgeUserEventsRequest, ProductDetail, Product
 from google.protobuf.timestamp_pb2 import Timestamp
 
 
@@ -40,10 +41,18 @@ def get_user_event(visitor_id):
     timestamp = Timestamp()
     timestamp.seconds = int(datetime.datetime.now().timestamp())
 
+    product = Product()
+    product.id = 'test_id'
+
+    product_detail = ProductDetail()
+    product_detail.product = product
+    product_detail.quantity = 3
+
     user_event = UserEvent()
-    user_event.event_type = "home-page-view"
+    user_event.event_type = "detail-page-view"
     user_event.visitor_id = visitor_id
     user_event.event_time = timestamp
+    user_event.product_details = [product_detail]
 
     print(user_event)
     return user_event
@@ -55,23 +64,18 @@ def write_user_event(visitor_id):
     write_user_event_request.user_event = get_user_event(visitor_id)
     write_user_event_request.parent = default_catalog
     user_event = get_user_events_service_client().write_user_event(write_user_event_request)
-
+    print("---the user event is written---")
+    print(user_event)
     return user_event
 
 
 # purge user event
 def purge_user_event(visitor_id):
     purge_user_event_request = PurgeUserEventsRequest()
-    purge_user_event_request.filter = visitor_id
+    purge_user_event_request.filter = 'visitorId="{}"'.format(visitor_id)
     purge_user_event_request.parent = default_catalog
     purge_user_event_request.force = True
     purge_operation = get_user_events_service_client().purge_user_events(purge_user_event_request)
 
-    print("---the operation was started:----")
+    print("---the purge operation was started:----")
     print(purge_operation.operation.name)
-
-    while not purge_operation.done():
-        print("---please wait till purge operation is done---")
-        time.sleep(5)
-
-    print("---import user events operation is done---")
