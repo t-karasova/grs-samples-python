@@ -16,7 +16,7 @@ import re
 import subprocess
 import pytest
 import os
-from setup_cleanup import delete_product
+from setup.setup_cleanup import delete_product
 
 
 #@pytest.mark.flaky(max_runs=10, min_passes=1)

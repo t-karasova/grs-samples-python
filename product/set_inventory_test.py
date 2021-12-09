@@ -12,15 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import random
 import subprocess
-import os
 import re
 import pytest
-import time
-
-from set_inventory import set_inventory
-from setup_cleanup import create_product, delete_product, get_product
 
 
 #@pytest.mark.flaky(max_runs=10, min_passes=1)

@@ -25,7 +25,7 @@ from google.cloud.retail_v2 import Product, ProductServiceClient, UpdateProductR
 from google.cloud.retail_v2.types import product
 # from google.protobuf.field_mask_pb2 import FieldMask
 
-from setup_cleanup import create_product, delete_product
+from setup.setup_cleanup import create_product, delete_product
 # from google.protobuf.field_mask_pb2 import FieldMask
 
 

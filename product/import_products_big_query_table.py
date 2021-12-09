@@ -21,7 +21,7 @@ import time
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import BigQuerySource, ProductInputConfig, ProductServiceClient, \
     ImportProductsRequest
-from setup_cleanup import get_project_id
+from setup.setup_cleanup import get_project_id
 
 project_number = os.getenv('PROJECT_NUMBER')
 project_id = get_project_id()

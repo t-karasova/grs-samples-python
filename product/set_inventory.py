@@ -23,7 +23,7 @@ from google.cloud.retail_v2 import Product
 from google.protobuf.field_mask_pb2 import FieldMask
 
 
-from setup_cleanup import create_product, get_product, delete_product
+from setup.setup_cleanup import create_product, get_product, delete_product
 
 project_number = os.getenv('PROJECT_NUMBER')
 endpoint = "retail.googleapis.com"

@@ -54,9 +54,9 @@ export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
 
 There is a JSON file with valid products prepared in the "product" directory: 
 
-**product/products.json**.
+**product/resources/products.json**.
 
-The other file, **product/products_some_invalid.json**, contains both valid and invalid products, you will use in to check the error handling.
+The other file, **product/resources/products_some_invalid.json**, contains both valid and invalid products, you will use in to check the error handling.
  
 In your own project you should create a Cloud Storage bucket and put the JSON file there.
 The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT_ID>_<TIMESTAMP>.
@@ -64,7 +64,7 @@ The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT
 To create the bucket and upload the JSON file run the following command in the Terminal:
 
 ```bash
-python product/create_gcs_bucket.py
+python product/setup/create_gcs_bucket.py
 ```
 Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the file is uploaded.
 
