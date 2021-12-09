@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 import os
 import re
 import shlex
@@ -50,7 +49,7 @@ def generate_product() -> Product:
         categories=['Speakers and displays'],
         brands=['Google'],
         price_info=price_info,
-        fulfillment_info=[fulfillment_info],
+        fulfillment_info = [fulfillment_info],
         availability="IN_STOCK",
     )
 
