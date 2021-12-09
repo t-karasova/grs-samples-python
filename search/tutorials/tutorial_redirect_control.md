@@ -3,7 +3,7 @@
 ## Get started
 
 The redirect control lets you specify a URL to redirect users to when they search for a specific query.
-Since we are not able to check its effect on the [Evaluate page](https://console.cloud.google.com/ai/retail/catalogs/default_catalog/evaluate), we will test it in the Cloud Shell. Make sure that you've created and attached the redirect control to the serving config. You can find the step-by-step instruction on how to do it in the [Creating and Managing Controls tutorial](https://cloud.google.com/retail/docs/manage-controls).
+Because we are not able to check its effect on the [Evaluate page](https://console.cloud.google.com/ai/retail/catalogs/default_catalog/evaluate), we will test it in the Cloud Shell. Make sure that you've created and attached the redirect control to the serving config. You can find the step-by-step instructions on how to do it in the [Creating and Managing Controls tutorial](https://cloud.google.com/retail/docs/manage-controls).
 
 
 <walkthrough-tutorial-duration duration="7"></walkthrough-tutorial-duration>
@@ -51,7 +51,7 @@ To run a code sample from the Cloud Shell, you need to authenticate. To do this,
 
 Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** as an environment variable. It will be used in every request to the Retail API.
 
-1. You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+1. You can find the ```project_number``` in the Project Info card displayed on **Home/Dashboard**.
 
 1. Set the environment variable with the following command:
     ```bash
@@ -92,7 +92,7 @@ Clone the Git repository with all the code samples to learn the Retail features 
 
     The code samples for each of the Retail services are stored in different directories.
 
-1. Go to the ```grs-samples-python``` directory. It's our starting point to run more commands.
+1. Go to the ```grs-samples-python``` directory. This is our starting point to run more commands.
     ```bash
     cd grs-samples-python
     ```
@@ -105,9 +105,9 @@ Otherwise, you can skip it.
 ### Upload catalog data to Cloud Storage
 
 There is a JSON file with valid products prepared in the `product` directory:
-`product/products.json`.
+`product/resouces/products.json`.
 
-Another file, `product/products_some_invalid.json`, contains both valid and invalid products, and you will use it to check the error handling.
+Another file, `product/resources/products_some_invalid.json`, contains both valid and invalid products, and you will use it to check the error handling.
 
 In your own project you need to create a Cloud Storage bucket and put the JSON file there.
 The bucket name must be unique. For convenience, you can name it `<YOUR_PROJECT_ID>_<TIMESTAMP>`.
@@ -115,7 +115,7 @@ The bucket name must be unique. For convenience, you can name it `<YOUR_PROJECT_
 1. To create the bucket and upload the JSON file, run the following command in the Terminal:
 
     ```bash
-    python product/create_gcs_bucket.py
+    python product/seetup/create_gcs_bucket.py
     ```
 
     Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the files are uploaded.
@@ -126,7 +126,7 @@ The bucket name must be unique. For convenience, you can name it `<YOUR_PROJECT_
     export BUCKET_NAME=<YOUR_BUCKET_NAME>
     ```
 
-### Import products to the Retail Catalog
+### Import products to the Retail catalog
 
 To import the prepared products to a catalog, run the following command in the Terminal:
 
@@ -134,22 +134,22 @@ To import the prepared products to a catalog, run the following command in the T
 python product/import_products_gcs.py
 ```
 
-## Configuring search to use redirect control
+## Configure search to use the redirect control
 
 1. Open
 <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_simple_query.py" regex="TRY DIFFERENT QUERY PHRASES HERE">search_simple_query.py</walkthrough-editor-select-regex> to review the request.
 
-1. Change the query variable to match the one you configured as query term in your redirect Control:
+1. Change the query variable to match the one you configured as a query term in your redirect control:
 
     ```query_phrase = "<YOUR_QUERY_TERM>"```
 
-Next step is to configure the Search Service to use the serving config that has the redirect control attached.
+The next step is to configure the Search Service to use the serving config that has the redirect control attached.
 
-## Configuring search to use serving config
+## Configure search to use the serving config
 
 1. In the code sample, find the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_simple_query.py" regex="default_search_placement">variable</walkthrough-editor-select-regex>.
 
-    Before applying the changes, it should look like this:
+    Before you apply the changes, it should look like this:
 
     ```
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
@@ -157,17 +157,17 @@ Next step is to configure the Search Service to use the serving config that has 
 
 1. Replace the `default_search` part to the ID of your serving config.
 
-1. After applying the changes, it should look like this:
+1. After you apply the changes, it should look like this:
 
     ```
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/<YOUR_SERVING_CONFIG_ID>"
     ```
 
-## Redirect control: testing
+## Redirect control testing
 
-We want to check the effect of the redirect Control printed in our console.
+We want to check the effect of the redirect control printed in our console.
 
-1. Go to the bottom of the code sample and find a following code fragment:
+1. Go to the bottom of the code sample and find the following code fragment:
 
     ```
     print("---search response---")
@@ -176,7 +176,7 @@ We want to check the effect of the redirect Control printed in our console.
 1. Add the following piece of code below:
 
     ```
-    print("redurect uri: " + search_response.redirect_uri)
+    print("redirect uri: " + search_response.redirect_uri)
     ```
 
 1. To execute our code sample, run the following command in the Terminal:
@@ -189,6 +189,6 @@ We want to check the effect of the redirect Control printed in our console.
 
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-You have completed the tutorial! We encourage you to test the redirecting controls by yourself.
+You have completed the tutorial! We encourage you to test the redirect controls by yourself.
 
 <walkthrough-inline-feedback></walkthrough-inline-feedback>
