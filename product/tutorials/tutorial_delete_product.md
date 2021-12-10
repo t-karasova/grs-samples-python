@@ -73,9 +73,7 @@ python product/delete_product.py
 
 There is no return value for this method, so to check if the product was successfully removed let's try to delete this product one more time. As the product cannot be deleted twice, we expect the following error message:
 
-
-TODO
-```[PUT THE ERROR MESSAGE HERE]```
+```google.api_core.exceptions.NotFound: 404 Product with name "projects/<PROJECT_NUMBER>/locations/global/catalogs/default_catalog/branches/0/products/<PRODUCT_ID>" does not exist.```
 
 Copy the product name from the output message ( it is printed in a terminal ) and assign it to the variable **```created_product_name```**.
 
@@ -89,7 +87,7 @@ Let's now remove the product_id part from the **```name```**  value and send thi
 
 **The expected error message** should be like:
 
-```[PUT THE ERROR MESSAGE HERE]```
+```google.api_core.exceptions.InvalidArgument: 400 Request contains an invalid argument.```
 
 ## Congratulations
 
