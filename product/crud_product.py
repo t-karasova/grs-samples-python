@@ -130,7 +130,8 @@ def delete_product():
     print("deleting product " + product_name)
     print("---product was deleted:---")
 
-
+ 
+# call the methods
 create_product()
 get_product()
 update_product()
