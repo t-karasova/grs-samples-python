@@ -1,5 +1,5 @@
-# Google Retail Search
-## Python code samples
+# Google Retail Search: Python code samples
+## Get started
 ### Select your project and enable the Retail API
 
 Google Cloud organizes resources into projects. This lets you
