@@ -16,10 +16,10 @@
 # Import products into a catalog from gcs using Retail API
 #
 import os
-import time
 import re
 import shlex
 import subprocess
+import time
 
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import GcsSource, ProductInputConfig, ProductServiceClient, ImportErrorsConfig, \
@@ -37,7 +37,9 @@ def get_project_id():
 project_number = os.getenv('PROJECT_NUMBER')
 project_id = get_project_id()
 endpoint = "retail.googleapis.com"
-default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
+# You can change the branch here. The "default_branch" is set to point to the branch "0"
+default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/default_branch".format(
+    project_number)
 
 # Read bucket name from the environment variable
 gcs_bucket = "gs://{}".format(os.getenv("BUCKET_NAME"))
@@ -100,7 +102,7 @@ def import_products_from_gcs():
     print("---operation result:---")
     print(gcs_operation.result())
 
-     # The imported products needs to be indexed in the catalog before they become available for search.
+    # The imported products needs to be indexed in the catalog before they become available for search.
     print("Wait 2 -5 minutes till products become indexed in the catalog, after that they will be available for search")
 
 
