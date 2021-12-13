@@ -84,7 +84,10 @@ To upload catalog data to the Cloud Storage bucket, create one or more JSON prod
 To check the example of an import product request, open **product/import_products_gcs.py**.
 
 The field **```parent```** contains a **catalog name** along with a branch number you are going to import your
-products to.
+products to. 
+If you are using products prepared for these tutorials: **product/resources/products.json**, it is fine to import products to the default branch.
+But, if you are using custom products, please change the **default_branch**, which is **0** to other branch ID, like **1**.
+In the Search tutorials you will request SearchService to find products in the default_branch. 
 
 The field **```input_config```** defines the **GcsSource** as an import source.
 
