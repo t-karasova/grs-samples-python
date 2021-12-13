@@ -168,10 +168,10 @@ def list_bq_datasets():
     return str(datasets)
 
 
-def create_bq_table(dataset, table_name):
+def create_bq_table(dataset, table_name, schema):
     """Create a BigQuery table"""
     if table_name not in list_bq_tables(dataset):
-        create_table_command = "bq mk --table {}:{}.{} product/resources/product_schema.json".format(get_project_id(),dataset, table_name)
+        create_table_command = "bq mk --table {}:{}.{} {}".format(get_project_id(),dataset, table_name, schema)
         output = subprocess.check_output(shlex.split(create_table_command))
         print(output)
     else:
@@ -186,8 +186,8 @@ def list_bq_tables(dataset):
     print(tables)
     return str(tables)
 
-def upload_data_to_bq_table(dataset, table_name, source):
+def upload_data_to_bq_table(dataset, table_name, source, schema):
     """Upload data to the table from specified source file"""
-    upload_data_command = "bq load --source_format=NEWLINE_DELIMITED_JSON {}:{}.{} {} product/resources/product_schema.json".format(get_project_id(),dataset, table_name, source)
+    upload_data_command = "bq load --source_format=NEWLINE_DELIMITED_JSON {}:{}.{} {} {}}".format(get_project_id(),dataset, table_name, source, schema)
     output = subprocess.check_output(shlex.split(upload_data_command))
     print(output)

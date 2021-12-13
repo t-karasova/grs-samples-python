@@ -21,18 +21,19 @@ import time
 from google.api_core.client_options import ClientOptions
 from google.cloud.retail import BigQuerySource, UserEventInputConfig, UserEventServiceClient, \
     ImportUserEventsRequest
+from setup.setup_cleanup import get_project_id
 
 project_number = os.getenv('PROJECT_NUMBER')
 
 # TODO(developer) Define the project Id here:
-project_id = ""
+project_id = get_project_id()
 
 endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(project_number)
 dataset_id = "user_events"
-table_id = "import_tutorial"
+table_id = "events"
 # TO CHECK ERROR HANDLING USE THE TABLE OF INVALID USER EVENTS:
-#table_id = "import_tutorial_invalid"
+#table_id = "events_some_invalid"
 
 
 # get user events service client
