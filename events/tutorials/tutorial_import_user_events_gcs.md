@@ -50,33 +50,53 @@ export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
 
 ## Upload user events data to the Cloud Storage bucket
 
-We have prepared a JSON file with a bunch of valid user events in the "events" directory: 
 
-**events/import_user_events_tutorial.json**
+## Prepare user events for importing
 
-You can use this file in the tutorial, or, if you want to use your own data, you should update the names of a bucket and a JSON file in the code samples.
+We have prepared a JSON file with a bunch of valid user events in the "events/resources" directory: 
+
+**resources/user_events.json**
+
+And another JSON file with both valid and invalid products, we will use both of these files as data sources.
+
+**resources/user_events_some_invalid.json**
+
+You can use this file in the tutorial, or, if you want to use your own data, you should update the names of a bucket and a JSON files in the code samples.
 
 You can import events that are **NOT older than 90 days** into the Retail catalog. Otherwise, the import will fail.
 
-To keep our historical user evens more recent, update the timestamps in the **import_user_events_tutorial.json** file. 
+To keep our historical user evens more recent, update the timestamps in the **user_events.json** and **user_events_some_invalid.json** files. 
 Run this script in a Terminal, and you will get the user events with yesterday's date:
 
 ```bash
-python  events/update_user_events_json.py
+python  setup/update_user_events_json.py
 ```
 
 Now, your data are updated and ready to be deployed to the Cloud Storage.
-In your own Google Platform project go to the [Cloud Storage](pantheon.corp.google.com/storage/browser)
 
-Click "Create Bucket" button, give it a name **import_user_events**, and press "Create".
+## Upload catalog data to Cloud Storage
 
-  *You can use your own bucket, but you should then update all references to your data in code.
+After you have updated the timestamps in both JSON files:
+**resources/user_events.json** and **resources/user_events_some_invalid.json**, you can proceed with uploading these data to Cloud Storage.
 
-Next, from the Cloud Shell Terminal run the following command:
+In your own project you should create a Cloud Storage bucket and put the JSON file there.
+The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT_ID>_events_<TIMESTAMP>.
+
+To create the bucket and upload the JSON file run the following command in the Terminal:
+
+```bash
+python events/setup/events_create_gcs_bucket.py
 ```
-gsutil cp events/import_user_events_tutorial.json gs://import_user_events
+Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the file is uploaded.
+
+Both **user_events.json** and **user_events_some_invalid.json** are uploaded to the bucket.
+
+The **name of the created GRS bucket** is printed in the Terminal, copy the name and set it as the environment variable EVENTS_BUCKET_NAME:
+
+```bash
+export EVENTS_BUCKET_NAME=<YOUR_EVENTS_BUCKET_NAME>
 ```
-Now you can see the file is uploaded to the Cloud Storage bucket.
+
 
 ## Import user events to the Retail catalog from the Cloud Storage source
 
@@ -129,7 +149,7 @@ Now, let's try to import a few invalid user event objects and check the error me
 
 The ```type``` field is a required and should have one of [defined values](https://cloud.google.com/retail/docs/user-events#types), so if you set some invalid value, you get the invalid user event objects. 
 
-There is a **```import_user_events_invalid.json```** file in the **events directory** containing such an invalid user events.
+There is a **```user_events_some_invalid.json```** file in the **events/resources directory** containing such an invalid user events.
 
 Let's upload it to the GCS as you did it before, repeat **Upload user events data to the Cloud Storage bucket** step for this file.
 
@@ -137,7 +157,7 @@ Now, import the invalid user event to get an error message.
 
 Go to the code sample, assign a value of ```gcs_events_object``` to the file name:
 
-```gcs_events_object = "import_user_events_invalid.json"```
+```gcs_events_object = "user_events_some_invalid.json"```
 
 Now, run the code sample and wait till the operation is completed. 
 

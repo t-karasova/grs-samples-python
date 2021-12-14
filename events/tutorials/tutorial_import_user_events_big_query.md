@@ -15,30 +15,30 @@ To find more information about different import types, their restrictions, and u
 
 To run Python code samples from this tutorial, you need to set up your virtual environment.
 
-To do that, run the following commands in a Terminal:
+To do that, run the following commands in a terminal:
+
 ```bash
-pip install virtualenv
-```
-```bash
-virtualenv <your-env>
-```
-```bash
-source <your-env>/bin/activate
-```
-Next, install Google packages:
-```bash
-pip install google
-```
-```bash
-pip install google-cloud-retail
+python3 -m venv tutorial-env
 ```
 
-**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell Terminal to
-run it.
+```bash
+source tutorial-env/bin/activate
+```
+
+Next, install Google packages:
+
+```bash
+python3 -m pip install google
+python3 -m pip install google.cloud.retail
+python3 -m pip install google.cloud.storage
+python3 -m pip install google.cloud.bigquery
+```
+
+**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
 ## Set the PROJECT_NUMBER environment variable
 
-As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable. It will be used in every request to the Retail API.
+As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
 
 You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
 
@@ -47,56 +47,86 @@ Set the environment variable with a following command:
 export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
 ```
 
-## Upload user events data to the Cloud Storage bucket
+## Prepare user events for importing
 
-We have prepared a JSON file with a bunch of valid user events in the "events" directory: 
+We have prepared a JSON file with a bunch of valid user events in the "events/resources" directory: 
 
-**events/import_user_events_tutorial.json**
+**resources/user_events.json**
 
-You can use this file in the tutorial, or, if you want to use your own data, you should update the names of a bucket and a JSON file in the code samples.
+And another JSON file with both valid and invalid products, we will use both of these files as data sources.
 
-You should remember that you can only import to Retail catalog events which are **NOT older than 90 days** otherwise the import will fail.
+**resources/user_events_some_invalid.json**
 
-To keep our historical user evens more recent let's update the timestamps in the import_user_events_tutorial.json. 
+You can use this file in the tutorial, or, if you want to use your own data, you should update the names of a bucket and a JSON files in the code samples.
+
+You can import events that are **NOT older than 90 days** into the Retail catalog. Otherwise, the import will fail.
+
+To keep our historical user evens more recent, update the timestamps in the **user_events.json** and **user_events_some_invalid.json** files. 
 Run this script in a Terminal, and you will get the user events with yesterday's date:
 
 ```bash
-python  events/update_user_events_json.py
+python  setup/update_user_events_json.py
 ```
 
 Now, your data are updated and ready to be deployed to the Cloud Storage.
-In your own Google Platform project go to the [Cloud Storage](pantheon.corp.google.com/storage/browser)
 
-Click "Create Bucket" button, give it a name **import_user_events**, and press "Create".
+## Create the BigQuery table and upload user events
 
-  *You can use your own bucket, but you should then update all references to your data in code.
+To upload the data to the BigQuery table you need to create a dataset first, then create table with specific User Events data schema. 
+Next, upload data to the table from prepared JSON file. The data in the file should correspond the User Events schema as well.
 
-Next, from the Cloud Shell Terminal run the following command:
+There is a **resources/user_events.json** with valid products. You should upload it to the **```user_events```** dataset, **```events```** table.
+
+Also, there is a **resources/user_events_some_invalid.json** containing some invalid user events along with valid ones. You should upload it to the **```user_events```** dataset, **```events_some_invalid```** table. This table will be used to demonstrate the error handling.
+
+Run the following code in the Terminal to create tables and import data:
+```bash
+python events/setup/events_create_bigquery_table.py
 ```
-gsutil cp events/import_user_events_tutorial.json gs://import_user_events
+The dataset "user_events" with both tables are created, check them in [Cloud Console](https://console.corp.google.com/bigquery)
+
+## Create the BigQuery table and upload products from UI admin console
+
+In case if you do not have permissions to run the ```bq``` command and performing the previous step you have got "Permission denied" error, you can try the other way to create the table and upload your data.
+
+### Upload catalog data to Cloud Storage
+
+After you have updated the timestamps in both JSON files:
+**resources/user_events.json** and **resources/user_events_some_invalid.json**, you can proceed with uploading these data to Cloud Storage.
+
+In your own project you should create a Cloud Storage bucket and put the JSON file there.
+The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT_ID>_events_<TIMESTAMP>.
+
+To create the bucket and upload the JSON file run the following command in the Terminal:
+
+```bash
+python events/setup/events_create_gcs_bucket.py
 ```
-Now you can see the file is uploaded to the Cloud Storage bucket.
+Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the file is uploaded.
 
-## Create the BigQuery table with the user events data
+The **name of the created GRS bucket** is printed in the Terminal, save it somewhere, you will need it on the next step
 
-In your own Google Platform project go to the [BigQuery](pantheon.corp.google.com/bigquery)
+### Create the BigQuery table and upload user events
 
-Click three dots icon near your project name in the "Explorer" panel, and chose **"Create dataset"** option. Set the Dataset Id as "user_events" and click "Create Dataset".
+Go to the [BigQuery in Cloud Console](https://console.corp.google.com/bigquery).
 
-In the newly created dataset click "Create Table" , chose **Google Cloud Source** option as the Source, select **"import_user_events"** bucket and  **"import_user_events_tutorial.json"** file, click "Select".
-
-Set the table name as **"import_tutorial"**
-
-Now, let's specify the table schema. In the Schema section turn on the "Edit as a text" option, copy the schema from the **"events_schema.json"** file and paste in the text field.
-Press Create.
+1. In the Explorer panel you see the list of your projects. 
+2. Click the "three dot" icon next to current project name and chose **Create Dataset** option.
+   Set the Dataset Id and click **Create**.
+3. Click "three dots" icon next to your new dataset and chose **Create Table**.
+   3.1 Set the **Source**: in the field **Create table from** chose **Google Cloud Storage** option.
+   Click **Browse** in the **Select file from GCS bucket** and chose the bucket you have created on the previous step. Chose the **user_events.json**, click Select.
+   3.2 Set the **Destination** field **Table** with a value **```events```**
+   3.3 Next, provide a table **Schema**. Click **Edit as a text** and paste in the field the schema which you can find in the **events/resources/events_schema.json** file.
+   Then, click **Create table**.
+   
+In a result the BigQuery table is created. You can proceed and import user events to the catalog.
 
 ## Import user events to the Retail catalog from the BigQuery table
 
 You have already created a BigQuery table, so you can use it in your Retail API import request.
 
 To check the example of an import user events request, open **events/import_user_events_big_query.py**.
-
-Set the ```project_id``` field, you can find the ```project_id``` in the **Home/Dashboard/Project Info card**.
 
 The **```parent```** field in the **ImportUserEventsRequest** contains a **catalog name** along with a branch number you are going to import your
 user events to.
@@ -147,13 +177,13 @@ The ```type``` field is required and should have one of [defined values](https:/
 
 You should create one more BigQuery table **```import_tutorial_invalid```** in the same dataset, dataset that contains such invalid user events.
 
-Follow the instructions described in **Upload user events data to the Cloud Storage bucket** and **Create the BigQuery table with the user events data** steps, use the **events/import_user_events_invalid.json** as a source.
+Follow the instructions described in **Upload user events data to the Cloud Storage bucket** and **Create the BigQuery table with the user events data** steps, use the **resources/user_events_some_invalid.json** as a source.
 
 Let's import from the table with one invalid user event to get an error message.
 
 Go to the code sample, assign a value of ```table_id``` to the table name:
 
-```table_id = "import_tutorial_invalid"```
+```table_id = "events_some_invalid"```
 
 Now, run the code sample and wait till the operation is completed. 
 

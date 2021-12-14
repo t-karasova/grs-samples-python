@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
+import datetime
 import os
 import re
 import shlex
@@ -20,76 +22,67 @@ import subprocess
 from google.api_core.client_options import ClientOptions
 from google.api_core.exceptions import NotFound
 from google.cloud import storage
+from google.cloud.retail import UserEvent, UserEventServiceClient, \
+    WriteUserEventRequest, PurgeUserEventsRequest, ProductDetail
 from google.cloud.retail_v2 import Product, ProductServiceClient, CreateProductRequest, DeleteProductRequest, \
     GetProductRequest, PriceInfo, FulfillmentInfo
 from google.cloud.retail_v2.types import product
+from google.protobuf.timestamp_pb2 import Timestamp
 
 project_number = os.getenv('PROJECT_NUMBER')
 endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(project_number)
-default_branch_name = "projects/" + project_number + "/locations/global/catalogs/default_catalog/branches/default_branch"
 
 
-def get_product_service_client():
+# get user events service client
+def get_user_events_service_client():
     client_options = ClientOptions(endpoint)
-    return ProductServiceClient(client_options=client_options)
+    return UserEventServiceClient(client_options=client_options)
 
 
-def generate_product() -> Product:
-    price_info = PriceInfo()
-    price_info.price = 30.0
-    price_info.original_price = 35.5
-    price_info.currency_code = "USD"
-    fulfillment_info = FulfillmentInfo()
-    fulfillment_info.type_ = "pickup-in-store"
-    fulfillment_info.place_ids = ["store0", "store1"]
-    return product.Product(
-        title='Nest Mini',
-        type_=product.Product.Type.PRIMARY,
-        categories=['Speakers and displays'],
-        brands=['Google'],
-        price_info=price_info,
-        fulfillment_info = [fulfillment_info],
-        availability="IN_STOCK",
-    )
+# get user event
+def get_user_event(visitor_id):
+    timestamp = Timestamp()
+    timestamp.seconds = int(datetime.datetime.now().timestamp())
+
+    product = Product()
+    product.id = 'test_id'
+
+    product_detail = ProductDetail()
+    product_detail.product = product
+    product_detail.quantity = 3
+
+    user_event = UserEvent()
+    user_event.event_type = "detail-page-view"
+    user_event.visitor_id = visitor_id
+    user_event.event_time = timestamp
+    user_event.product_details = [product_detail]
+
+    print(user_event)
+    return user_event
 
 
-def create_product(product_id: str) -> object:
-    create_product_request = CreateProductRequest()
-    create_product_request.product = generate_product()
-    create_product_request.product_id = product_id
-    create_product_request.parent = default_branch_name
-
-    created_product = get_product_service_client().create_product(create_product_request)
-    print("---product is created:---")
-    print(created_product)
-
-    return created_product
+# write user event
+def write_user_event(visitor_id):
+    write_user_event_request = WriteUserEventRequest()
+    write_user_event_request.user_event = get_user_event(visitor_id)
+    write_user_event_request.parent = default_catalog
+    user_event = get_user_events_service_client().write_user_event(write_user_event_request)
+    print("---the user event is written---")
+    print(user_event)
+    return user_event
 
 
-def delete_product(product_name: str):
-    delete_product_request = DeleteProductRequest()
-    delete_product_request.name = product_name
-    get_product_service_client().delete_product(delete_product_request)
+# purge user event
+def purge_user_event(visitor_id):
+    purge_user_event_request = PurgeUserEventsRequest()
+    purge_user_event_request.filter = 'visitorId="{}"'.format(visitor_id)
+    purge_user_event_request.parent = default_catalog
+    purge_user_event_request.force = True
+    purge_operation = get_user_events_service_client().purge_user_events(purge_user_event_request)
 
-    print("---product " + product_name + " was deleted:---")
-
-
-def get_product(product_name: str):
-    get_product_request = GetProductRequest()
-    get_product_request.name = product_name
-    # product = get_product_service_client().get_product(get_product_request)
-    #
-    # print("---product:---")
-    # print(product)
-    try:
-        product = get_product_service_client().get_product(get_product_request)
-        print("---get product response:---")
-        print(product)
-        return product
-    except NotFound as e:
-        print(e.message)
-        return e.message
+    print("---the purge operation was started:----")
+    print(purge_operation.operation.name)
 
 
 def get_project_id():
@@ -138,7 +131,6 @@ def upload_blob(bucket_name, source_file_name):
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     object_name = re.search('resources/(.*?)$', source_file_name).group(1)
-
     blob = bucket.blob(object_name)
     blob.upload_from_filename(source_file_name)
 

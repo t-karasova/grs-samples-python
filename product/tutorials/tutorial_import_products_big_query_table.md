@@ -68,13 +68,13 @@ Before you import products to your catalog, you need to upload the data to the B
 To upload the data to the BigQuery table you need to create a dataset first, then create table with specific Retail data schema. 
 Next, upload data to the table from prepared JSON file. The data in the file should correspond the Retail schema as well.
 
-There is a **product/resources/products.json** with valid products. You should upload it to the **```products```** dataset, **```products```** table.
+There is a **resources/products.json** with valid products. You should upload it to the **```products```** dataset, **```products```** table.
 
-Also, there is a **product/resources/products_some_invalid.json** containing some invalid products along with valid ones. You should uploadt it to the **```products```** dataset, **```products_some_invalid```** table. This table will be used to demonstrate the error handling.
+Also, there is a **resources/products_some_invalid.json** containing some invalid products along with valid ones. You should uploadt it to the **```products```** dataset, **```products_some_invalid```** table. This table will be used to demonstrate the error handling.
 
 Run the following code in the Terminal to create tables and import data:
 ```bash
-python product/setup/create_bigquery_table.py
+python product/setup/product_create_bigquery_table.py
 ```
 The dataset "products" with both tables are created, check them in [Cloud Console](https://console.corp.google.com/bigquery)
 
@@ -86,9 +86,9 @@ In case if you do not have permissions to run the ```bq``` command and performin
 
 There is a JSON file with valid products prepared in the "product" directory: 
 
-**product/resources/products.json**.
+**resources/products.json**.
 
-The other file, **product/resources/products_some_invalid.json**, contains both valid and invalid products, you will use in to check the error handling.
+The other file, **resources/products_some_invalid.json**, contains both valid and invalid products, you will use in to check the error handling.
  
 In your own project you should create a Cloud Storage bucket and put the JSON file there.
 The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT_ID>_<TIMESTAMP>.
@@ -96,7 +96,7 @@ The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT
 To create the bucket and upload the JSON file run the following command in the Terminal:
 
 ```bash
-python product/setup/create_gcs_bucket.py
+python product/setup/product_create_gcs_bucket.py
 ```
 Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the file is uploaded.
 
