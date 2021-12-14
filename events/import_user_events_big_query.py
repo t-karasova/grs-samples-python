@@ -59,7 +59,7 @@ def get_import_events_big_query_request():
     import_request.parent = default_catalog
     import_request.input_config = input_config
 
-    print("---import user events from google cloud source request---")
+    print("---import user events from BigQuery source request---")
     print(import_request)
 
     return import_request

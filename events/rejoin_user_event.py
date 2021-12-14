@@ -44,7 +44,8 @@ def get_rejoin_user_event_request():
     rejoin_user_event_request = RejoinUserEventsRequest()
     rejoin_user_event_request.parent = default_catalog
     rejoin_user_event_request.user_event_rejoin_scope = RejoinUserEventsRequest.UserEventRejoinScope.UNJOINED_EVENTS
-
+    print("---rejoin user events request---")
+    print(rejoin_user_event_request)
     return rejoin_user_event_request
 
 

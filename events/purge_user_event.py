@@ -44,7 +44,8 @@ def get_purge_user_event_request():
     purge_user_event_request.filter = 'visitorId="{}"'.format(visitor_id)
     purge_user_event_request.parent = default_catalog
     purge_user_event_request.force = True
-
+    print("---purge user events request---")
+    print(purge_user_event_request)
     return purge_user_event_request
 
 
