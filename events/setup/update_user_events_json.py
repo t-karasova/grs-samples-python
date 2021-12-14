@@ -18,10 +18,10 @@ def update_events_timestamp(json_file):
     filedata = re.sub('\"eventTime\"\:\"(\d{4})-(\d{2})-(\d{2})', '\"eventTime\":\"' + day, filedata, flags=re.M)
 
     # Write the file out again
-    with open('events/resources/user_events.json', 'w') as file:
+    with open(json_file, 'w') as file:
         file.write(filedata)
-    print("The user_events.json is updated")
+    print("The {} is updated".format(json_file))
 
 
-update_events_timestamp('events/resources/user_events.json')
-update_events_timestamp('events/resources/user_events_some_invalid.json')
+update_events_timestamp('resources/user_events.json')
+update_events_timestamp('resources/user_events_some_invalid.json')

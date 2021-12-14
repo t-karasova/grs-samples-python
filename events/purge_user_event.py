@@ -40,6 +40,7 @@ def get_user_events_service_client():
 # get purge user event request
 def get_purge_user_event_request():
     purge_user_event_request = PurgeUserEventsRequest()
+    # TO CHECK ERROR HANDLING SET INVALID FILTER HERE:
     purge_user_event_request.filter = 'visitorId="{}"'.format(visitor_id)
     purge_user_event_request.parent = default_catalog
     purge_user_event_request.force = True

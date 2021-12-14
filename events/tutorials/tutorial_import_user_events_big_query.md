@@ -51,11 +51,11 @@ export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
 
 We have prepared a JSON file with a bunch of valid user events in the "events/resources" directory: 
 
-**events/resources/user_events.json**
+**resources/user_events.json**
 
 And another JSON file with both valid and invalid products, we will use both of these files as data sources.
 
-**events/resources/user_events_some_invalid.json**
+**resources/user_events_some_invalid.json**
 
 You can use this file in the tutorial, or, if you want to use your own data, you should update the names of a bucket and a JSON files in the code samples.
 
@@ -65,7 +65,7 @@ To keep our historical user evens more recent, update the timestamps in the **us
 Run this script in a Terminal, and you will get the user events with yesterday's date:
 
 ```bash
-python  events/setup/update_user_events_json.py
+python  setup/update_user_events_json.py
 ```
 
 Now, your data are updated and ready to be deployed to the Cloud Storage.
@@ -75,13 +75,13 @@ Now, your data are updated and ready to be deployed to the Cloud Storage.
 To upload the data to the BigQuery table you need to create a dataset first, then create table with specific User Events data schema. 
 Next, upload data to the table from prepared JSON file. The data in the file should correspond the User Events schema as well.
 
-There is a **events/resources/user_events.json** with valid products. You should upload it to the **```user_events```** dataset, **```events```** table.
+There is a **resources/user_events.json** with valid products. You should upload it to the **```user_events```** dataset, **```events```** table.
 
-Also, there is a **events/resources/user_events_some_invalid.json** containing some invalid user events along with valid ones. You should upload it to the **```user_events```** dataset, **```events_some_invalid```** table. This table will be used to demonstrate the error handling.
+Also, there is a **resources/user_events_some_invalid.json** containing some invalid user events along with valid ones. You should upload it to the **```user_events```** dataset, **```events_some_invalid```** table. This table will be used to demonstrate the error handling.
 
 Run the following code in the Terminal to create tables and import data:
 ```bash
-python events/setup/create_bigquery_table.py
+python events/setup/events_create_bigquery_table.py
 ```
 The dataset "user_events" with both tables are created, check them in [Cloud Console](https://console.corp.google.com/bigquery)
 
@@ -92,7 +92,7 @@ In case if you do not have permissions to run the ```bq``` command and performin
 ### Upload catalog data to Cloud Storage
 
 After you have updated the timestamps in both JSON files:
-**events/resources/user_events.json** and **events/resources/user_events_some_invalid.json**, you can proceed with uploading these data to Cloud Storage.
+**resources/user_events.json** and **resources/user_events_some_invalid.json**, you can proceed with uploading these data to Cloud Storage.
 
 In your own project you should create a Cloud Storage bucket and put the JSON file there.
 The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT_ID>_events_<TIMESTAMP>.
@@ -100,7 +100,7 @@ The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT
 To create the bucket and upload the JSON file run the following command in the Terminal:
 
 ```bash
-python events/setup/create_gcs_bucket.py
+python events/setup/events_create_gcs_bucket.py
 ```
 Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the file is uploaded.
 
@@ -177,7 +177,7 @@ The ```type``` field is required and should have one of [defined values](https:/
 
 You should create one more BigQuery table **```import_tutorial_invalid```** in the same dataset, dataset that contains such invalid user events.
 
-Follow the instructions described in **Upload user events data to the Cloud Storage bucket** and **Create the BigQuery table with the user events data** steps, use the **events/resources/user_events_some_invalid.json** as a source.
+Follow the instructions described in **Upload user events data to the Cloud Storage bucket** and **Create the BigQuery table with the user events data** steps, use the **resources/user_events_some_invalid.json** as a source.
 
 Let's import from the table with one invalid user event to get an error message.
 

@@ -17,9 +17,9 @@ from setup_cleanup import create_bq_dataset, create_bq_table, upload_data_to_bq_
 dataset = "user_events"
 valid_events_table = "events"
 invalid_events_table = "events_some_invalid"
-events_schema = "events/resources/events_schema.json"
-valid_events_source_file = "events/resources/user_events.json"
-invalid_events_source_file = "events/resources/user_events_some_invalid.json"
+events_schema = "resources/events_schema.json"
+valid_events_source_file = "resources/user_events.json"
+invalid_events_source_file = "resources/user_events_some_invalid.json"
 
 
 create_bq_dataset(dataset)

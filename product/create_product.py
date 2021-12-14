@@ -24,7 +24,6 @@ from google.api_core.client_options import ClientOptions
 from google.cloud.retail import Product, ProductServiceClient, CreateProductRequest
 from google.cloud.retail_v2 import PriceInfo
 from google.cloud.retail_v2.types import product
-
 from setup.setup_cleanup import delete_product
 
 project_number = os.getenv('PROJECT_NUMBER')
@@ -82,5 +81,4 @@ def create_product(product_id: str):
 created_product = create_product(generated_product_id)
 # delete created product
 delete_product(created_product.name)
-
 # [END retail_create_product]

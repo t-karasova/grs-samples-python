@@ -33,7 +33,7 @@ default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".forma
 dataset_id = "user_events"
 table_id = "events"
 # TO CHECK ERROR HANDLING USE THE TABLE OF INVALID USER EVENTS:
-#table_id = "events_some_invalid"
+# table_id = "events_some_invalid"
 
 
 # get user events service client

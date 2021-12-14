@@ -108,9 +108,9 @@ Otherwise, you can skip it.
 ### Upload catalog data to Cloud Storage
 
 There is a JSON file with valid products prepared in the `product` directory:
-`product/resources/products.json`.
+`resources/products.json`.
 
-Another file, `product/resources/products_some_invalid.json`, contains both valid and invalid products, and you will use it to check the error handling.
+Another file, `resources/products_some_invalid.json`, contains both valid and invalid products, and you will use it to check the error handling.
 
 In your own project you need to create a Cloud Storage bucket and put the JSON file there.
 The bucket name must be unique. For convenience, you can name it <YOUR_PROJECT_ID>_<TIMESTAMP>.
@@ -118,7 +118,7 @@ The bucket name must be unique. For convenience, you can name it <YOUR_PROJECT_I
 1. To create the bucket and upload the JSON file run the following command in the Terminal:
 
     ```bash
-    python product/setup/create_gcs_bucket.py
+    python product/setup/product_create_gcs_bucket.py
     ```
 
     Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the files are uploaded.

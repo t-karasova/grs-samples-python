@@ -55,11 +55,11 @@ export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
 
 We have prepared a JSON file with a bunch of valid user events in the "events/resources" directory: 
 
-**events/resources/user_events.json**
+**resources/user_events.json**
 
 And another JSON file with both valid and invalid products, we will use both of these files as data sources.
 
-**events/resources/user_events_some_invalid.json**
+**resources/user_events_some_invalid.json**
 
 You can use this file in the tutorial, or, if you want to use your own data, you should update the names of a bucket and a JSON files in the code samples.
 
@@ -69,7 +69,7 @@ To keep our historical user evens more recent, update the timestamps in the **us
 Run this script in a Terminal, and you will get the user events with yesterday's date:
 
 ```bash
-python  events/setup/update_user_events_json.py
+python  setup/update_user_events_json.py
 ```
 
 Now, your data are updated and ready to be deployed to the Cloud Storage.
@@ -77,7 +77,7 @@ Now, your data are updated and ready to be deployed to the Cloud Storage.
 ## Upload catalog data to Cloud Storage
 
 After you have updated the timestamps in both JSON files:
-**events/resources/user_events.json** and **events/resources/user_events_some_invalid.json**, you can proceed with uploading these data to Cloud Storage.
+**resources/user_events.json** and **resources/user_events_some_invalid.json**, you can proceed with uploading these data to Cloud Storage.
 
 In your own project you should create a Cloud Storage bucket and put the JSON file there.
 The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT_ID>_events_<TIMESTAMP>.
@@ -85,7 +85,7 @@ The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT
 To create the bucket and upload the JSON file run the following command in the Terminal:
 
 ```bash
-python events/setup/create_gcs_bucket.py
+python events/setup/events_create_gcs_bucket.py
 ```
 Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the file is uploaded.
 

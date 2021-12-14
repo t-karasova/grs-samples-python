@@ -39,6 +39,8 @@ def get_user_events_service_client():
 
 # get rejoin user event request
 def get_rejoin_user_event_request():
+    # TO CHECK THE ERROR HANDLING TRY TO PASS INVALID CATALOG:
+    # default_catalog = "projects/{0}/locations/global/catalogs/invalid_catalog".format(project_number)
     rejoin_user_event_request = RejoinUserEventsRequest()
     rejoin_user_event_request.parent = default_catalog
     rejoin_user_event_request.user_event_rejoin_scope = RejoinUserEventsRequest.UserEventRejoinScope.UNJOINED_EVENTS

@@ -12,23 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 import os
 import re
 import shlex
 import subprocess
 
 from google.api_core.client_options import ClientOptions
+from google.api_core.exceptions import NotFound
+from google.cloud import storage
 from google.cloud.retail_v2 import Product, ProductServiceClient, CreateProductRequest, DeleteProductRequest, \
     GetProductRequest, PriceInfo, FulfillmentInfo
 from google.cloud.retail_v2.types import product
-from google.cloud import storage
-from google.cloud import bigquery
-from google.api_core.exceptions import NotFound
 
 project_number = os.getenv('PROJECT_NUMBER')
-
+endpoint = "retail.googleapis.com"
+default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(project_number)
 default_branch_name = "projects/" + project_number + "/locations/global/catalogs/default_catalog/branches/default_branch"
-endpoint = "retail.googleapis.com:443"
 
 
 def get_product_service_client():
@@ -50,7 +50,7 @@ def generate_product() -> Product:
         categories=['Speakers and displays'],
         brands=['Google'],
         price_info=price_info,
-        fulfillment_info = [fulfillment_info],
+        fulfillment_info=[fulfillment_info],
         availability="IN_STOCK",
     )
 
@@ -100,7 +100,7 @@ def get_project_id():
     return project_id
 
 
-def create_bucket(bucket_name:str):
+def create_bucket(bucket_name: str):
     """Create a new bucket in Cloud Storage"""
     print("bucket name:" + bucket_name)
     buckets_in_your_project = str(list_buckets())
@@ -117,7 +117,6 @@ def create_bucket(bucket_name:str):
             )
         )
         return new_bucket
-
 
 
 def list_buckets():
@@ -139,7 +138,7 @@ def upload_blob(bucket_name, source_file_name):
 
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
-    object_name = re.search('product/(.*?)$', source_file_name).group(1)
+    object_name = re.search('resources/(.*?)$', source_file_name).group(1)
     blob = bucket.blob(object_name)
     blob.upload_from_filename(source_file_name)
 
@@ -171,7 +170,9 @@ def list_bq_datasets():
 def create_bq_table(dataset, table_name, schema):
     """Create a BigQuery table"""
     if table_name not in list_bq_tables(dataset):
-        create_table_command = "bq mk --table {}:{}.{} {}".format(get_project_id(),dataset, table_name, schema)
+        create_table_command = "bq mk --table {}:{}.{} {}".format(get_project_id(),
+                                                                  dataset,
+                                                                  table_name, schema)
         output = subprocess.check_output(shlex.split(create_table_command))
         print(output)
     else:
@@ -186,8 +187,10 @@ def list_bq_tables(dataset):
     print(tables)
     return str(tables)
 
+
 def upload_data_to_bq_table(dataset, table_name, source, schema):
     """Upload data to the table from specified source file"""
-    upload_data_command = "bq load --source_format=NEWLINE_DELIMITED_JSON {}:{}.{} {} {}}".format(get_project_id(),dataset, table_name, source, schema)
+    upload_data_command = "bq load --source_format=NEWLINE_DELIMITED_JSON {}:{}.{} {} {}".format(
+        get_project_id(), dataset, table_name, source, schema)
     output = subprocess.check_output(shlex.split(upload_data_command))
     print(output)

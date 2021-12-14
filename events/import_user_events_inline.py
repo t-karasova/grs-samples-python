@@ -48,7 +48,7 @@ def get_user_events():
 
         user_event = UserEvent()
         user_event.event_type = "home-page-view"
-        user_event.visitor_id = 'visitor_'.join(random.sample(string.ascii_lowercase, 5))
+        user_event.visitor_id = ''.join(random.sample(string.ascii_lowercase, 5))
         user_event.event_time = timestamp
         user_events.append(user_event)
 

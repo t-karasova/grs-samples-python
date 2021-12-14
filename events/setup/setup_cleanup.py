@@ -14,21 +14,20 @@
 
 
 import datetime
-import time
-import os
 import os
 import re
 import shlex
 import subprocess
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import UserEvent, UserEventServiceClient, \
-    WriteUserEventRequest, PurgeUserEventsRequest, ProductDetail, Product
-from google.protobuf.timestamp_pb2 import Timestamp
-from google.api_core.client_options import ClientOptions
+from google.api_core.exceptions import NotFound
 from google.cloud import storage
-from google.cloud.retail_v2 import UserEventServiceAsyncClient
-
+from google.cloud.retail import UserEvent, UserEventServiceClient, \
+    WriteUserEventRequest, PurgeUserEventsRequest, ProductDetail
+from google.cloud.retail_v2 import Product, ProductServiceClient, CreateProductRequest, DeleteProductRequest, \
+    GetProductRequest, PriceInfo, FulfillmentInfo
+from google.cloud.retail_v2.types import product
+from google.protobuf.timestamp_pb2 import Timestamp
 
 project_number = os.getenv('PROJECT_NUMBER')
 endpoint = "retail.googleapis.com"
@@ -131,7 +130,7 @@ def upload_blob(bucket_name, source_file_name):
 
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
-    object_name = re.search('/(.*?)$', source_file_name).group(1)
+    object_name = re.search('resources/(.*?)$', source_file_name).group(1)
     blob = bucket.blob(object_name)
     blob.upload_from_filename(source_file_name)
 

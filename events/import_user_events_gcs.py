@@ -45,7 +45,7 @@ gcs_bucket = "gs://{}".format(os.getenv("EVENTS_BUCKET_NAME"))
 gcs_errors_bucket = "{}/error".format(gcs_bucket)
 gcs_events_object = "user_events.json"
 # TO CHECK ERROR HANDLING USE THE JSON WITH INVALID PRODUCT
-# gcs_products_object = "user_events_some_invalid.json"
+# gcs_events_object = "user_events_some_invalid.json"
 
 
 # get user events service client
