@@ -138,6 +138,7 @@ def upload_blob(bucket_name, source_file_name):
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     object_name = re.search('resources/(.*?)$', source_file_name).group(1)
+
     blob = bucket.blob(object_name)
     blob.upload_from_filename(source_file_name)
 
