@@ -27,7 +27,7 @@ project_number = os.getenv('PROJECT_NUMBER')
 project_id = get_project_id()
 
 endpoint = "retail.googleapis.com"
-default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
+default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/default_branch".format(project_number)
 dataset_id = "products"
 table_id = "products"
 # TO CHECK ERROR HANDLING USE THE TABLE WITH INVALID PRODUCTS:

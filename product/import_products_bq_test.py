@@ -21,6 +21,6 @@ def test_import_products_bq():
 
     assert re.match('.*import products from big query table request.*', output)
     assert re.match('.*the operation was started.*', output)
-    assert re.match('.*projects/.*/locations/global/catalogs/default_catalog/branches/1/operations/import-products.*', output)
+    assert re.match('.*projects/.*/locations/global/catalogs/default_catalog/branches/0/operations/import-products.*', output)
 
     assert re.match('.*number of successfully imported products.*316.*', output)

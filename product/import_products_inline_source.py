@@ -29,7 +29,7 @@ from google.protobuf.field_mask_pb2 import FieldMask
 project_number = os.getenv('PROJECT_NUMBER')
 
 endpoint = "retail.googleapis.com"
-default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/1".format(project_number)
+default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/default_branch".format(project_number)
 
 
 # prepare product to import as inline source
