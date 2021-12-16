@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# [START add_remove_fulfillment_places]
+# [START retail_remove_fulfillment_places]
 import datetime
 import os
 import time
@@ -70,7 +70,7 @@ def remove_fulfillment_places(product_name: str):
     time.sleep(30)
 
 
-# [END add_remove_fulfillment_places]
+# [END retail_remove_fulfillment_places]
 
 
 create_product(product_id)

@@ -99,7 +99,6 @@ def get_products():
     products.append(product1)
     products.append(product2)
     return products
-    # [START retail_prepare_product_to_import_as_inline_source]
 
 
 # get product service client

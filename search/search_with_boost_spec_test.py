@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# [START retail_search_for_products_with_query_parameter]
 # Call Retail API to search for a products in a catalog using only search query.
 #
 import re

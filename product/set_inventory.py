@@ -96,3 +96,4 @@ create_product(product_id)
 set_inventory(product_name)
 get_product(product_name)
 delete_product(product_name)
+# [END add_fulfillment_places]
