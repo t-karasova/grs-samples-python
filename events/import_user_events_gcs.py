@@ -47,7 +47,7 @@ gcs_errors_bucket = "{}/error".format(gcs_bucket)
 gcs_events_object = "user_events.json"
 
 
-# TO CHECK ERROR HANDLING USE THE JSON WITH INVALID PRODUCT
+# TO CHECK ERROR HANDLING USE THE JSON WITH INVALID USER EVENT
 # gcs_events_object = "user_events_some_invalid.json"
 
 
