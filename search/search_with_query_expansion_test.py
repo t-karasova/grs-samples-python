@@ -20,8 +20,10 @@ import subprocess
 
 from search_with_query_expansion_spec import search
 
+
 def test_search_with_query_expansion_spec_pass():
-    output = str(subprocess.check_output('python search/search_with_query_expansion_spec.py', shell=True))
+    output = str(subprocess.check_output(
+        'python search/search_with_query_expansion_spec.py', shell=True))
 
     assert re.match('.*search request.*', output)
     assert re.match('.*search response.*', output)
@@ -35,4 +37,4 @@ def test_search_with_query_expansion_spec():
     assert len(response.results) == 10
     assert response.results[0].product.title == 'Google Youth Hero Tee Grey'
     assert response.results[2].product.title != 'Google Youth Hero Tee Grey'
-    assert response.query_expansion_info.expanded_query == True
+    assert response.query_expansion_info.expanded_query is True

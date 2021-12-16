@@ -19,7 +19,7 @@
 import os
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import SearchServiceClient, SearchRequest
+from google.cloud.retail import SearchRequest, SearchServiceClient
 
 project_number = os.getenv('PROJECT_NUMBER')
 
@@ -31,7 +31,8 @@ def get_search_service_client():
 
 
 # get search service request:
-def get_search_request(query: str, condition: SearchRequest.QueryExpansionSpec.Condition):
+def get_search_request(query: str,
+                       condition: SearchRequest.QueryExpansionSpec.Condition):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
     query_expansion_spec = SearchRequest().QueryExpansionSpec()

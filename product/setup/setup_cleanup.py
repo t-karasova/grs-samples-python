@@ -20,13 +20,13 @@ import subprocess
 from google.api_core.client_options import ClientOptions
 from google.api_core.exceptions import NotFound
 from google.cloud import storage
-from google.cloud.retail_v2 import Product, ProductServiceClient, CreateProductRequest, DeleteProductRequest, \
-    GetProductRequest, PriceInfo, FulfillmentInfo
-from google.cloud.retail_v2.types import product
+from google.cloud.retail_v2 import CreateProductRequest, DeleteProductRequest, \
+    FulfillmentInfo, GetProductRequest, PriceInfo, Product, ProductServiceClient
 
 project_number = os.getenv('PROJECT_NUMBER')
 endpoint = "retail.googleapis.com"
-default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(project_number)
+default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(
+    project_number)
 default_branch_name = "projects/" + project_number + "/locations/global/catalogs/default_catalog/branches/default_branch"
 
 
@@ -43,13 +43,13 @@ def generate_product() -> Product:
     fulfillment_info = FulfillmentInfo()
     fulfillment_info.type_ = "pickup-in-store"
     fulfillment_info.place_ids = ["store0", "store1"]
-    return product.Product(
+    return Product(
         title='Nest Mini',
-        type_=product.Product.Type.PRIMARY,
+        type_=Product.Type.PRIMARY,
         categories=['Speakers and displays'],
         brands=['Google'],
         price_info=price_info,
-        fulfillment_info = [fulfillment_info],
+        fulfillment_info=[fulfillment_info],
         availability="IN_STOCK",
     )
 
@@ -60,7 +60,8 @@ def create_product(product_id: str) -> object:
     create_product_request.product_id = product_id
     create_product_request.parent = default_branch_name
 
-    created_product = get_product_service_client().create_product(create_product_request)
+    created_product = get_product_service_client().create_product(
+        create_product_request)
     print("---product is created:---")
     print(created_product)
 
@@ -170,9 +171,10 @@ def list_bq_datasets():
 def create_bq_table(dataset, table_name, schema):
     """Create a BigQuery table"""
     if table_name not in list_bq_tables(dataset):
-        create_table_command = "bq mk --table {}:{}.{} {}".format(get_project_id(),
-                                                                  dataset,
-                                                                  table_name, schema)
+        create_table_command = "bq mk --table {}:{}.{} {}".format(
+            get_project_id(),
+            dataset,
+            table_name, schema)
         output = subprocess.check_output(shlex.split(create_table_command))
         print(output)
     else:

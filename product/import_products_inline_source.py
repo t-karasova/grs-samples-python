@@ -21,15 +21,16 @@ import string
 import time
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import ProductInlineSource, ProductInputConfig, \
-    ImportProductsRequest, Product, PriceInfo, ColorInfo, \
-    ProductServiceClient, FulfillmentInfo
+from google.cloud.retail import ColorInfo, FulfillmentInfo, \
+    ImportProductsRequest, PriceInfo, Product, ProductInlineSource, \
+    ProductInputConfig, ProductServiceClient
 from google.protobuf.field_mask_pb2 import FieldMask
 
 project_number = os.getenv('PROJECT_NUMBER')
 
 endpoint = "retail.googleapis.com"
-default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/default_branch".format(project_number)
+default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/default_branch".format(
+    project_number)
 
 
 # prepare product to import as inline source
@@ -54,7 +55,8 @@ def get_products():
     fulfillment_info1.type_ = "pickup-in-store"
     fulfillment_info1.place_ids = ["store1", "store2"]
 
-    field_mask1 = FieldMask(paths=["title", "categories", "price_info", "color_info"])
+    field_mask1 = FieldMask(
+        paths=["title", "categories", "price_info", "color_info"])
 
     # TO CHECK ERROR HANDLING COMMENT OUT THE PRODUCT TITLE HERE:
     product1.title = "#IamRemarkable Pen"
@@ -81,7 +83,8 @@ def get_products():
     fulfillment_info2.type_ = "pickup-in-store"
     fulfillment_info2.place_ids = ["store2", "store3"]
 
-    field_mask2 = FieldMask(paths=["title", "categories", "price_info", "color_info"])
+    field_mask2 = FieldMask(
+        paths=["title", "categories", "price_info", "color_info"])
 
     product2.title = "Android Embroidered Crewneck Sweater"
     product2.id = ''.join(random.sample(string.ascii_lowercase, 8))
@@ -128,7 +131,8 @@ def get_import_products_inline_request(products_to_import):
 # call the Retail API to import products
 def import_products_from_inline_source():
     import_request = get_import_products_inline_request(get_products())
-    import_operation = get_product_service_client().import_products(import_request)
+    import_operation = get_product_service_client().import_products(
+        import_request)
 
     print("---the operation was started:----")
     print(import_operation.operation.name)

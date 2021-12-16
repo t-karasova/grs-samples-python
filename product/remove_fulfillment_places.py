@@ -18,7 +18,8 @@ import os
 import time
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import ProductServiceClient, RemoveFulfillmentPlacesRequest
+from google.cloud.retail import ProductServiceClient, \
+    RemoveFulfillmentPlacesRequest
 
 from setup.setup_cleanup import create_product, get_product
 
@@ -29,6 +30,8 @@ product_name = 'projects/' + project_number + '/locations/global/catalogs/defaul
 
 # The request timestamp
 request_time = datetime.datetime.now()
+
+
 # The outdated request timestamp
 # request_time = datetime.datetime.now() - datetime.timedelta(days=1)
 
@@ -40,7 +43,8 @@ def get_product_service_client():
 
 
 # remove fulfillment request
-def get_remove_fulfillment_request(product_name: str) -> RemoveFulfillmentPlacesRequest:
+def get_remove_fulfillment_request(
+        product_name: str) -> RemoveFulfillmentPlacesRequest:
     remove_fulfillment_request = RemoveFulfillmentPlacesRequest()
     remove_fulfillment_request.product = product_name
     remove_fulfillment_request.type_ = 'pickup-in-store'
@@ -57,12 +61,14 @@ def get_remove_fulfillment_request(product_name: str) -> RemoveFulfillmentPlaces
 # remove fulfillment places to product
 def remove_fulfillment_places(product_name: str):
     remove_fulfillment_request = get_remove_fulfillment_request(product_name)
-    get_product_service_client().remove_fulfillment_places(remove_fulfillment_request)
+    get_product_service_client().remove_fulfillment_places(
+        remove_fulfillment_request)
 
     # This is a long running operation and its result is not immediately present with get operations,
     # thus we simulate wait with sleep method.
     print("---remove fulfillment places, wait 30 seconds:---")
     time.sleep(30)
+
 
 # [END add_remove_fulfillment_places]
 
@@ -71,4 +77,4 @@ create_product(product_id)
 time.sleep(30)
 remove_fulfillment_places(product_name)
 get_product(product_name)
-#delete_product(product_name)
+# delete_product(product_name)

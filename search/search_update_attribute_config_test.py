@@ -32,7 +32,9 @@ def test_update_attribute_config():
 
 
 def test_update_attribute_config_pass():
-    output = str(subprocess.check_output('python search/search_attribute_config.py', shell=True))
+    output = str(
+        subprocess.check_output('python search/search_attribute_config.py',
+                                shell=True))
 
     assert re.match('.*search request.*', output)
     assert re.match('.*search response.*', output)

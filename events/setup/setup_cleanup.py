@@ -20,18 +20,16 @@ import shlex
 import subprocess
 
 from google.api_core.client_options import ClientOptions
-from google.api_core.exceptions import NotFound
 from google.cloud import storage
-from google.cloud.retail import UserEvent, UserEventServiceClient, \
-    WriteUserEventRequest, PurgeUserEventsRequest, ProductDetail
-from google.cloud.retail_v2 import Product, ProductServiceClient, CreateProductRequest, DeleteProductRequest, \
-    GetProductRequest, PriceInfo, FulfillmentInfo
-from google.cloud.retail_v2.types import product
+from google.cloud.retail import ProductDetail, PurgeUserEventsRequest, \
+    UserEvent, UserEventServiceClient, WriteUserEventRequest
+from google.cloud.retail_v2 import Product
 from google.protobuf.timestamp_pb2 import Timestamp
 
 project_number = os.getenv('PROJECT_NUMBER')
 endpoint = "retail.googleapis.com"
-default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(project_number)
+default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(
+    project_number)
 
 
 # get user events service client
@@ -67,7 +65,8 @@ def write_user_event(visitor_id):
     write_user_event_request = WriteUserEventRequest()
     write_user_event_request.user_event = get_user_event(visitor_id)
     write_user_event_request.parent = default_catalog
-    user_event = get_user_events_service_client().write_user_event(write_user_event_request)
+    user_event = get_user_events_service_client().write_user_event(
+        write_user_event_request)
     print("---the user event is written---")
     print(user_event)
     return user_event
@@ -79,7 +78,8 @@ def purge_user_event(visitor_id):
     purge_user_event_request.filter = 'visitorId="{}"'.format(visitor_id)
     purge_user_event_request.parent = default_catalog
     purge_user_event_request.force = True
-    purge_operation = get_user_events_service_client().purge_user_events(purge_user_event_request)
+    purge_operation = get_user_events_service_client().purge_user_events(
+        purge_user_event_request)
 
     print("---the purge operation was started:----")
     print(purge_operation.operation.name)
@@ -162,9 +162,10 @@ def list_bq_datasets():
 def create_bq_table(dataset, table_name, schema):
     """Create a BigQuery table"""
     if table_name not in list_bq_tables(dataset):
-        create_table_command = "bq mk --table {}:{}.{} {}".format(get_project_id(),
-                                                                  dataset,
-                                                                  table_name, schema)
+        create_table_command = "bq mk --table {}:{}.{} {}".format(
+            get_project_id(),
+            dataset,
+            table_name, schema)
         output = subprocess.check_output(shlex.split(create_table_command))
         print(output)
     else:

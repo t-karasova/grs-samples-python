@@ -23,12 +23,14 @@ from google.api_core.client_options import ClientOptions
 from google.cloud.retail import UserEvent, UserEventServiceClient, \
     WriteUserEventRequest
 from google.protobuf.timestamp_pb2 import Timestamp
+
 from setup.setup_cleanup import purge_user_event
 
 project_number = os.getenv('PROJECT_NUMBER')
 
 endpoint = "retail.googleapis.com"
-default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(project_number)
+default_catalog = "projects/{0}/locations/global/catalogs/default_catalog"\
+    .format(project_number)
 visitor_id = 'test_visitor_id'
 
 
@@ -55,7 +57,8 @@ def get_user_event():
 # get write user event request
 def get_write_event_request(user_event):
     # TO CHECK THE ERROR HANDLING TRY TO PASS INVALID CATALOG:
-    # default_catalog = "projects/{0}/locations/global/catalogs/invalid_catalog".format(project_number)
+    # default_catalog = "projects/{0}/locations/global/catalogs/invalid_catalog"
+    # .format(project_number)
     write_user_event_request = WriteUserEventRequest()
     write_user_event_request.user_event = user_event
     write_user_event_request.parent = default_catalog
@@ -69,7 +72,8 @@ def get_write_event_request(user_event):
 # call the Retail API to write user event
 def write_user_event():
     write_user_event_request = get_write_event_request(get_user_event())
-    user_event = get_user_events_service_client().write_user_event(write_user_event_request)
+    user_event = get_user_events_service_client().write_user_event(
+        write_user_event_request)
 
     print("---written user event:---")
     print(user_event)

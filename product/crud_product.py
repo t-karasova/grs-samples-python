@@ -19,8 +19,8 @@
 import os
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import Product, ProductServiceClient, CreateProductRequest, GetProductRequest, \
-    UpdateProductRequest, DeleteProductRequest
+from google.cloud.retail import CreateProductRequest, DeleteProductRequest, \
+    GetProductRequest, Product, ProductServiceClient, UpdateProductRequest
 from google.cloud.retail_v2 import PriceInfo
 from google.cloud.retail_v2.types import product
 
@@ -81,7 +81,8 @@ def create_product() -> object:
     print("---create product request---")
     print(create_product_request)
 
-    product_created = get_product_service_client().create_product(create_product_request)
+    product_created = get_product_service_client().create_product(
+        create_product_request)
     print("---created product:---")
     print(product_created)
     return product_created
@@ -95,7 +96,8 @@ def get_product() -> object:
     print("---get product request---")
     print(get_product_request)
 
-    get_product_response = get_product_service_client().get_product(get_product_request)
+    get_product_response = get_product_service_client().get_product(
+        get_product_request)
 
     print("---get product response:---")
     print(get_product_response)
@@ -111,7 +113,8 @@ def update_product():
     print("---update product request---")
     print(update_product_request)
 
-    updated_product = get_product_service_client().update_product(update_product_request)
+    updated_product = get_product_service_client().update_product(
+        update_product_request)
     print('---updated product---:')
     print(updated_product)
     return updated_product
@@ -130,7 +133,7 @@ def delete_product():
     print("deleting product " + product_name)
     print("---product was deleted:---")
 
- 
+
 # call the methods
 create_product()
 get_product()

@@ -17,17 +17,17 @@
 # Import user events into a catalog from inline source using Retail API
 #
 import os
-import time
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import UserEventServiceClient, \
-    PurgeUserEventsRequest
+from google.cloud.retail import PurgeUserEventsRequest, UserEventServiceClient
+
 from setup.setup_cleanup import write_user_event
 
 project_number = os.getenv('PROJECT_NUMBER')
 
 endpoint = "retail.googleapis.com"
-default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(project_number)
+default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(
+    project_number)
 visitor_id = 'test_visitor_id'
 
 
@@ -51,7 +51,8 @@ def get_purge_user_event_request():
 
 # call the Retail API to purge user event
 def call_purge_user_events():
-    purge_operation = get_user_events_service_client().purge_user_events(get_purge_user_event_request())
+    purge_operation = get_user_events_service_client().purge_user_events(
+        get_purge_user_event_request())
 
     print("---the purge operation was started:----")
     print(purge_operation.operation.name)

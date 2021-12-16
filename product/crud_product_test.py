@@ -17,17 +17,24 @@ import subprocess
 
 
 def test_add_fulfillment():
-    output = str(subprocess.check_output('python product/crud_product.py', shell=True))
+    output = str(
+        subprocess.check_output('python product/crud_product.py', shell=True))
 
     assert re.match('.*create product request.*', output)
-    assert re.match('.*create product request.*?parent: "projects/.*?/locations/global/catalogs/default_catalog/branches/default_branch".*', output)
+    assert re.match(
+        '.*create product request.*?parent: "projects/.*?/locations/global/catalogs/default_catalog/branches/default_branch".*',
+        output)
     assert re.match('.*create product request.*?title: "Nest Mini".*', output)
     assert re.match('.*created product.*', output)
     assert re.match('.*created product.*?id: "crud_product_id".*', output)
     assert re.match('.*created product.*?title: "Nest Mini".*', output)
 
-    assert re.match('.*get product request.*?name: "projects/.*?/locations/global/catalogs/default_catalog/branches/default_branch/products/crud_product_id.*', output)
-    assert re.match('.*get product response.*?name: "projects/.*?/locations/global/catalogs/default_catalog/branches/default_branch/products/crud_product_id.*', output)
+    assert re.match(
+        '.*get product request.*?name: "projects/.*?/locations/global/catalogs/default_catalog/branches/default_branch/products/crud_product_id.*',
+        output)
+    assert re.match(
+        '.*get product response.*?name: "projects/.*?/locations/global/catalogs/default_catalog/branches/default_branch/products/crud_product_id.*',
+        output)
 
     assert re.match('.*update product request.*', output)
     assert re.match(
@@ -40,5 +47,7 @@ def test_add_fulfillment():
     assert re.match('.*updated product.*?brands.*?Updated Google.*', output)
     assert re.match('.*updated product.*?price.*?20.*', output)
 
-    assert re.match('.*delete product request.*?name: "projects/.*?/locations/global/catalogs/default_catalog/branches/default_branch/products/crud_product_id".*', output)
+    assert re.match(
+        '.*delete product request.*?name: "projects/.*?/locations/global/catalogs/default_catalog/branches/default_branch/products/crud_product_id".*',
+        output)
     assert re.match('.*product was deleted.*', output)

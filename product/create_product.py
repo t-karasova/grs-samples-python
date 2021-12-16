@@ -21,9 +21,11 @@ import random
 import string
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import Product, ProductServiceClient, CreateProductRequest
+from google.cloud.retail import CreateProductRequest, Product, \
+    ProductServiceClient
 from google.cloud.retail_v2 import PriceInfo
 from google.cloud.retail_v2.types import product
+
 from setup.setup_cleanup import delete_product
 
 project_number = os.getenv('PROJECT_NUMBER')
@@ -55,7 +57,8 @@ def generate_product() -> Product:
 
 
 # get create product request
-def get_create_product_request(product_to_create: Product, product_id: str) -> object:
+def get_create_product_request(product_to_create: Product,
+                               product_id: str) -> object:
     create_product_request = CreateProductRequest()
     create_product_request.product = product_to_create
     create_product_request.product_id = product_id
@@ -69,8 +72,10 @@ def get_create_product_request(product_to_create: Product, product_id: str) -> o
 
 # call the Retail API to create product
 def create_product(product_id: str):
-    create_product_request = get_create_product_request(generate_product(), product_id)
-    product_created = get_product_service_client().create_product(create_product_request)
+    create_product_request = get_create_product_request(generate_product(),
+                                                        product_id)
+    product_created = get_product_service_client().create_product(
+        create_product_request)
 
     print("---created product:---")
     print(product_created)

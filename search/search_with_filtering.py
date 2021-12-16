@@ -18,7 +18,7 @@
 import os
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import SearchServiceClient, SearchRequest
+from google.cloud.retail import SearchRequest, SearchServiceClient
 
 project_number = os.getenv('PROJECT_NUMBER')
 
@@ -50,9 +50,9 @@ def get_search_request(query: str, _filter: str):
 # call the Retail Search:
 def search():
     # TRY DIFFERENT FILTER EXPRESSIONS HERE:
-    filter = '(colorFamily: ANY("Black"))'
+    filter_ = '(colorFamily: ANY("Black"))'
 
-    search_request = get_search_request("Tee", filter)
+    search_request = get_search_request("Tee", filter_)
     search_response = get_search_service_client().search(search_request)
     print("---search response---")
     print(search_response)

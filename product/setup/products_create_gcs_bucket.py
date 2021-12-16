@@ -14,7 +14,7 @@
 
 import datetime
 
-from setup_cleanup import get_project_id, create_bucket, upload_blob
+from setup_cleanup import create_bucket, get_project_id, upload_blob
 
 timestamp_ = datetime.datetime.now().timestamp().__round__()
 bucket_name = "{}_products_{}".format(get_project_id(), timestamp_)

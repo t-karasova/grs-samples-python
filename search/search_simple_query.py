@@ -18,7 +18,7 @@
 import os
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import SearchServiceClient, SearchRequest
+from google.cloud.retail import SearchRequest, SearchServiceClient
 
 project_number = os.getenv('PROJECT_NUMBER')
 
@@ -47,8 +47,8 @@ def get_search_request(query: str):
 
 # call the Retail Search:
 def search():
-     # TRY DIFFERENT QUERY PHRASES HERE:
-    query_phrase = "Hoodie" 
+    # TRY DIFFERENT QUERY PHRASES HERE:
+    query_phrase = "Hoodie"
 
     search_request = get_search_request(query_phrase)
     search_response = get_search_service_client().search(search_request)

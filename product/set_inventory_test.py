@@ -12,21 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import subprocess
 import re
+import subprocess
+
 import pytest
 
 
-#@pytest.mark.flaky(max_runs=10, min_passes=1)
-@pytest.mark.flaky(reruns=10)
+@pytest.mark.flaky(max_runs=10, min_passes=1)
 def test_set_inventory():
-    output = str(subprocess.check_output('python product/set_inventory.py', shell=True))
+    output = str(
+        subprocess.check_output('python product/set_inventory.py', shell=True))
     print(output)
     assert re.match('.*product is created.*', output)
-    assert re.match('.*name: "projects/.*/locations/global/catalogs/default_catalog/branches/0/products/inventory_test_product_id".*', output)
+    assert re.match(
+        '.*name: "projects/.*/locations/global/catalogs/default_catalog/branches/0/products/inventory_test_product_id".*',
+        output)
     assert re.match('.*set inventory request.*', output)
-    assert re.match('.*get product response.*?fulfillment_info.*type_: "pickup-in-store".*?place_ids: "store1".*',
-                    output)
-    assert re.match('.*get product response.*?fulfillment_info.*type_: "pickup-in-store".*?place_ids: "store2".*',
-                    output)
-    assert re.match('.*product projects/.*/locations/global/catalogs/default_catalog/branches/default_branch/products/inventory_test_product_id was deleted.*', output)
+    assert re.match(
+        '.*get product response.*?fulfillment_info.*type_: "pickup-in-store".*?place_ids: "store1".*',
+        output)
+    assert re.match(
+        '.*get product response.*?fulfillment_info.*type_: "pickup-in-store".*?place_ids: "store2".*',
+        output)
+    assert re.match(
+        '.*product projects/.*/locations/global/catalogs/default_catalog/branches/default_branch/products/inventory_test_product_id was deleted.*',
+        output)

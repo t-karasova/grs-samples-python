@@ -15,12 +15,11 @@
 from __future__ import print_function
 
 import os
-from pathlib import Path
 import sys
+from pathlib import Path
 from typing import Callable, Dict, List, Optional
 
 import nox
-
 
 # WARNING - WARNING - WARNING - WARNING - WARNING
 # WARNING - WARNING - WARNING - WARNING - WARNING
@@ -58,7 +57,6 @@ TEST_CONFIG = {
     "envs": {},
 }
 
-
 try:
     # Ensure we can import noxfile_config in the project's directory.
     sys.path.append(".")
@@ -94,13 +92,15 @@ IGNORED_VERSIONS = TEST_CONFIG["ignored_versions"]
 
 TESTED_VERSIONS = sorted([v for v in ALL_VERSIONS if v not in IGNORED_VERSIONS])
 
-INSTALL_LIBRARY_FROM_SOURCE = os.environ.get("INSTALL_LIBRARY_FROM_SOURCE", False) in (
-    "True",
-    "true",
-)
+INSTALL_LIBRARY_FROM_SOURCE = os.environ.get("INSTALL_LIBRARY_FROM_SOURCE",
+                                             False) in (
+                                  "True",
+                                  "true",
+                              )
 
 # Error if a python version is missing
 nox.options.error_on_missing_interpreters = True
+
 
 #
 # Style Checks
@@ -118,8 +118,8 @@ def _determine_local_import_names(start_dir: str) -> List[str]:
         basename
         for basename, extension in file_ext_pairs
         if extension == ".py"
-        or os.path.isdir(os.path.join(start_dir, basename))
-        and basename not in ("__pycache__")
+           or os.path.isdir(os.path.join(start_dir, basename))
+           and basename not in ("__pycache__")
     ]
 
 
@@ -182,7 +182,7 @@ PYTEST_COMMON_ARGS = ["--junitxml=sponge_log.xml"]
 
 
 def _session_tests(
-    session: nox.sessions.Session, post_install: Callable = None
+        session: nox.sessions.Session, post_install: Callable = None
 ) -> None:
     if TEST_CONFIG["pip_version_override"]:
         pip_version = TEST_CONFIG["pip_version_override"]
@@ -196,7 +196,8 @@ def _session_tests(
 
     if os.path.exists("requirements-test.txt"):
         if os.path.exists("constraints-test.txt"):
-            session.install("-r", "requirements-test.txt", "-c", "constraints-test.txt")
+            session.install("-r", "requirements-test.txt", "-c",
+                            "constraints-test.txt")
         else:
             session.install("-r", "requirements-test.txt")
 
@@ -224,7 +225,8 @@ def py(session: nox.sessions.Session) -> None:
         _session_tests(session)
     else:
         session.skip(
-            "SKIPPED: {} tests are disabled for this sample.".format(session.python)
+            "SKIPPED: {} tests are disabled for this sample.".format(
+                session.python)
         )
 
 
@@ -266,5 +268,6 @@ def readmegen(session: nox.sessions.Session, path: str) -> None:
 
     in_file = os.path.join(dir_, "README.rst.in")
     session.run(
-        "python", _get_repo_root() + "/scripts/readme-gen/readme_gen.py", in_file
+        "python", _get_repo_root() + "/scripts/readme-gen/readme_gen.py",
+        in_file
     )

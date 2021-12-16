@@ -23,14 +23,16 @@ import string
 import time
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import UserEvent, UserEventInlineSource, UserEventInputConfig, UserEventServiceClient, \
+from google.cloud.retail import UserEvent, UserEventInlineSource, \
+    UserEventInputConfig, UserEventServiceClient, \
     ImportUserEventsRequest
 from google.protobuf.timestamp_pb2 import Timestamp
 
 project_number = os.getenv('PROJECT_NUMBER')
 
 endpoint = "retail.googleapis.com"
-default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(project_number)
+default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(
+    project_number)
 
 
 # get user events service client
@@ -48,7 +50,8 @@ def get_user_events():
 
         user_event = UserEvent()
         user_event.event_type = "home-page-view"
-        user_event.visitor_id = ''.join(random.sample(string.ascii_lowercase, 5))
+        user_event.visitor_id = ''.join(
+            random.sample(string.ascii_lowercase, 4)) + 'event_' + x
         user_event.event_time = timestamp
         user_events.append(user_event)
 
@@ -76,8 +79,10 @@ def get_import_events_inline_source_request(user_events_to_import):
 
 # call the Retail API to import user events
 def import_user_events_from_inline_source():
-    import_inline_request = get_import_events_inline_source_request(get_user_events())
-    import_operation = get_user_events_service_client().import_user_events(import_inline_request)
+    import_inline_request = get_import_events_inline_source_request(
+        get_user_events())
+    import_operation = get_user_events_service_client().import_user_events(
+        import_inline_request)
 
     print("---the operation was started:----")
     print(import_operation.operation.name)

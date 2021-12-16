@@ -12,24 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 import re
 import subprocess
+
 import pytest
-import os
+
 from setup.setup_cleanup import delete_product
 
 
-#@pytest.mark.flaky(max_runs=10, min_passes=1)
-@pytest.mark.flaky(reruns=10)
+@pytest.mark.flaky(max_runs=10, min_passes=1)
 def test_add_fulfillment():
     project_number = os.getenv('PROJECT_NUMBER')
     product_name = 'projects/' + project_number + '/locations/global/catalogs/default_catalog/branches/default_branch/products/remove_fulfillment_test_product_id'
-    output = str(subprocess.check_output('python product/remove_fulfillment_places.py', shell=True))
+    output = str(
+        subprocess.check_output('python product/remove_fulfillment_places.py',
+                                shell=True))
 
     assert re.match('.*product is created.*', output)
     assert re.match('.*remove fulfillment request.*', output)
     assert re.match('.*remove fulfillment places.*', output)
-    assert re.match('.*get product response.*?fulfillment_info.*type_: "pickup-in-store".*?place_ids: "store1".*', output)
+    assert re.match(
+        '.*get product response.*?fulfillment_info.*type_: "pickup-in-store".*?place_ids: "store1".*',
+        output)
 
     delete_product(product_name)
-

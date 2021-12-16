@@ -17,7 +17,8 @@ import subprocess
 
 
 def test_add_fulfillment():
-    output = str(subprocess.check_output('python product/update_product.py', shell=True))
+    output = str(
+        subprocess.check_output('python product/update_product.py', shell=True))
 
     assert re.match('.*product is created.*', output)
     assert re.match('.*updated product.*', output)

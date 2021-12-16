@@ -19,7 +19,7 @@
 import os
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import SearchServiceClient, SearchRequest
+from google.cloud.retail import SearchRequest, SearchServiceClient
 
 project_number = os.getenv('PROJECT_NUMBER')
 
@@ -65,6 +65,7 @@ def search():
     print("---search response---")
     print(search_response)
     return search_response
+
 
 search()
 # [END retail_search_product_with_boost_spec]

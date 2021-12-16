@@ -21,11 +21,13 @@ import random
 import string
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail_v2 import Product, ProductServiceClient, UpdateProductRequest, PriceInfo
+from google.cloud.retail_v2 import PriceInfo, Product, ProductServiceClient, \
+    UpdateProductRequest
 from google.cloud.retail_v2.types import product
-# from google.protobuf.field_mask_pb2 import FieldMask
 
 from setup.setup_cleanup import create_product, delete_product
+
+# from google.protobuf.field_mask_pb2 import FieldMask
 # from google.protobuf.field_mask_pb2 import FieldMask
 
 
@@ -76,7 +78,8 @@ def get_update_product_request(product_to_update: Product):
 def update_product(original_product: Product):
     # update product
     updated_product = get_product_service_client().update_product(
-        get_update_product_request(generate_product_for_update(original_product.id)))
+        get_update_product_request(
+            generate_product_for_update(original_product.id)))
 
     print('---updated product---:')
     print(updated_product)

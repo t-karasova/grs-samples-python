@@ -20,7 +20,7 @@
 import os
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import SearchServiceClient, SearchRequest
+from google.cloud.retail import SearchRequest, SearchServiceClient
 
 project_number = os.getenv('PROJECT_NUMBER')
 
@@ -32,7 +32,8 @@ def get_search_service_client():
 
 
 # get search service request:
-def get_search_request(query: str, page_size: int, offset: int, next_page_token: str):
+def get_search_request(query: str, page_size: int, offset: int,
+                       next_page_token: str):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
 
     search_request = SearchRequest()
@@ -56,8 +57,10 @@ def search():
     offset = 0
     page_token = ""
 
-    search_request_first_page = get_search_request("Hoodie", page_size, offset, page_token)
-    search_response_first_page = get_search_service_client().search(search_request_first_page)
+    search_request_first_page = get_search_request("Hoodie", page_size, offset,
+                                                   page_token)
+    search_response_first_page = get_search_service_client().search(
+        search_request_first_page)
 
     print("---search response---")
     print(search_response_first_page)

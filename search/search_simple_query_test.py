@@ -22,7 +22,8 @@ from search_simple_query import search
 
 
 def test_search_simple_query_pass():
-    output = str(subprocess.check_output('python search/search_simple_query.py', shell=True))
+    output = str(subprocess.check_output('python search/search_simple_query.py',
+                                         shell=True))
 
     assert re.match('.*search request.*', output)
     assert re.match('.*search response.*', output)

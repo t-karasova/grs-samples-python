@@ -19,17 +19,21 @@ import os
 import time
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import BigQuerySource, ProductInputConfig, ProductServiceClient, \
-    ImportProductsRequest
+from google.cloud.retail import BigQuerySource, ImportProductsRequest, \
+    ProductInputConfig, ProductServiceClient
+
 from setup.setup_cleanup import get_project_id
 
 project_number = os.getenv('PROJECT_NUMBER')
 project_id = get_project_id()
 
 endpoint = "retail.googleapis.com"
-default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/default_branch".format(project_number)
+default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/default_branch".format(
+    project_number)
 dataset_id = "products"
 table_id = "products"
+
+
 # TO CHECK ERROR HANDLING USE THE TABLE WITH INVALID PRODUCTS:
 # table_id = "products_some_invalid"
 
@@ -69,8 +73,10 @@ def import_products_from_big_query():
     # TRY THE FULL RECONCILIATION MODE HERE:
     reconciliation_mode = ImportProductsRequest.ReconciliationMode.FULL
 
-    import_big_query_request = get_import_products_big_query_request(reconciliation_mode)
-    big_query_operation = get_product_service_client().import_products(import_big_query_request)
+    import_big_query_request = get_import_products_big_query_request(
+        reconciliation_mode)
+    big_query_operation = get_product_service_client().import_products(
+        import_big_query_request)
 
     print("---the operation was started:----")
     print(big_query_operation.operation.name)

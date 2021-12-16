@@ -16,10 +16,10 @@
 # [START retail_update_attribute_config]
 # Update product in a catalog using Retail API to change the product attribute searchability and indexability.
 import os
-import time
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail_v2 import ProductServiceClient, Product, UpdateProductRequest, GetProductRequest, \
+from google.cloud.retail_v2 import ProductServiceClient, Product, \
+    UpdateProductRequest, GetProductRequest, \
     CustomAttribute
 
 project_number = os.getenv('PROJECT_NUMBER')
@@ -71,7 +71,8 @@ def update_product(product_to_update_id):
     print('---updated product---:')
     print(updated_product)
 
-    print('---Wait 2 minutes to be sure the catalog has been indexed after the changes---:')
+    print(
+        '---Wait 2 minutes to be sure the catalog has been indexed after the changes---:')
     return updated_product
 
 

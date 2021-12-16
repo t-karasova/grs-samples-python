@@ -22,8 +22,8 @@ import subprocess
 import time
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import GcsSource, ProductInputConfig, ProductServiceClient, ImportErrorsConfig, \
-    ImportProductsRequest
+from google.cloud.retail import GcsSource, ImportErrorsConfig, \
+    ImportProductsRequest, ProductInputConfig, ProductServiceClient
 
 
 def get_project_id():
@@ -45,6 +45,8 @@ default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branch
 gcs_bucket = "gs://{}".format(os.getenv("BUCKET_NAME"))
 gcs_errors_bucket = "{}/error".format(gcs_bucket)
 gcs_products_object = "products.json"
+
+
 # TO CHECK ERROR HANDLING USE THE JSON WITH INVALID PRODUCT
 # gcs_products_object = "products_some_invalid.json"
 
@@ -85,7 +87,8 @@ def get_import_products_gcs_request(gcs_object_name: str):
 # call the Retail API to import products
 def import_products_from_gcs():
     import_gcs_request = get_import_products_gcs_request(gcs_products_object)
-    gcs_operation = get_product_service_client().import_products(import_gcs_request)
+    gcs_operation = get_product_service_client().import_products(
+        import_gcs_request)
 
     print("---the operation was started:----")
     print(gcs_operation.operation.name)
@@ -103,7 +106,8 @@ def import_products_from_gcs():
     print(gcs_operation.result())
 
     # The imported products needs to be indexed in the catalog before they become available for search.
-    print("Wait 2 -5 minutes till products become indexed in the catalog, after that they will be available for search")
+    print(
+        "Wait 2 -5 minutes till products become indexed in the catalog, after that they will be available for search")
 
 
 import_products_from_gcs()

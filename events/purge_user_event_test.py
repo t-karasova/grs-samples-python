@@ -17,11 +17,20 @@ import subprocess
 
 
 def test_create_product():
-    output = str(subprocess.check_output('python events/purge_user_event.py', shell=True))
+    output = str(subprocess.check_output('python events/purge_user_event.py',
+                                         shell=True))
 
     assert re.match('.*the user event is written.*', output)
-    assert re.match('.*purge user events request.*?parent: "projects/.*?/locations/global/catalogs/default_catalog.*', output)
-    assert re.match('.*purge user events request.*?filter: \"visitorId=.*?test_visitor_id.*?\".*', output)
-    assert re.match('.*purge user events request.*?parent: "projects/.*?/locations/global/catalogs/default_catalog.*', output)
+    assert re.match(
+        '.*purge user events request.*?parent: "projects/.*?/locations/global/catalogs/default_catalog.*',
+        output)
+    assert re.match(
+        '.*purge user events request.*?filter: \"visitorId=.*?test_visitor_id.*?\".*',
+        output)
+    assert re.match(
+        '.*purge user events request.*?parent: "projects/.*?/locations/global/catalogs/default_catalog.*',
+        output)
     assert re.match('.*purge user events request.*?force: true.*', output)
-    assert re.match('.*the purge operation was started.*?projects/.*?/locations/global/catalogs/default_catalog/operations/purge-user-events.*', output)
+    assert re.match(
+        '.*the purge operation was started.*?projects/.*?/locations/global/catalogs/default_catalog/operations/purge-user-events.*',
+        output)

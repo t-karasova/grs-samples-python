@@ -18,12 +18,12 @@ import os
 import time
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import ProductServiceClient, SetInventoryRequest, PriceInfo, FulfillmentInfo
+from google.cloud.retail import FulfillmentInfo, PriceInfo, \
+    ProductServiceClient, SetInventoryRequest
 from google.cloud.retail_v2 import Product
 from google.protobuf.field_mask_pb2 import FieldMask
 
-
-from setup.setup_cleanup import create_product, get_product, delete_product
+from setup.setup_cleanup import create_product, delete_product, get_product
 
 project_number = os.getenv('PROJECT_NUMBER')
 endpoint = "retail.googleapis.com"
@@ -64,10 +64,13 @@ def get_set_inventory_request(product_name: str) -> SetInventoryRequest:
     request_time = datetime.datetime.now()
     # The out-of-order request timestamp
     # request_time = datetime.datetime.now() - datetime.timedelta(days=1)
-    set_mask = FieldMask(paths=['price_info', 'availability', 'fulfillment_info', 'available_quantity'])
+    set_mask = FieldMask(
+        paths=['price_info', 'availability', 'fulfillment_info',
+               'available_quantity'])
 
     set_inventory_request = SetInventoryRequest()
-    set_inventory_request.inventory = get_product_with_inventory_info(product_name)
+    set_inventory_request.inventory = get_product_with_inventory_info(
+        product_name)
     set_inventory_request.set_time = request_time
     set_inventory_request.allow_missing = True
     set_inventory_request.set_mask = set_mask

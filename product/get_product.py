@@ -21,7 +21,7 @@ import random
 import string
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import ProductServiceClient, GetProductRequest
+from google.cloud.retail import GetProductRequest, ProductServiceClient
 
 from setup.setup_cleanup import create_product, delete_product
 
