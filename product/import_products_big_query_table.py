@@ -22,10 +22,8 @@ from google.api_core.client_options import ClientOptions
 from google.cloud.retail import BigQuerySource, ImportProductsRequest, \
     ProductInputConfig, ProductServiceClient
 
-from setup.setup_cleanup import get_project_id
-
 project_number = os.getenv('PROJECT_NUMBER')
-project_id = get_project_id()
+project_id = os.getenv('PROJECT_ID')
 
 endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog/branches/default_branch".format(

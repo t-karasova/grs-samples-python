@@ -28,15 +28,6 @@ from google.cloud.retail import GcsSource, ImportErrorsConfig, \
 # Read the project number from the environment variable
 project_number = os.getenv('PROJECT_NUMBER')
 
-
-def get_project_id():
-    get_project_command = "gcloud config get-value project --format json"
-    config = subprocess.check_output(shlex.split(get_project_command))
-    project_id = re.search('\"(.*?)\"', str(config)).group(1)
-    return project_id
-
-
-project_id = get_project_id()
 endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(
     project_number)

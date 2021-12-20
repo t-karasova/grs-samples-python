@@ -22,12 +22,9 @@ from google.api_core.client_options import ClientOptions
 from google.cloud.retail import BigQuerySource, ImportUserEventsRequest, \
     UserEventInputConfig, UserEventServiceClient
 
-from setup.setup_cleanup import get_project_id
 
 project_number = os.getenv('PROJECT_NUMBER')
-
-# TODO(developer) Define the project Id here:
-project_id = get_project_id()
+project_id = project_id = os.getenv('PROJECT_ID')
 
 endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(

@@ -59,10 +59,10 @@ def get_product(product_name: str):
 
 
 # create a product
-created_product = create_product(product_id)
+#created_product = create_product(product_id)
 # get created product
-product = get_product(created_product.name)
+product = get_product("projects/945579214386/locations/global/catalogs/default_catalog/branches/0/products/GGOEGAEL146914")
 # remove created product
-delete_product(created_product.name)
+#delete_product(created_product.name)
 
 # [END retail_get_product]
