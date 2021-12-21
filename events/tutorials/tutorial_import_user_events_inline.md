@@ -1,114 +1,169 @@
-# **Import User Events From the Cloud Storage Tutorial**
+# Import user events from the Cloud Storage tutorial
 
-## Let's get started
+## Introduction
 
-The Retail API offers you an easy way to import your user event data inline. All you need is to create the array of user events and set it as an inline source.
+The Retail API offers you an way to import user events data inline by creating the array of user events and set it as an inline source.
 
-If you want to have the increased privacy of having all authentication occur on the backend and are capable of performing a backend import.
+Use this method, if you want to have the increased privacy of having all authentication occur on the backend and are capable of performing a backend import.
 
-You can find more information about different import types, their restrictions, and use cases in the [Retail API documentation](https://cloud.google.com/retail/docs/import-user-events)
+For more information about different import types, their restrictions, and use cases, see the [Retail API documentation](https://cloud.google.com/retail/docs/import-user-events).
 
-**Time to complete**: 
 <walkthrough-tutorial-duration duration="3.0"></walkthrough-tutorial-duration>
 
-## Before you begin
+## Get started with Google Cloud Retail
 
-To run Python code samples from this tutorial, you need to set up your virtual environment.
+This step is required if this is the first Retail API tutorial you run.
+Otherwise, you can skip it.
 
-To do that, run the following commands in a Terminal:
-```bash
-pip install virtualenv
-```
-```bash
-virtualenv <your-env>
-```
-```bash
-source <your-env>/bin/activate
-```
-Next, install Google packages:
-```bash
-pip install google
-```
-```bash
-pip install google-cloud-retail
-```
+### Select your project and enable the Retail API
 
-**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell Terminal to
-run it.
+Google Cloud organizes resources into projects. This lets you
+collect all the related resources for a single application in one place.
 
-## Set the PROJECT_NUMBER environment variable
+If you don't have a Google Cloud project yet or you're not the owner of an existing one, you can
+[create a new project](https://console.cloud.google.com/projectcreate).
 
-As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable. It will be used in every request to the Retail API.
+After the project is created, set your PROJECT_ID to a ```project``` variable.
+1. Run the following command in Terminal:
+    ```bash
+    gcloud config set project <YOUR_PROJECT_ID>
+    ```
 
-You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+1. Check that the Retail API is enabled for your project in the [Admin Console](https://console.cloud.google.com/ai/retail/).
 
-Set the environment variable with a following command:
-```bash
-export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
-```
+### Set up authentication
+
+To run a code sample from the Cloud Shell, you need to authenticate. To do this, use the Application Default Credentials.
+
+1. Set your user credentials to authenticate your requests to the Retail API
+
+    ```bash
+    gcloud auth application-default login
+    ```
+
+1. Type `Y` and press **Enter**. Click the link in Terminal. A browser window should appear asking you to log in using your Gmail account.
+
+1. Provide the Google Auth Library with access to your credentials and paste the code from the browser to the Terminal.
+
+1. Run the code sample and check the Retail API in action.
+
+**Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
+
+### Set the PROJECT_NUMBER and PROJECT_ID environment variables
+
+Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** and **project_id** as environment variables. It will be used in every request to the Retail API.
+
+1. You can find these values in the Project Info card displayed on **Home/Dashboard**.
+
+1. Set **project_number** with the following command:
+    ```bash
+    export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
+    ```
+1. Set **project_id** with the following command:
+    ```bash
+    export PROJECT_ID=<YOUR_PROJECT_ID>
+    ```
+
+### Install Google Cloud Retail libraries
+
+To run Python code samples for the Retail API tutorial, you need to set up your virtual environment.
+
+1. Run the following commands in a Terminal to create an isolated Python environment:
+    ```bash
+    pip install virtualenv
+    virtualenv myenv
+    source myenv/bin/activate
+    ```
+1. Next, install Google packages:
+    ```bash
+    pip install google
+    pip install google-cloud-retail
+    pip install google.cloud.storage
+    pip install google.cloud.bigquery
+
+    ```
+
+## Clone the Retail code samples
+
+This step is required if this is the first Retail API tutorial you run.
+Otherwise, you can skip it.
+
+Clone the Git repository with all the code samples to learn the Retail features and check them in action.
+
+<!-- TODO(ianan): change the repository link -->
+1. Run the following command in the Terminal:
+    ```bash
+    git clone https://github.com/t-karasova/grs-samples-python.git
+    ```
+
+    The code samples for each of the Retail services are stored in different directories.
+
+1. Go to the ```grs-samples-python``` directory. This is our starting point to run more commands.
+    ```bash
+    cd grs-samples-python
+    ```
 
 ## Import user events to the Retail catalog from the inline source
 
-To check the example of an import user events request, open **events/import_user_events_inline.py**.
+1. To check the example of an import user events request, open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/events/import_user_events_inline.py" regex="# get user events for import">`events/import_user_events_inline.py`</walkthrough-editor-select-regex> file.
 
-Here, in the ```get_user_events()``` method the user events are created to be used in the ```input_config```.
+    Here, in the `get_user_events()` method the user events are created to be used in the `input_config`.
 
-The **```parent```** field in the **ImportUserEventsRequest** contains a **catalog name** along with a branch number you are going to import your
-user events to.
+    The `parent` field in the `ImportUserEventsRequest` method contains a catalog name along with a branch number you are going to import your user events to. You can use the default branch to import user events to. But, if you are using custom user events, change the default_branch, which is `0`, to another branch ID, for example `1`.
 
-The **```input_config```** field defines the **UserEventInlineSource** as an import source.
+    The `input_config` field defines the `UserEventInlineSource` method as an import source.
 
-To perform the user events import, open Terminal and run the command:
-
-```bash
-python events/import_user_events_inline.py
-```
+1. To perform the user events import, run the following command in the Terminal:
+    ```bash
+    python events/import_user_events_inline.py
+    ```
 
 ## Response analysis
 
-Once you have called the import user events method from the Retail API, the **import operation** has started.
+Once you have called the import user events method from the Retail API, the import operation has started.
 
-Importing may take some time depending on the size of user events set in your Cloud Source.
+Importing can take some time depending on the size of user events set in your Cloud Source.
 
-The operation is completed when the **```operation.done()```** field is set to true. 
+The operation is completed when the `operation.done()` field is set to true.
 
-Check the result. One of the following fields should be present:
- - **```error```**, if the operation failed.
- - **```result```**, if the operation was successful.
+1. Check the result. One of the following fields should be present:
+    - `error`, if the operation failed.
+    - `result`, if the operation was successful.
 
-You have imported valid user event objects into the catalog.
+    You have imported valid user event objects into the catalog.
 
-Check the ```import_operation.metadata.success_count``` field to get the total number of the successfully imported events.
+1. Check the `import_operation.metadata.success_count` field to get the total number of the successfully imported events.
 
-The number of failures during the import is returned to the ```import_operation.metadata.failure_count``` field.
+    The number of failures during the import is returned to the `import_operation.metadata.failure_count` field.
 
-The operation is successful, and the operation object contains a **```result```** field.
-Check it printed out in a Terminal. It should look like this: 
-
-```
-import_summary {
-  joined_events_count: 3
-}
-```
+    The operation is successful, and the operation object contains a `result` field.
+1. Check it printed out in a Terminal:
+    ```
+    import_summary {
+      joined_events_count: 3
+    }
+    ```
 
 ## Errors appeared during the importing
 
-Now, let's try to import a few invalid user event objects and check the error message in the operation response. Note that in this case the operation itself is considered successful.
+Try to import a few invalid user event objects and check the error message in the operation response.
+**Note**, that in this case the operation itself is considered successful.
 
-The ```type``` and ```visitor_id``` fields are required, so if you remove them, you get the invalid user event objects. 
+The `type` and `visitor_id` fields are required, so if you remove them, you get the invalid user event objects.
 
-Set some invalid value to the ```user_event.event_type``` field and run the import one more time to get an error message.
+1. Set an invalid value to the `user_event.event_type` field and run the import one more time to get an error message.
 
-The expected error message is like the following:
-
-```
-google.api_core.exceptions.InvalidArgument: 400 Unsupported inputConfig.userEventInlineSource.userEvents.eventType invalid.
-```
+1. Check the error message:
+    ```terminal
+    google.api_core.exceptions.InvalidArgument: 400 Unsupported inputConfig.userEventInlineSource.userEvents.eventType invalid.
+    ```
 
 ## Congratulations
 
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-You have completed the tutorial! Now you know how to prepare the data for importing user events inline.
+You have completed the tutorial! We encourage you to test the importing user events inline.
 
-**Thank you for completing this tutorial!**
+<walkthrough-inline-feedback></walkthrough-inline-feedback>
+
+
