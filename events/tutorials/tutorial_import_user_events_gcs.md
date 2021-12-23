@@ -1,181 +1,205 @@
-# **Import User Events From the Cloud Storage Tutorial**
+# Import user events from Cloud Storage tutorial
 
-## Let's get started
+## Introduction
 
-The Retail API offers you an easy way to import your user event data from a Cloud Storage. All you need is to provide a name of
-the JSON file in the GCS bucket.
+The Retail API lets you import your user event data from Cloud Storage. All you need to do is provide a name of
+the JSON file in the Cloud Storage bucket.
 
-This type of import is useful when you need to import a large amount of items to your catalog in a single step.
+This type of import is useful when you need to import a large number of user events to your catalog in a single step.
 
-You can find more information about different import types, their restrictions, and use cases in the [Retail API documentation](https://cloud.google.com/retail/docs/import-user-events)
+For more information about different import types, their restrictions, and use cases, see the [Retail API documentation](https://cloud.google.com/retail/docs/import-user-events).
 
-**Time to complete**: 
-<walkthrough-tutorial-duration duration="3.0"></walkthrough-tutorial-duration>
+<walkthrough-tutorial-duration duration="5"></walkthrough-tutorial-duration>
 
-## Before you begin
+## Get started with Google Cloud Retail
 
-To run Python code samples from this tutorial, you need to set up your virtual environment.
+This step is required if this is the first Retail API tutorial you run.
+Otherwise, you can skip it.
 
-To do that, run the following commands in a Terminal:
-```bash
-pip install virtualenv
-```
-```bash
-virtualenv <your-env>
-```
-```bash
-source <your-env>/bin/activate
-```
-Next, install Google packages:
-```bash
-pip install google
-```
-```bash
-pip install google-cloud-retail
-```
+### Select your project and enable the Retail API
 
-**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell Terminal to
-run it.
+Google Cloud organizes resources into projects. This lets you
+collect all the related resources for a single application in one place.
 
-## Set the PROJECT_NUMBER environment variable
+If you don't have a Google Cloud project yet or you're not the owner of an existing one, you can
+[create a new project](https://console.cloud.google.com/projectcreate).
 
-As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable. It will be used in every request to the Retail API.
+After the project is created, set your PROJECT_ID to a ```project``` variable.
+1. Run the following command in Terminal:
+    ```bash
+    gcloud config set project <YOUR_PROJECT_ID>
+    ```
 
-You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+1. Check that the Retail API is enabled for your project in the [Admin Console](https://console.cloud.google.com/ai/retail/).
 
-Set the environment variable with a following command:
-```bash
-export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
-```
+### Set up authentication
 
-## Upload user events data to the Cloud Storage bucket
+To run a code sample from the Cloud Shell, you need to authenticate. To do this, use the Application Default Credentials.
+
+1. Set your user credentials to authenticate your requests to the Retail API:
+
+    ```bash
+    gcloud auth application-default login
+    ```
+
+1. Type `Y` and press **Enter**. Click the link in Terminal. A browser window should appear asking you to log in using your Gmail account.
+
+1. Provide the Google Auth Library with access to your credentials and paste the code from the browser to the Terminal.
+
+1. Run the code sample and check the Retail API in action.
+
+**Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
+
+### Set the PROJECT_NUMBER and PROJECT_ID environment variables
+
+Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** and **project_id** as environment variables. It will be used in every request to the Retail API.
+
+1. Find the project number and project ID in the Project Info card displayed on **Home/Dashboard**.
+
+1. Set **project_number** with the following command:
+    ```bash
+    export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
+    ```
+1. Set **project_id** with the following command:
+    ```bash
+    export PROJECT_ID=<YOUR_PROJECT_ID>
+    ```
 
 
-## Prepare user events for importing
+### Install Google Cloud Retail libraries
 
-We have prepared a JSON file with a bunch of valid user events in the "events/resources" directory: 
+To run Python code samples for the Retail API tutorial, you need to set up your virtual environment.
 
-**resources/user_events.json**
+1. Run the following commands in a Terminal to create an isolated Python environment:
+    ```bash
+    pip install virtualenv
+    virtualenv myenv
+    source myenv/bin/activate
+    ```
+1. Next, install Google packages:
+    ```bash
+    pip install google
+    pip install google-cloud-retail
+    pip install google.cloud.storage
+    pip install google.cloud.bigquery
 
-And another JSON file with both valid and invalid products, we will use both of these files as data sources.
+    ```
 
-**resources/user_events_some_invalid.json**
+## Clone the Retail code samples
 
-You can use this file in the tutorial, or, if you want to use your own data, you should update the names of a bucket and a JSON files in the code samples.
+This step is required if this is the first Retail API tutorial you run.
+Otherwise, you can skip it.
 
-You can import events that are **NOT older than 90 days** into the Retail catalog. Otherwise, the import will fail.
+Clone the Git repository with all the code samples to learn the Retail features and check them in action.
 
-To keep our historical user evens more recent, update the timestamps in the **user_events.json** and **user_events_some_invalid.json** files. 
-Run this script in a Terminal, and you will get the user events with yesterday's date:
+<!-- TODO(ianan): change the repository link -->
+1. Run the following command in the Terminal:
+    ```bash
+    git clone https://github.com/t-karasova/grs-samples-python.git
+    ```
 
-```bash
-python  setup/update_user_events_json.py
-```
+    The code samples for each of the Retail services are stored in different directories.
 
-Now, your data are updated and ready to be deployed to the Cloud Storage.
+1. Go to the ```grs-samples-python``` directory. This is our starting point to run more commands.
+    ```bash
+    cd grs-samples-python
+    ```
 
 ## Upload catalog data to Cloud Storage
 
-After you have updated the timestamps in both JSON files:
-**resources/user_events.json** and **resources/user_events_some_invalid.json**, you can proceed with uploading these data to Cloud Storage.
+There is a <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/resources/user_events.json" regex="id">resources/user_events.json</walkthrough-editor-select-regex> file with valid user events prepared in the `resources` directory.
+
+The other file, <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/resources/user_events_some_invalid.json" regex="id">resources/user_events_some_invalid.json</walkthrough-editor-select-regex>, contains both valid and invalid user events. You will use it to check the error handling.
 
 In your own project you should create a Cloud Storage bucket and put the JSON file there.
-The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT_ID>_events_<TIMESTAMP>.
+The bucket name must be unique. For convenience, you can name it `<YOUR_PROJECT_ID>_<TIMESTAMP>`.
 
-To create the bucket and upload the JSON file run the following command in the Terminal:
+1. To create the bucket and upload the JSON file, run the following command in the Terminal:
+    ```bash
+    python events/setup/events_create_gcs_bucket.py
+    ```
+1. Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the file is uploaded. The name of the created Cloud Storage bucket is printed in the Terminal.
 
-```bash
-python events/setup/events_create_gcs_bucket.py
-```
-Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the file is uploaded.
-
-Both **user_events.json** and **user_events_some_invalid.json** are uploaded to the bucket.
-
-The **name of the created GRS bucket** is printed in the Terminal, copy the name and set it as the environment variable EVENTS_BUCKET_NAME:
-
-```bash
-export EVENTS_BUCKET_NAME=<YOUR_EVENTS_BUCKET_NAME>
-```
-
+1. Copy the name and set it as the environment variable `EVENTS_BUCKET_NAME`:
+    ```bash
+    export EVENTS_BUCKET_NAME=<YOUR_EVENTS_BUCKET_NAME>
+    ```
 
 ## Import user events to the Retail catalog from the Cloud Storage source
 
-To check the example of an import user events request, open **events/import_user_events_gcs.py**.
+1. To check the example of an import user events request, open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/events/import_user_events_gcs.py" regex="# call the Retail API to import user events">events/import_user_events_gcs.py</walkthrough-editor-select-regex>.
 
-The **```parent```** field in the **ImportUserEventsRequest** contains a **catalog name** along with a branch number you are going to import your
-user events to.
+    The `parent` field in the `ImportUserEventsRequest` method contains a catalog name along with a branch number you are going to import your user events to.
 
-The **```input_config```** field defines the **GcsSource** as an import source.
+    If you are using user events prepared for these tutorials from the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/resources/user_events.json" regex="id">resources/user_events.json</walkthrough-editor-select-regex> file, you can use the default branch to import user events to. However, if you are using custom user events, change the default_branch, which is `0`, to another branch ID, for example `1`.
 
-To perform the user events import, open Terminal and run the command:
+    The `input_config` field defines the `GcsSource` as an import source.
 
-```bash
-python events/import_user_events_gcs.py
-```
+1. To perform the user events import, open Terminal and run the command:
+    ```bash
+    python events/import_user_events_gcs.py
+    ```
 
 ## Response analysis
 
-Once you have called the import user events method from the Retail API, the **import operation** has started.
+After you call the import user events method from the Retail API, the import operation starts.
 
-Importing may take some time depending on the size of user events set in your Cloud Source.
+Importing can take a lot of time depending on the size of the user events set in your Cloud Storage.
 
-The operation is completed when the **```operation.done()```** field is set to true. 
+The operation is completed when the field `operation.done()` is set to true.
 
-Check the result. One of the following fields should be present:
- - **```error```**, if the operation failed.
- - **```result```**, if the operation was successful.
+1. Check the result. One of the following fields should be present:
+    - `error`, if the operation failed.
+    - `result`, if the operation was successful.
 
-You have imported valid user event objects into the catalog.
+    You have imported valid user event objects into the catalog.
 
-Check the ```gcs_operation.metadata.success_count``` field to get the total number of the successfully imported events.
+1. Check the `gcs_operation.metadata.success_count` field to get the total number of successfully imported user events. The number of failures during the user events import is returned in the `gcs_operation.metadata.failure_count` field.
 
-The number of failures during the import is returned to the ```gcs_operation.metadata.failure_count``` field.
-
-The operation is successful, and the operation object contains a **```result```** field.
-Check it printed out in a Terminal. It should look like this: 
-
-```
-errors_config {
-  gcs_prefix: "gs://import_user_events/error"
-}
-import_summary {
-  joined_events_count: 13500
-}
-```
+1. Check the results printed out in the Terminal:
+    ```terminal
+    errors_config {
+      gcs_prefix: "gs://import_user_events/error"
+    }
+    import_summary {
+      joined_events_count: 4
+    }
+    ```
 
 ## Errors appeared during the importing
 
-Now, let's try to import a few invalid user event objects and check the error message in the operation response. Note that in this case the operation itself is considered successful.
+Try to import some invalid user events objects and check the error message in the operation response.
 
-The ```type``` field is a required and should have one of [defined values](https://cloud.google.com/retail/docs/user-events#types), so if you set some invalid value, you get the invalid user event objects. 
+**Note**: The operation in this example generates an error message, but finishes successfully.
 
-There is a **```user_events_some_invalid.json```** file in the **events/resources directory** containing such an invalid user events.
+The `type` field is required and should have one of the [defined values](https://cloud.google.com/retail/docs/user-events#types), so if you set some invalid value, you get the invalid user event objects.
 
-Let's upload it to the GCS as you did it before, repeat **Upload user events data to the Cloud Storage bucket** step for this file.
+There is a <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/resources/user_events_some_invalid.json" regex="id">resources/user_events_some_invalid.json</walkthrough-editor-select-regex> file in the Cloud Storage bucket that contains some invalid user events.
 
-Now, import the invalid user event to get an error message.
+1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/events/import_user_events_gcs.py" regex="# TO CHECK ERROR HANDLING USE THE JSON WITH INVALID USER EVENT">code sample</walkthrough-editor-select-regex> and assign the `gcs_events_object` value to the filename:
+    ```
+    gcs_events_object = "user_events_some_invalid.json"
+    ```
 
-Go to the code sample, assign a value of ```gcs_events_object``` to the file name:
+1. Run the code sample and wait until the operation is completed:
+    ```bash
+    python events/import_user_events_gcs.py
+    ```
 
-```gcs_events_object = "user_events_some_invalid.json"```
+Next, check the operation printed out in the Terminal.
 
-Now, run the code sample and wait till the operation is completed. 
+## Errors appeared during importing: output analysis
 
-Next, check the operation printed out to the Terminal.
+If the operation is completed successfully, the `result` field will be displayed. Otherwise, an `error` field is displayed instead.
 
-## Errors appeared during importing. Output analysis
+Check the operation printed out in the Terminal. The operation is considered **successful** and the `gcs_operation.metadata.success_count` field contains the number of successfully imported user events, which is `3`.
 
-If the operation is completed successfully, you can find a **```result```** field. Otherwise, there would be an **```error```** field instead.
+There are two invalid user events in the input JSON file, and the number of failures during the user events import in the `gcs_operation.metadata.failure_count` field is `1`.
 
-In this case, the operation is considered as successful, and the ```gcs_operation.metadata.success_count``` field contains the number of the successfully imported events, which is "3".
+The `operation.result` field points to the errors bucket, where you can find a JSON file with all of the importing errors.
 
-There are two invalid user events in the input JSON file, and the number of failures during the importing in the ```gcs_operation.metadata.failure_count``` field is also "1".
-
-The ```operation.result``` field points to the errors bucket where you can find a JSON file with all the importing errors.
-
-The response is the following: 
-
-```
+The error is the following:
+```terminal
 errors_config {
   gcs_prefix: "gs://import_user_events/error"
 }
@@ -186,20 +210,23 @@ import_summary {
 
 ## Errors appeared due to an invalid request
 
-Next, let's send an invalid import request to check the error message. 
+Next, send an invalid import request to check the error message.
 
-In the code sample, find the **```get_import_events_gcs_request()```** method, and add there a local variable ```default_catalog``` with some invalid catalog name.
+1. Open the  <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/events/import_user_events_gcs.py" regex="# TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">`get_import_events_gcs_request()`</walkthrough-editor-select-regex> method, and uncomment the line with the `default_catalog` local variable with an invalid catalog name.
 
-Now, run the code again and check the error message. It should look like this:
-
-```
-google.api_core.exceptions.InvalidArgument: 400 Request contains an invalid argument.
-```
+1. Run the code again with the following command:
+    ```bash
+    python events/import_user_events_gcs.py
+    ```
+1. Check the error message in the Terminal:
+    ```terminal
+    google.api_core.exceptions.InvalidArgument: 400 Request contains an invalid argument.
+    ```
 
 ## Congratulations
 
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-You have completed the tutorial! Now you know how to prepare the data for importing user events from the Google Cloud Storage.
+You have completed the tutorial! We encourage you to test the importing user events from Cloud Storage by yourself and try different combinations of various filter expressions.
 
-**Thank you for completing this tutorial!**
+<walkthrough-inline-feedback></walkthrough-inline-feedback>
