@@ -1,10 +1,10 @@
-# Import user events from the Cloud Storage tutorial
+# Import user events from the Inline Source tutorial
 
 ## Introduction
 
-The Retail API offers you an way to import user events data inline by creating the array of user events and set it as an inline source.
+The Retail API lets you import user events data inline by creating the array of user events and setting it as an inline source.
 
-Use this method, if you want to have the increased privacy of having all authentication occur on the backend and are capable of performing a backend import.
+Use this method if you want to have the increased privacy of having all authentication occur on the backend and are capable of performing a backend import.
 
 For more information about different import types, their restrictions, and use cases, see the [Retail API documentation](https://cloud.google.com/retail/docs/import-user-events).
 
@@ -53,7 +53,7 @@ To run a code sample from the Cloud Shell, you need to authenticate. To do this,
 
 Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** and **project_id** as environment variables. It will be used in every request to the Retail API.
 
-1. You can find these values in the Project Info card displayed on **Home/Dashboard**.
+1. Find the project number and project ID in the Project Info card displayed on **Home/Dashboard**.
 
 1. Set **project_number** with the following command:
     ```bash
@@ -105,11 +105,11 @@ Clone the Git repository with all the code samples to learn the Retail features 
 
 ## Import user events to the Retail catalog from the inline source
 
-1. To check the example of an import user events request, open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/events/import_user_events_inline.py" regex="# get user events for import">`events/import_user_events_inline.py`</walkthrough-editor-select-regex> file.
+1. To check the example of an import user events request, open the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/events/import_user_events_inline.py" regex="# get user events for import">`events/import_user_events_inline.py`</walkthrough-editor-select-regex> file.
 
-    Here, in the `get_user_events()` method the user events are created to be used in the `input_config`.
+    The `get_user_events( )` method creates the user events to be used in the `input_config` field.
 
-    The `parent` field in the `ImportUserEventsRequest` method contains a catalog name along with a branch number you are going to import your user events to. You can use the default branch to import user events to. But, if you are using custom user events, change the default_branch, which is `0`, to another branch ID, for example `1`.
+    The `parent` field in the `ImportUserEventsRequest` method contains a catalog name along with a branch number you are going to import your user events to. You can import user events to the default branch. However, if you're using custom user events, change the default branch, which is `0`, to another branch ID, for example `1`.
 
     The `input_config` field defines the `UserEventInlineSource` method as an import source.
 
@@ -120,9 +120,9 @@ Clone the Git repository with all the code samples to learn the Retail features 
 
 ## Response analysis
 
-Once you have called the import user events method from the Retail API, the import operation has started.
+After you call the import user events method from the Retail API, the import operation starts.
 
-Importing can take some time depending on the size of user events set in your Cloud Source.
+Importing can take a lot of time depending on the size of the user events set in your Cloud Storage.
 
 The operation is completed when the `operation.done()` field is set to true.
 
@@ -147,7 +147,7 @@ The operation is completed when the `operation.done()` field is set to true.
 ## Errors appeared during the importing
 
 Try to import a few invalid user event objects and check the error message in the operation response.
-**Note**, that in this case the operation itself is considered successful.
+Note that in this case the operation itself is considered successful.
 
 The `type` and `visitor_id` fields are required, so if you remove them, you get the invalid user event objects.
 
