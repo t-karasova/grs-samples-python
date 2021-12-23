@@ -50,6 +50,7 @@ def get_user_events():
 
         user_event = UserEvent()
         user_event.event_type = "home-page-view"
+        # user_event.event_type = "invalid"
         user_event.visitor_id = "test_visitor_id"
         user_event.event_time = timestamp
         user_events.append(user_event)

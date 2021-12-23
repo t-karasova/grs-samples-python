@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# [START retail_search_for_products_with_filter]
-# Call Retail API to search for a products in a catalog, filter the results by different product fields.
+# [START retail_search_product_with_facet_spec]
 #
 import os
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.retail import SearchRequest, SearchServiceClient
+from google.cloud.retail import SearchRequest, SearchServiceClient, Interval
 
 project_number = os.getenv('PROJECT_NUMBER')
 
@@ -30,18 +29,23 @@ def get_search_service_client():
 
 
 # get search service request:
-def get_search_request(query: str, _filter: str):
+def get_search_request(query: str, facet_key_param: str):
     default_search_placement = "projects/" + project_number + "/locations/global/catalogs/default_catalog/placements/default_search"
+    # PUT THE INTERVALS HERE:
+    facet_key = SearchRequest.FacetSpec().FacetKey()
+    facet_key.key = facet_key_param
+
+    facet_spec = SearchRequest.FacetSpec()
+    facet_spec.facet_key = facet_key
 
     search_request = SearchRequest()
     search_request.placement = default_search_placement  # Placement is used to identify the Serving Config name.
     search_request.query = query
-    search_request.filter = _filter
-    search_request.page_size = 10
     search_request.visitor_id = "123456"  # A unique identifier to track visitors
+    search_request.facet_specs = [facet_spec]
     search_request.page_size = 10
 
-    print("---search request:---")
+    print("---search request---")
     print(search_request)
 
     return search_request
@@ -49,17 +53,15 @@ def get_search_request(query: str, _filter: str):
 
 # call the Retail Search:
 def search():
-    # TRY DIFFERENT FILTER EXPRESSIONS HERE:
-    filter_ = '(colorFamily: ANY("Black"))'
+    # TRY DIFFERENT FACETS HERE:
+    facet_key = "colorFamilies"
 
-    search_request = get_search_request("Tee", filter_)
+    search_request = get_search_request("Tee", facet_key)
     search_response = get_search_service_client().search(search_request)
     print("---search response---")
     print(search_response)
-    print("---facets:---")
-    print(search_response.facets)
     return search_response
 
 
 search()
-# [END retail_search_for_products_with_filter]
+# [END retail_search_product_with_facet_spec]

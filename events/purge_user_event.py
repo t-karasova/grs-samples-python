@@ -28,7 +28,6 @@ project_number = os.getenv('PROJECT_NUMBER')
 endpoint = "retail.googleapis.com"
 default_catalog = "projects/{0}/locations/global/catalogs/default_catalog".format(
     project_number)
-visitor_id = 'test_visitor_id'
 
 
 # get user events service client
@@ -41,7 +40,7 @@ def get_user_events_service_client():
 def get_purge_user_event_request():
     purge_user_event_request = PurgeUserEventsRequest()
     # TO CHECK ERROR HANDLING SET INVALID FILTER HERE:
-    purge_user_event_request.filter = 'visitorId="{}"'.format(visitor_id)
+    purge_user_event_request.filter = 'visitorId="test_visitor_id"'
     purge_user_event_request.parent = default_catalog
     purge_user_event_request.force = True
     print("---purge user events request---")
@@ -58,6 +57,6 @@ def call_purge_user_events():
     print(purge_operation.operation.name)
 
 
-write_user_event(visitor_id)
+write_user_event("test_visitor_id")
 call_purge_user_events()
 # [END retail_purge_user_event]
