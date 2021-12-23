@@ -1,17 +1,15 @@
-# **Purge User Events Tutorial**
+# Purge user events tutorial
 
-## Let's get started
+## Introduction
 
-The Retail API expose methods for managing user events.
-If you want to purge the user events from the catalog you can use the **```PurgeUserEvents```** method.
+The Retail API exposes methods for managing user events.
+If you want to purge the user events from the catalog you can use the `PurgeUserEvents` method.
 
-
-**Time to complete**: 
 <walkthrough-tutorial-duration duration="3.0"></walkthrough-tutorial-duration>
 
 ## Get started with Google Cloud Retail
 
-This step is required if this is the first Retail API Tutorial you run.
+This step is required if this is the first Retail API tutorial you run.
 Otherwise, you can skip it.
 
 ### Select your project and enable the Retail API
@@ -19,7 +17,7 @@ Otherwise, you can skip it.
 Google Cloud organizes resources into projects. This lets you
 collect all the related resources for a single application in one place.
 
-If you don't have a Google Cloud project yet or you're not the Owner of an existing one, you can
+If you don't have a Google Cloud project yet or you're not the owner of an existing one, you can
 [create a new project](https://console.cloud.google.com/projectcreate).
 
 After the project is created, set your PROJECT_ID to a ```project``` variable.
@@ -28,7 +26,7 @@ After the project is created, set your PROJECT_ID to a ```project``` variable.
     gcloud config set project <YOUR_PROJECT_ID>
     ```
 
-1. Check that the Retail API is enabled for your Project in the [Admin Console](https://console.cloud.google.com/ai/retail/).
+1. Check that the Retail API is enabled for your project in the [Admin Console](https://console.cloud.google.com/ai/retail/).
 
 ### Set up authentication
 
@@ -48,16 +46,21 @@ To run a code sample from the Cloud Shell, you need to authenticate. To do this,
 
 **Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
-### Set the PROJECT_NUMBER environment variable
+### Set the PROJECT_NUMBER and PROJECT_ID environment variables
 
-Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** as an environment variable. It will be used in every request to the Retail API.
+Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** and **project_id** as environment variables. It will be used in every request to the Retail API.
 
-1. You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+1. Find the project number and project ID in the Project Info card displayed on **Home/Dashboard**.
 
-1. Set the environment variable with the following command:
+1. Set **project_number** with the following command:
     ```bash
     export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
     ```
+1. Set **project_id** with the following command:
+    ```bash
+    export PROJECT_ID=<YOUR_PROJECT_ID>
+    ```
+
 
 ### Install Google Cloud Retail libraries
 
@@ -78,12 +81,12 @@ To run Python code samples for the Retail API tutorial, you need to set up your 
 
     ```
 
-### Clone the Retail code samples
+## Clone the Retail code samples
 
-This step is required if this is the first Retail API Tutorial you run.
+This step is required if this is the first Retail API tutorial you run.
 Otherwise, you can skip it.
 
-Clone the Git repository with all the code samples to learn the Retail features and check them in action.
+Clone the Git repository with all the code samples to learn about the Retail features and see them in action.
 
 <!-- TODO(ianan): change the repository link -->
 1. Run the following command in the Terminal:
@@ -93,64 +96,70 @@ Clone the Git repository with all the code samples to learn the Retail features 
 
     The code samples for each of the Retail services are stored in different directories.
 
-1. Go to the ```grs-samples-python``` directory. It's our starting point to run more commands.
+1. Go to the ```grs-samples-python``` directory. This is our starting point to run more commands.
     ```bash
     cd grs-samples-python
     ```
 
 ## Purge user events
 
-Sending the ```PurgeUserEventsRequest``` you need to specify the following fields: 
- - **```parent```** - Required field. The parent catalog name, such as projects/<YOUR_PROJECT_NUMBER>/locations/global/catalogs/default_catalog.
- - **```filter```** - Required field. The filter string to specify the events to be deleted. Empty string filter is not allowed. 
-   The eligible fields for filtering are:
-   - eventType: UserEvent.event_type string.
-   - eventTime: in ISO 8601 "zulu" format.
-   - visitorId: Specifying this will delete all events associated with a visitor.
-   - userId: Specifying this will delete all events associated with a user.
- - **```force```** - If force is set to **false**, the method will return the expected purge count without deleting any user events, 
-   if set to **true** the user events will actually purge from the catalog.
+To send the `PurgeUserEventsRequest` request you need to specify the following fields:
+- `parent`—required field. The parent catalog name, such as `projects/<YOUR_PROJECT_NUMBER>/locations/global/catalogs/default_catalog`.
+- `filter`—required field. The filter string to specify the events to be deleted. An empty string filter is not allowed.
+  The eligible fields for filtering are:
+  - eventType: UserEvent.event_type string.
+  - eventTime: in ISO 8601 "zulu" format.
+  - visitorId: specifying this deletes all events associated with a visitor.
+  - userId: specifying this deletes all events associated with a user.
+- `force`—if force is set to `false`, the method returns the expected purge count without deleting any user events; if set to `true`, the user events are purged from the catalog.
 
-You can check the **PurgeUserEventsRequest** example in the ```events/purge_user_event.py``` file.
+1. Open the`PurgeUserEventsRequest` example in the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/events/purge_user_event.py" regex="# get purge user event request">`events/purge_user_event.py`</walkthrough-editor-select-regex> file.
 
-The **filter** field is set with the value:
+1. Check that the filter field is set with the value:
+    ```
+    purge_user_event_request.filter = 'visitorId="test_visitor_id"'
+    ```
 
-```filter = 'visitorId="123abc"```
+1. Run the code sample in the Terminal with the following command:
+    ```bash
+    python events/purge_user_event.py
+    ```
 
-Run the code sample in the Terminal with the following command:
+The long-running operation starts. You can check the operation name in the Terminal output.
 
-```bash
-python events/purge_user_event.py
-```
-
-In a result the longrunning operation is started. You can check the operation name in the Terminal output.
-
-The purge operation may last long time, up to 24 hours. If the longrunning operation is successfully done, then ```purged_events_count``` is returned in the google.longrunning.Operations.response field.
+The purge operation might take up to 24 hours. If the long-running operation is successful, then `purged_events_count` is returned in the `google.longrunning.Operations.response` field.
 
 ## Error handling
 
-Next, let's check the error handling. Send a request with invalid filter.
+Next, let's check the error handling. Send a request with an invalid filter.
 
-Find the comment ```# TO CHECK ERROR HANDLING SET INVALID FILTER HERE::```, and set the filter field with some invalid value.
+1. Find the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/events/purge_user_event.py" regex="# TO CHECK ERROR HANDLING SET INVALID FILTER HERE:">comment</walkthrough-editor-select-regex> and set the filter field with an invalid value:
+    ```
+    purge_user_event_request.filter = 'invalid="123abc"'
+    ```
 
-```purge_user_event_request.filter = 'invalid="123abc"'```
+1. Run the code sample in the Terminal with the following command:
+    ```bash
+    python events/purge_user_event.py
+    ```
 
-Run the same code sample again:
-```bash
-python events/purge_user_event.py
-```
-
-Check the error message appeared, it should be like the following:
-
-```none
-google.api_core.exceptions.InvalidArgument: 400 Invalid filter 'invalid="123abc"'. '=' can not be specified with 'invalid' Valid filter examples: 
-eventTime>"2012-04-23T18:25:43.511Z" eventTime<"2012-04-23T18:25:43.511Z" eventType=search visitorId="someVisitorId"
-```
+1. Check the error message:
+    ```terminal
+    google.api_core.exceptions.InvalidArgument: 400 Invalid filter 'invalid="123abc"'. '=' can not be specified with 'invalid' Valid filter examples:
+    eventTime>"2012-04-23T18:25:43.511Z" eventTime<"2012-04-23T18:25:43.511Z" eventType=search visitorId="someVisitorId"
+    ```
 
 ## Congratulations
 
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-You have completed the tutorial! Now you know how to purge the user events. We encourage you to exercise in purging the user events using different filters.
+You have completed the tutorial! We encourage you to test purging the user events using different filters.
 
-**Thank you for completing this tutorial!**
+<walkthrough-inline-feedback></walkthrough-inline-feedback>
+
+### Do more with the Retail API
+
+<walkthrough-tutorial-card id="retail_api_v2_rejoin_user_events_python" icon="LOGO_PYTHON" title="Rejoin user events tutorial" keepPrevious=true>Try to rejoin user events via the Retail API</walkthrough-tutorial-card>
+
+<walkthrough-tutorial-card id="retail_api_v2_write_user_events_python" icon="LOGO_PYTHON" title="Write user events tutorial" keepPrevious=true>
+Try to write user events via the Retail API</walkthrough-tutorial-card>
