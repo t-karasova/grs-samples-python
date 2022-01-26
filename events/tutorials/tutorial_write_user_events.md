@@ -1,3 +1,9 @@
+<walkthrough-metadata>
+  <meta name="title" content="Write user events tutorial" />
+  <meta name="description" content="Use this method if you want to add one user event to the catalog." />
+  <meta name="component_id" content="593554" />
+</walkthrough-metadata>
+
 # Write user events tutorial
 
 ## Introduction
@@ -9,7 +15,7 @@ If you want to add one user event to the catalog, you can use the `WriteUserEven
 
 ## Get started with Google Cloud Retail
 
-This step is required if this is the first Retail API tutorial you run.
+This step is required if this is the first Retail API Tutorial you run.
 Otherwise, you can skip it.
 
 ### Select your project and enable the Retail API
@@ -30,19 +36,31 @@ After the project is created, set your PROJECT_ID to a ```project``` variable.
 
 ### Set up authentication
 
-To run a code sample from the Cloud Shell, you need to authenticate. To do this, use the Application Default Credentials.
+To run a code sample from the Cloud Shell, you need to be authenticated using the service account credentials.
 
-1. Set your user credentials to authenticate your requests to the Retail API
-
+1. Login with your user credentials.
     ```bash
-    gcloud auth application-default login
+    gcloud auth login
     ```
 
 1. Type `Y` and press **Enter**. Click the link in Terminal. A browser window should appear asking you to log in using your Gmail account.
 
 1. Provide the Google Auth Library with access to your credentials and paste the code from the browser to the Terminal.
 
-1. Run the code sample and check the Retail API in action.
+1. Upload your service account key JSON file and use it to activate the service account:
+
+    ```bash
+    gcloud iam service-accounts keys create ~/key.json --iam-account <YOUR_SERVICE_ACCOUNT_EMAIL>
+    ```
+
+    ```bash
+    gcloud auth activate-service-account --key-file  ~/key.json
+    ```
+
+1. Set key as the GOOGLE_APPLICATION_CREDENTIALS environment variable to be used for requesting the Retail API:
+    ```bash
+    export GOOGLE_APPLICATION_CREDENTIALS=~/key.json
+    ```
 
 **Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
