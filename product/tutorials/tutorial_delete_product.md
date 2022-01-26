@@ -1,99 +1,187 @@
-# **Delete Product Tutorial**
+<walkthrough-metadata>
+  <meta name="title" content="Delete product tutorial" />
+  <meta name="description" content="In this tutorial you will call the `delete_product()` method" />
+  <meta name="component_id" content="593554" />
+</walkthrough-metadata>
 
-## Let's get started
+# Delete product tutorial
 
-If you need to make some detached changes in your product catalog, you may call the following Retail API methods:
- - create_product, 
- - get_product, 
- - update_product, 
- - delete_product.
+## Get started
 
-In this tutorial you will call the **delete_product()** method.
+To fill the catalog or to update a massive number of products, we recommend using the `import_products` method. However,
+sometimes you might need to make some detached changes in your product catalog.
 
-You can find detailed information about managing catalog information in the [Retail API documentation](https://cloud.google.com/retail/docs/manage-catalog)
+For such cases, the Retail API provides you with the following methods:
+- create_product
+- get_product
+- update_product
+- delete_product
 
-**Time to complete**: 
-<walkthrough-tutorial-duration duration="2.0"></walkthrough-tutorial-duration>
+In this tutorial you will call the `delete_product()` method.
 
-## Before you begin
+For information about managing catalog information, see the [Retail API documentation](https://cloud.google.com/retail/docs/manage-catalog).
 
-To run Python code samples from this tutorial, you need to set up your virtual environment.
+<walkthrough-tutorial-duration duration="4"></walkthrough-tutorial-duration>
 
-To do that, run the following commands in a terminal:
+## Get started with Google Cloud Retail
 
-```bash
-python3 -m venv tutorial-env
+This step is required if this is the first Retail API Tutorial you run.
+Otherwise, you can skip it.
+
+### Select your project and enable the Retail API
+
+Google Cloud organizes resources into projects. This lets you
+collect all the related resources for a single application in one place.
+
+If you don't have a Google Cloud project yet or you're not the owner of an existing one, you can
+[create a new project](https://console.cloud.google.com/projectcreate).
+
+After the project is created, set your PROJECT_ID to a ```project``` variable.
+1. Run the following command in Terminal:
+    ```bash
+    gcloud config set project <YOUR_PROJECT_ID>
+    ```
+
+1. Check that the Retail API is enabled for your project in the [Admin Console](https://console.cloud.google.com/ai/retail/).
+
+### Create service account
+
+To access the Retail API you must create a service account.
+
+1. To create service account follow this [instruction](https://cloud.google.com/retail/docs/setting-up#service-account)
+
+1. Find your service account on the [IAM page](https://console.cloud.google.com/iam-admin/iam),
+   click `Edit` icon and add the roles 'Storage Admin' and 'BigQuery Admin. It may take a while for the changes to take effect.
+
+1. Copy the service account email in the field Principal.
+
+### Set up authentication
+
+To run a code sample from the Cloud Shell, you need to be authenticated using the service account credentials.
+
+1. Login with your user credentials.
+    ```bash
+    gcloud auth login
+    ```
+
+1. Type `Y` and press **Enter**. Click the link in Terminal. A browser window should appear asking you to log in using your Gmail account.
+
+1. Provide the Google Auth Library with access to your credentials and paste the code from the browser to the Terminal.
+
+1. Upload your service account key JSON file and use it to activate the service account:
+
+    ```bash
+    gcloud iam service-accounts keys create ~/key.json --iam-account <YOUR_SERVICE_ACCOUNT_EMAIL>
+    ```
+
+    ```bash
+    gcloud auth activate-service-account --key-file  ~/key.json
+    ```
+
+1. Set key as the GOOGLE_APPLICATION_CREDENTIALS environment variable to be used for requesting the Retail API:
+    ```bash
+    export GOOGLE_APPLICATION_CREDENTIALS=~/key.json
+    ```
+
+**Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
+
+### Set the PROJECT_NUMBER and PROJECT_ID environment variables
+
+Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** and **project_id** as environment variables. It will be used in every request to the Retail API.
+
+1. Find the project number and project ID in the Project Info card displayed on **Home/Dashboard**.
+
+1. Set **project_number** with the following command:
+    ```bash
+    export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
+    ```
+1. Set **project_id** with the following command:
+    ```bash
+    export PROJECT_ID=<YOUR_PROJECT_ID>
+    ```
+
+### Install Google Cloud Retail libraries
+
+To run Python code samples for the Retail API tutorial, you need to set up your virtual environment.
+
+1. Run the following commands in a Terminal to create an isolated Python environment:
+    ```bash
+    pip install virtualenv
+    virtualenv myenv
+    source myenv/bin/activate
+    ```
+1. Next, install Google packages:
+    ```bash
+    pip install google
+    pip install google-cloud-retail
+    pip install google.cloud.storage
+    pip install google.cloud.bigquery
+
+    ```
+
+## Clone the Retail code samples
+
+This step is required if this is the first Retail API Tutorial you run.
+Otherwise, you can skip it.
+
+Clone the Git repository with all the code samples to learn the Retail features and check them in action.
+
+<!-- TODO(ianan): change the repository link -->
+1. Run the following command in the Terminal:
+    ```bash
+    git clone https://github.com/t-karasova/grs-samples-python.git
+    ```
+
+    The code samples for each of the Retail services are stored in different directories.
+
+1. Go to the ```grs-samples-python``` directory. This is our starting point to run more commands.
+    ```bash
+    cd grs-samples-python
+    ```
+
+## Delete product
+
+To build `DeleteProductRequest`, only the `name` field is required.
+
+You should use the full resource name of a product, such as:
 ```
-
-```bash
-source tutorial-env/bin/activate
-```
-
-Next, install Google packages:
-
-```bash
-python3 -m pip install google
-```
-
-```bash
-python3 -m pip install google.cloud.retail
-```
-
-**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
-
-## Set the PROJECT_NUMBER environment variable
-
-As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
-
-You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
-
-Set the environment variable with a following command:
-```bash
-export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
-```
-
-## Delete a product
-
-To build DeleteProductRequest, only **```name```** field is required. 
-
-You should pass the **full resource name of Product**, such as:
-```none
 projects/<project_number>/locations/global/catalogs/<catalog_id>/branches/<branch_id>/products/<product_id>
 ```
 
-You can find the DeleteProductRequest example in a **delete_product.py**
+1. Open the `DeleteProductRequest` example in <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/product/delete_product.py" regex="# get delete product request">delete_product.py</walkthrough-editor-select-regex>.
 
-When you run this code sample, a product will be created in a catalog, then it will be removed using a prepared request.
+1. Run the code sample in the Terminal to create a product in a catalog and remove it using a prepared request:
+    ```bash
+    python product/delete_product.py
+    ```
 
-Open terminal and run the command:
+There is no return value for this method. To check if the product was successfully removed, try to delete this product one more time:
 
-```bash
-python product/delete_product.py
-```
+1. Copy the product name from the output message in the Terminal and assign it <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/product/delete_product.py" regex="# delete created product">here</walkthrough-editor-select-regex> to the `delete_product` function argument.
 
-There is no return value for this method, so to check if the product was successfully removed let's try to delete this product one more time. As the product cannot be deleted twice, we expect the following error message:
+1. Run the following command in the Terminal:
+   ```bash
+    python product/delete_product.py
+    ```
 
-```google.api_core.exceptions.NotFound: 404 Product with name "projects/<PROJECT_NUMBER>/locations/global/catalogs/default_catalog/branches/0/products/<PRODUCT_ID>" does not exist.```
-
-Copy the product name from the output message ( it is printed in a terminal ) and assign it to the variable **```created_product_name```**.
-
-Now, run the code again, you should receive the error message as above.
-
-## Error handling
-
-If you send a request without the field **```name```** or if the field format is incorrect you will get an error message.
-
-Let's now remove the product_id part from the **```name```**  value and send this request again. 
-
-**The expected error message** should be like:
-
-```google.api_core.exceptions.InvalidArgument: 400 Request contains an invalid argument.```
+1. You should see the following error message:
+    ```terminal
+    google.api_core.exceptions.NotFound: 404 Product with name "projects/<project_number>/locations/global/catalogs/<catalog_id>/branches/<branch_id>/products/<product_id>" does not exist.
+    ```
 
 ## Congratulations
 
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-You have completed the tutorial! Now you know how to remove a single product from the catalog using Retail API. 
-We encourage you to practice in deleting products right here, in Cloud Shell environment or in your oun Google Cloud Catalog.
+You have completed the tutorial! We encourage you to test the deleting products by yourself.
 
-**Thank you for completing this tutorial!**
+<walkthrough-inline-feedback></walkthrough-inline-feedback>
+
+### Do more with the Retail API
+
+<walkthrough-tutorial-card id="retail_api_v2_create_product_python" icon="LOGO_PYTHON" title="Create product tutorial" keepPrevious=true>Try to create a product via the Retail API</walkthrough-tutorial-card>
+
+<walkthrough-tutorial-card id="retail_api_v2_get_product_python" icon="LOGO_PYTHON" title="Get product tutorial" keepPrevious=true>
+Try to get a product via the Retail API</walkthrough-tutorial-card>
+
+<walkthrough-tutorial-card id="retail_api_v2_update_product_python" icon="LOGO_PYTHON" title="Update product tutorial" keepPrevious=true>Try to update a product via the Retail API</walkthrough-tutorial-card>
