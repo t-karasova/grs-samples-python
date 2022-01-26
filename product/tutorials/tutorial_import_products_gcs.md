@@ -1,179 +1,247 @@
-# **Import Products From the Cloud Storage Tutorial**
+<walkthrough-metadata>
+  <meta name="title" content="Import products from Cloud Storage tutorial" />
+  <meta name="description" content="Import a large number of items to your catalog in a single step." />
+  <meta name="component_id" content="593554" />
+</walkthrough-metadata>
 
-## Let's get started
+# Import products from Cloud Storage tutorial
 
-Retail API offers you an easy way to import your catalog data from a Cloud Storage. All you need is to provide a name of
-the JSON file in the GCS bucket.
+## Get started
 
-This type of import is useful when you need to import a large amount of items to your catalog in a single step.
+The Retail API offers you an easy way to import your catalog data from Cloud Storage. All you need is to provide the name of
+the JSON file in the Cloud Storage bucket.
 
-You can find more information about different import types, their restrictions, and use cases in the [Retail API documentation](https://cloud.google.com/retail/docs/upload-catalog#considerations)
+This type of import is useful when you need to import a large number of items to your catalog in a single step.
 
-**Time to complete**: 
-<walkthrough-tutorial-duration duration="3.0"></walkthrough-tutorial-duration>
+You can find more information about different import types, their restrictions, and use cases in the [Retail API documentation](https://cloud.google.com/retail/docs/upload-catalog#considerations).
 
-## Before you begin
+<walkthrough-tutorial-duration duration="5"></walkthrough-tutorial-duration>
 
-To run Python code samples from this tutorial, you need to set up your virtual environment.
+## Get started with Google Cloud Retail
 
-To do that, run the following commands in a terminal:
+This step is required if this is the first Retail API tutorial you run.
+Otherwise, you can skip it.
 
-```bash
-python3 -m venv tutorial-env
-```
+### Select your project and enable the Retail API
 
-```bash
-source tutorial-env/bin/activate
-```
+Google Cloud organizes resources into projects. This lets you
+collect all the related resources for a single application in one place.
 
-Next, install Google packages:
+If you don't have a Google Cloud project yet or you're not the owner of an existing one, you can
+[create a new project](https://console.cloud.google.com/projectcreate).
 
-```bash
-python3 -m pip install google
-python3 -m pip install google.cloud.retail
-python3 -m pip install google.cloud.storage
-python3 -m pip install google.cloud.bigquery
-```
+After the project is created, set your PROJECT_ID to a ```project``` variable.
+1. Run the following command in Terminal:
+    ```bash
+    gcloud config set project <YOUR_PROJECT_ID>
+    ```
 
+1. Check that the Retail API is enabled for your project in the [Admin Console](https://console.cloud.google.com/ai/retail/).
 
-**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal to
-run it.
+### Set up authentication
 
-## Set the PROJECT_NUMBER environment variable
+To run a code sample from the Cloud Shell, you need to be authenticated using the service account credentials.
 
-As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
+1. Login with your user credentials.
+    ```bash
+    gcloud auth login
+    ```
 
-You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+1. Type `Y` and press **Enter**. Click the link in Terminal. A browser window should appear asking you to log in using your Gmail account.
 
-Set the environment variable with a following command:
-```bash
-export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
-```
+1. Provide the Google Auth Library with access to your credentials and paste the code from the browser to the Terminal.
 
-### Upload catalog data to Cloud Storage
+1. Upload your service account key JSON file and use it to activate the service account:
 
-There is a JSON file with valid products prepared in the "product" directory: 
+    ```bash
+    gcloud iam service-accounts keys create ~/key.json --iam-account <YOUR_SERVICE_ACCOUNT_EMAIL>
+    ```
 
-**resources/products.json**.
+    ```bash
+    gcloud auth activate-service-account --key-file  ~/key.json
+    ```
 
-The other file, **resources/products_some_invalid.json**, contains both valid and invalid products, you will use in to check the error handling.
- 
+1. Set key as the GOOGLE_APPLICATION_CREDENTIALS environment variable to be used for requesting the Retail API:
+    ```bash
+    export GOOGLE_APPLICATION_CREDENTIALS=~/key.json
+    ```
+
+**Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
+
+### Set the PROJECT_NUMBER and PROJECT_ID environment variables
+
+Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** and **project_id** as environment variables. It will be used in every request to the Retail API.
+
+1. Find the project number and project ID in the Project Info card displayed on **Home/Dashboard**.
+
+1. Set **project_number** with the following command:
+    ```bash
+    export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
+    ```
+1. Set **project_id** with the following command:
+    ```bash
+    export PROJECT_ID=<YOUR_PROJECT_ID>
+    ```
+
+### Install Google Cloud Retail libraries
+
+To run Python code samples for the Retail API tutorial, you need to set up your virtual environment.
+
+1. Run the following commands in a Terminal to create an isolated Python environment:
+    ```bash
+    pip install virtualenv
+    virtualenv myenv
+    source myenv/bin/activate
+    ```
+1. Next, install Google packages:
+    ```bash
+    pip install google
+    pip install google-cloud-retail
+    pip install google.cloud.storage
+    pip install google.cloud.bigquery
+
+    ```
+
+## Clone the Retail code samples
+
+This step is required if this is the first Retail API tutorial you run.
+Otherwise, you can skip it.
+
+Clone the Git repository with all the code samples to learn the Retail features and check them in action.
+
+<!-- TODO(ianan): change the repository link -->
+1. Run the following command in the Terminal:
+    ```bash
+    git clone https://github.com/t-karasova/grs-samples-python.git
+    ```
+
+    The code samples for each of the Retail services are stored in different directories.
+
+1. Go to the ```grs-samples-python``` directory. This is our starting point to run more commands.
+    ```bash
+    cd grs-samples-python
+    ```
+
+## Upload catalog data to Cloud Storage
+
+There is a <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/resources/products.json" regex="id">resources/products.json</walkthrough-editor-select-regex> file with valid products prepared in the `resources` directory.
+
+The other file, <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/resources/products_some_invalid.json" regex="id">resources/products_some_invalid.json</walkthrough-editor-select-regex>, contains both valid and invalid products. You will use it to check the error handling.
+
 In your own project you should create a Cloud Storage bucket and put the JSON file there.
-The bucket name must be unique, for convenience it can be named as <YOUR_PROJUCT_ID>_<TIMESTAMP>.
+The bucket name must be unique. For convenience, you can name it `<YOUR_PROJECT_ID>_<TIMESTAMP>`.
 
-To create the bucket and upload the JSON file run the following command in the Terminal:
+1. To create the bucket and upload the JSON file, run the following command in the Terminal:
+    ```bash
+    python product/setup/products_create_gcs_bucket.py
+    ```
+1. Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the file is uploaded. The name of the created Cloud Storage bucket is printed in the Terminal.
 
-```bash
-python product/setup/product_create_gcs_bucket.py
-```
-Now you can see the bucket is created in the [Cloud Storage](pantheon.corp.google.com/storage/browser), and the file is uploaded.
-
-The **name of the created GRS bucket** is printed in the Terminal, copy the name and set it as the environment variable BUCKET_NAME:
-
-```bash
-export BUCKET_NAME=<YOUR_BUCKET_NAME>
-```
-
+1. Copy the name and set it as the environment variable `BUCKET_NAME`:
+    ```bash
+    export BUCKET_NAME=<YOUR_BUCKET_NAME>
+    ```
 
 ## Import products from the Cloud Storage source
 
-The only reconciliation mode available for import from GCS is INCREMENTAL. That is, importing automatically creates new products and updates current products. Products already present in a catalog and missing from the import JSON source will not change.
+The only reconciliation mode available for import from Cloud Storage is `INCREMENTAL`. That is, importing automatically creates new products and updates current products. Products already present in a catalog and missing from the import JSON source will not change.
 
-To upload catalog data to the Cloud Storage bucket, create one or more JSON product files that do not exceed 2 GB each. You can set up to 100 JSON files in a single import request. For more information, refer to the [example of the product in JSON format](https://cloud.google.com/retail/docs/upload-catalog#json-format)
+To upload catalog data to the Cloud Storage bucket, you can create one or more JSON product files that do not exceed 2 GB each. You can set up to 100 JSON files in a single import request. For more information, see the [example of the product in JSON format](https://cloud.google.com/retail/docs/upload-catalog#json-format).
 
-To check the example of an import product request, open **product/import_products_gcs.py**.
+1. To check the example of an import product request, open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/product/import_products_gcs.py" regex="# call the Retail API to import products">product/import_products_gcs.py</walkthrough-editor-select-regex>.
 
-The field **```parent```** contains a **catalog name** along with a branch number you are going to import your
-products to. 
-If you are using products prepared for these tutorials: **product/resources/products.json**, it is fine to import products to the default branch.
-But, if you are using custom products, please change the **default_branch**, which is **0** to other branch ID, like **1**.
-In the Search tutorials you will request SearchService to find products in the default_branch. 
+    The `parent` field contains a catalog name along with a branch number where products will be imported.
 
-The field **```input_config```** defines the **GcsSource** as an import source.
+    If you are using products prepared for these tutorials from <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/resources/products.json" regex="id">resources/products.json</walkthrough-editor-select-regex> file, you can use the defailt branch to import products to. But, if you are using custom products, change the default_branch, which is **0**, to another branch ID, for example **1**. In the search tutorials you will request `SearchService` to search for products in the default branch.
 
-To perform the product import, open terminal and run the command:
+    The `input_config` field defines the `GcsSource` as an import source.
 
-```bash
-python product/import_products_gcs.py
-```
+1. To perform the product import, open Terminal and run the command:
+    ```bash
+    python product/import_products_gcs.py
+    ```
 
 ## Response analysis
 
-Once you have called the import products method from the Retail API, the **import operation** has started.
+After you have called the import products method from the Retail API, the import operation has started.
 
-Importing may take some time depending on the size of product set in your Cloud Source.
+Importing can take a lot of time depending on the size of the product set.
 
-The operation is completed when the field **```operation.done()```** is set to true. 
+The operation is completed when the field `operation.done()` is set to true.
 
-Check the result, one of the following fields should be present:
- - **```error```**, if the operation failed.
- - **```result```**, if the operation was successful.
+1. Check the result. One of the following fields should be present:
+    - `error`, if the operation failed.
+    - `result`, if the operation was successful.
 
-You have imported valid product objects into the catalog.
+1. You have imported valid product objects into the catalog.
 
-Check the ```gcs_operation.metadata.success_count``` field to get the total number of the successfully imported products.
+1. Check the `gcs_operation.metadata.success_count` field to get the total number of successfully imported products. The number of failures during the product import is returned in the `gcs_operation.metadata.failure_count` field.
 
-The number of failures during the product import is returned to the ```gcs_operation.metadata.failure_count``` field.
-
-The operation is successful, and the operation object contains a **```result```** field.
-Check it printed out in a Terminal. It should look like this: 
-
-```
-errors_config {
-  gcs_prefix: "gs://products_catalog/error"
-}
-```
+1. Check the results printed out in the Terminal:
+    ```terminal
+    errors_config {
+      gcs_prefix: "gs://products_catalog/error"
+    }
+    ```
 
 ## Errors appeared during the importing
 
-Now, let's try to import a few invalid product objects and check the error message in the operation response. Note that in this case the operation itself is considered successful.
+Try to import some invalid product objects and check the error message in the operation response.
 
-The title field is required, so if you remove it, you get the invalid product object. 
-Another example of an invalid product is a product with an incorrect value of the ```product.availability``` field.
-There is a **```products_for_import_some_invalid.json```** file in the Cloud Storage bucket containing such an invalid products.
+**Note**: The operation in this example will generate an error message, but will complete successfully.
 
-Let's use it for import to get an error message.
+The title field is required. If you remove it, you get the invalid product object.
 
-Go to the code sample, assign a value of ```gcs_products_object``` to the file name:
+Another example of an invalid product is a product with an incorrect value in the `product.availability` field.
 
-```gcs_products_object = "products_for_import_some_invalid.json"```
+There is a <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/resources/products_some_invalid.json" regex="id">resources/products_some_invalid.json</walkthrough-editor-select-regex> file in the Cloud Storage bucket that contains some invalid products.
 
-Now, run the code sample and wait till the operation is completed. 
+1. Open the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/product/import_products_gcs.py" regex="# TO CHECK ERROR HANDLING USE THE JSON WITH INVALID PRODUCT">code sample</walkthrough-editor-select-regex> and assign `gcs_products_object` value to the file name:
+    ```
+    gcs_products_object = "products_for_import_some_invalid.json"
+    ```
 
-Next, check the operation printed out to the Terminal.
+1. Run the code sample and wait until the operation is completed:
+    ```bash
+    python product/import_products_gcs.py
+    ```
 
-## Errors appeared during importing. Output analysis
+Next, check the operation printed out in the Terminal.
 
-If the operation is completed successfully, you can find a **```result```** field. Otherwise, there would be an **```error```** field instead.
+## Errors appeared during importing: output analysis
 
-In this case, the operation is considered as successful, and the ```gcs_operation.metadata.success_count``` field contains the number of the successfully imported products, which is "2".
+If the operation is completed successfully, the `result` field will be displayed. Otherwise, an `error` field is displayed instead.
 
-There are two invalid products in the input JSON file, and the number of failures during the product import in the ```gcs_operation.metadata.failure_count``` field is "1".
+Check the operation printed out in the Terminal. The operation is considered **successful** and the `gcs_operation.metadata.success_count` field contains the number of successfully imported products, which is `2`.
 
-The ```operation.result``` field points to the errors bucket where you can find a json file with all the importing errors.
+There are two invalid products in the input JSON file, and the number of failures during the product import in the `gcs_operation.metadata.failure_count` field is `1`.
 
-The error is the following: 
+The `operation.result` field points to the errors bucket, where you can find a JSON file with all of the importing errors.
 
+The error is the following:
 ```json
 {"code":3,"message":"Invalid value at 'availability' (type.googleapis.com/google.cloud.retail.v2main.Product.Availability): \"INVALID_VALUE\"","details":[{"@type":"type.googleapis.com/google.protobuf.Struct","value":{"line_number":1}}]}
 ```
 
 ## Errors appeared due to invalid request
 
-Next, let's send invalid import request to check the error message. 
+Next, send an invalid import request to check the error message.
 
-In the code sample, find the **```get_import_products_gcs_request()```** method, and add there a local variable ```default_catalog``` with some invalid catalog name.
+1. Open the  <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/product/import_products_gcs.py" regex="# TO CHECK ERROR HANDLING PASTE THE INVALID CATALOG NAME HERE">get_import_products_gcs_request()</walkthrough-editor-select-regex> method, and uncomment the line with the `default_catalog` local variable with an invalid catalog name.
 
-Now, run the code again and check the error message. It should look like this:
-
-```
-google.api_core.exceptions.InvalidArgument: 400 Request contains an invalid argument.
-```
+1. Run the code again with the following command:
+    ```bash
+    python product/import_products_gcs.py
+    ```
+1. Check the error message in the Terminal:
+    ```terminal
+    google.api_core.exceptions.InvalidArgument: 400 Request contains an invalid argument.
+    ```
 
 ## Congratulations
 
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-You have completed the tutorial! Now you know how to prepare the data for importing and import products from the Google Cloud Storage.
+You have completed the tutorial! We encourage you to test the importing products from Google Cloud Storage by yourself and try different combinations of various filter expressions.
 
-**Thank you for completing this tutorial!**
+<walkthrough-inline-feedback></walkthrough-inline-feedback>
