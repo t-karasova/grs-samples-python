@@ -1,3 +1,9 @@
+<walkthrough-metadata>
+  <meta name="title" content="Filter tutorial" />
+  <meta name="description" content="In this tutorial you will learn some examples of product filtering." />
+  <meta name="component_id" content="593554" />
+</walkthrough-metadata>
+
 # Filter tutorial
 
 ## Get started
@@ -38,31 +44,47 @@ After the project is created, set your PROJECT_ID to a ```project``` variable.
 
 ### Set up authentication
 
-To run a code sample from the Cloud Shell, you need to authenticate. To do this, use the Application Default Credentials.
+To run a code sample from the Cloud Shell, you need to be authenticated using the service account credentials.
 
-1. Set your user credentials to authenticate your requests to the Retail API
-
+1. Login with your user credentials.
     ```bash
-    gcloud auth application-default login
+    gcloud auth login
     ```
 
 1. Type `Y` and press **Enter**. Click the link in Terminal. A browser window should appear asking you to log in using your Gmail account.
 
 1. Provide the Google Auth Library with access to your credentials and paste the code from the browser to the Terminal.
 
-1. Run the code sample and check the Retail API in action.
+1. Upload your service account key JSON file and use it to activate the service account:
+
+    ```bash
+    gcloud iam service-accounts keys create ~/key.json --iam-account <YOUR_SERVICE_ACCOUNT_EMAIL>
+    ```
+
+    ```bash
+    gcloud auth activate-service-account --key-file  ~/key.json
+    ```
+
+1. Set key as the GOOGLE_APPLICATION_CREDENTIALS environment variable to be used for requesting the Retail API:
+    ```bash
+    export GOOGLE_APPLICATION_CREDENTIALS=~/key.json
+    ```
 
 **Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
-### Set the PROJECT_NUMBER environment variable
+### Set the PROJECT_NUMBER and PROJECT_ID environment variables
 
-Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** as an environment variable. It will be used in every request to the Retail API.
+Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** and **project_id** as environment variables. It will be used in every request to the Retail API.
 
-1. You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+1. Find the project number and project ID in the Project Info card displayed on **Home/Dashboard**.
 
-1. Set the environment variable with the following command:
+1. Set **project_number** with the following command:
     ```bash
     export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
+    ```
+1. Set **project_id** with the following command:
+    ```bash
+    export PROJECT_ID=<YOUR_PROJECT_ID>
     ```
 
 ### Install Google Cloud Retail libraries
@@ -111,10 +133,10 @@ Otherwise, you can skip it.
 
 ### Upload catalog data to Cloud Storage
 
-There is a JSON file with valid products prepared in the `product` directory:
+There is a JSON file with valid products prepared in the `resources` directory:
 `resources/products.json`.
 
-Another file, `resources/products_some_invalid.json`, contains both valid and invalid products, and you use it to check the error handling.
+Another file, `resources/products_some_invalid.json`, contains both valid and invalid products, and you will use it to check the error handling.
 
 In your own project, create a Cloud Storage bucket and put the JSON file there.
 The bucket name must be unique. For convenience, you can name it `<YOUR_PROJECT_ID>_<TIMESTAMP>`.
@@ -122,7 +144,7 @@ The bucket name must be unique. For convenience, you can name it `<YOUR_PROJECT_
 1. To create the bucket and upload the JSON file, run the following command in the Terminal:
 
     ```bash
-    python product/setup/product_create_gcs_bucket.py
+    python product/setup/products_create_gcs_bucket.py
     ```
 
     Now you can see the bucket is created in the [Cloud Storage](https://console.cloud.google.com/storage/browser), and the files are uploaded.
