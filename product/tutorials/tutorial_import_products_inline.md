@@ -1,138 +1,215 @@
-# **Import Products From the Inline Source Tutorial**
+<walkthrough-metadata>
+  <meta name="title" content="Import up to 100 products at a time from the inline source tutorial"/>
+  <meta name="description" content="Inline importing is a convenient way to make bulk changes in a catalog" />
+  <meta name="component_id" content="593554" />
+</walkthrough-metadata>
 
-## Let's get started
+#  Import up to 100 products at a time from the inline source tutorial
 
-The inline importing is a convenient way to make bulk changes in a catalog, such as:
+## Introduction
 
-- Import some amount of products, no more than 100 at a time.
+Inline importing is a convenient way to make bulk changes in a catalog, such as:
+
+- Import up to 100 products at a time.
 - Update products.
-- Make fast and frequent changes to the products quantity or price or any other field.
+- Make fast and frequent changes to the products' quantity, price, or any other field.
 
-To import your products into a catalog inline you should prepare the **```product_inline_source```** object which is a set
-of products. 
+To import your products into a catalog inline, you should prepare the `product_inline_source` object, which is a set
+of products.
 
-Each product should be provided in a JSON format as a standalone line (one product per line with line breaks as a
-delimiter). To find an example of a product in JSON format, refer to
-the [Retail API documentation](https://cloud.google.com/retail/docs/upload-catalog#json-format)
+Each product should be provided in JSON format as a standalone line (one product per line with line breaks as a
+delimiter). To find an example of a product in JSON format, see
+the [Retail API documentation](https://cloud.google.com/retail/docs/upload-catalog#json-format).
 
-To find more information about different import types, their restrictions, and use cases, refer to the [Retail API documentation](https://cloud.google.com/retail/docs/upload-catalog#considerations)
+To find more information about different import types, their restrictions, and use cases, see the [Retail API documentation](https://cloud.google.com/retail/docs/upload-catalog#considerations).
 
-**Time to complete**: 
-<walkthrough-tutorial-duration duration="3.0"></walkthrough-tutorial-duration>
+<walkthrough-tutorial-duration duration="5"></walkthrough-tutorial-duration>
 
-## Before you begin
+## Get started with Google Cloud Retail
 
-To run Python code samples from this tutorial, you need to set up your virtual environment.
+This step is required if this is the first Retail API Tutorial you run.
+Otherwise, you can skip it.
 
-To do that, run the following commands in a terminal:
+### Select your project and enable the Retail API
 
-```bash
-python3 -m venv tutorial-env
-```
+Google Cloud organizes resources into projects. This lets you
+collect all the related resources for a single application in one place.
 
-```bash
-source tutorial-env/bin/activate
-```
+If you don't have a Google Cloud project yet or you're not the owner of an existing one, you can
+[create a new project](https://console.cloud.google.com/projectcreate).
 
-Next, install Google packages:
+After the project is created, set your PROJECT_ID to a ```project``` variable.
+1. Run the following command in Terminal:
+    ```bash
+    gcloud config set project <YOUR_PROJECT_ID>
+    ```
 
-```bash
-python3 -m pip install google
-```
+1. Check that the Retail API is enabled for your Project in the [Admin Console](https://console.cloud.google.com/ai/retail/).
 
-```bash
-python3 -m pip install google.cloud.retail
-```
+### Set up authentication
 
-**Tip**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and
-run it.
+To run a code sample from the Cloud Shell, you need to be authenticated using the service account credentials.
 
-## Set the PROJECT_NUMBER environment variable
+1. Login with your user credentials.
+    ```bash
+    gcloud auth login
+    ```
 
-As you are going to run the code samples in your own Cloud Project, you should specify the **project_id** as an environment variable, it will be used in every request to the Retail API.
+1. Type `Y` and press **Enter**. Click the link in Terminal. A browser window should appear asking you to log in using your Gmail account.
 
-You can find the ```project_number``` in the **Home/Dashboard/Project Info card**.
+1. Provide the Google Auth Library with access to your credentials and paste the code from the browser to the Terminal.
 
-Set the environment variable with a following command:
-```bash
-export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
-```
+1. Upload your service account key JSON file and use it to activate the service account:
+
+    ```bash
+    gcloud iam service-accounts keys create ~/key.json --iam-account <YOUR_SERVICE_ACCOUNT_EMAIL>
+    ```
+
+    ```bash
+    gcloud auth activate-service-account --key-file  ~/key.json
+    ```
+
+1. Set key as the GOOGLE_APPLICATION_CREDENTIALS environment variable to be used for requesting the Retail API:
+    ```bash
+    export GOOGLE_APPLICATION_CREDENTIALS=~/key.json
+    ```
+
+**Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
+
+### Set the PROJECT_NUMBER and PROJECT_ID environment variables
+
+Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** and **project_id** as environment variables. It will be used in every request to the Retail API.
+
+1. Find the project number and project ID in the Project Info card displayed on **Home/Dashboard**.
+
+1. Set **project_number** with the following command:
+    ```bash
+    export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
+    ```
+1. Set **project_id** with the following command:
+    ```bash
+    export PROJECT_ID=<YOUR_PROJECT_ID>
+    ```
+
+### Install Google Cloud Retail libraries
+
+To run Python code samples for the Retail API tutorial, you need to set up your virtual environment.
+
+1. Run the following commands in a Terminal to create an isolated Python environment:
+    ```bash
+    pip install virtualenv
+    virtualenv myenv
+    source myenv/bin/activate
+    ```
+1. Next, install Google packages:
+    ```bash
+    pip install google
+    pip install google-cloud-retail
+    pip install google.cloud.storage
+    pip install google.cloud.bigquery
+
+    ```
+
+## Clone the Retail code samples
+
+This step is required if this is the first Retail API Tutorial you run.
+Otherwise, you can skip it.
+
+Clone the Git repository with all the code samples to learn the Retail features and check them in action.
+
+<!-- TODO(ianan): change the repository link -->
+1. Run the following command in the Terminal:
+    ```bash
+    git clone https://github.com/t-karasova/grs-samples-python.git
+    ```
+
+    The code samples for each of the Retail services are stored in different directories.
+
+1. Go to the ```grs-samples-python``` directory. This is our starting point to run more commands.
+    ```bash
+    cd grs-samples-python
+    ```
 
 ## Import products from the inline source
 
-The only reconciliation mode available for inline importing is INCREMENTAL. That is, importing automatically creates new products and updates current products. Products already present in a catalog and missing from the imported JSON source will not change.
+The only reconciliation mode available for inline importing is `INCREMENTAL`. That is, importing automatically creates new products and updates current products. Products already present in a catalog and missing from the imported JSON source will not change.
 
-To check the example of an import product request, open **product/import_products_inline_source.py**.
+1. To check the example of an import product request, open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/product/import_products_inline_source.py" regex="# get import products from inline source request">product/import_products_inline_source.py</walkthrough-editor-select-regex>.
 
-The **```parent```** field contains a **catalog name** along with a branch number which you are going to import your
-products to.
+    The `parent` field contains a catalog name along with a branch number where products will be imported.
 
-The **```input_config```** field defines the **ProductInlineSource** as an import source.
+    If you are using products prepared for these tutorials from <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/resources/products.json" regex="id">resources/products.json</walkthrough-editor-select-regex> file, you can use the default branch to import products to. However, if you are using custom products, change the default_branch, which is **0**, to another branch ID, for example **1**. In the search tutorials you request `SearchService` to search for products in the default branch.
 
-To use generated products in this tutorial, check the **```get_products()```** function first.
+    The `input_config` field defines the `ProductInlineSource` as an import source.
 
-To perform the products importing, open the Terminal and run the following command:
+    To use generated products in this tutorial, check the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/product/import_products_inline_source.py" regex="# prepare product to import as inline source">`get_products()` </walkthrough-editor-select-regex> function first.
 
-```bash
-python product/import_products_inline_source.py
-```
+1. To import the products, open the Terminal and run the following command:
+    ```bash
+    python product/import_products_inline_source.py
+    ```
 
 ## Response analysis
 
-Once you have called the import products method, the **import operation** has started.
+When you call the import products method, the import operation starts.
 
-Importing may take some time depending on the size of product set in your inline source.
+Importing might take some time depending on the size of product set in your inline source.
 
-The operation is completed when the **```operation.done()```** field is set to true.
+The operation is completed when the `operation.done()` field is set to true.
 
-Check the result, one of the following fields should be present:
- - **```error```**, if the operation failed.
- - **```result```**, if the operation was successful.
+1. Check the operation response. One of the following fields should be present:
+    - `error`, if the operation failed.
+    - `result`, if the operation was successful.
 
-You have imported valid product objects into the catalog.
-
-Check the ```import_operation.metadata.success_count``` field to get the total number of the successfully imported products.
-
-The number of failures during the product import is returned in ```import_operation.metadata.failure_count``` field.
+1. Check the `import_operation.metadata.success_count` field to get the total number of successfully imported products. The number of failures during the product import is returned in `import_operation.metadata.failure_count` field.
 
 ## Error handling
 
-Now, let's try to import a few product objects, add an invalid one to them, and check the error message in the operation response. Note that in this case the operation itself is considered as successful.
+Try to import a few product objects, add an invalid one to them, and check the error message in the operation response.
 
-The title field is a required, so if you remove it, you will get an invalid product object.
+**Note**: The operation in this example will generate an error message, but will complete successfully.
 
-Go to the code sample and comment or remove the **```line product1.title = "#IamRemarkable Pen"```** line.
+The title field is required, so if you remove it, you will get an invalid product object.
 
-Now, run the code sample and wait till the operation is completed. Check the operation printed out to the Terminal.
+1. Go to the code sample and comment or remove the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/product/import_products_inline_source.py" regex="#IamRemarkable Pen">line product1.title = "#IamRemarkable Pen" </walkthrough-editor-select-regex> line.
 
-## Error hanfling output analysis
+1. Run the code sample and wait till the operation is completed:
+    ```bash
+    python product/import_products_inline_source.py
+    ```
 
-The operation is successfully completed, so you can find a **```result```** field. Otherwise, there would be an **```error```** field instead.
+Next, check the operation printed out in the Terminal.
 
-Check the error message in the **```result.error_samples```** list. It should state the invalid product object and its field which caused a problem. In our case, the message should be:
+## Error handling output analysis
 
-```
-error_samples {
-  code: 3
-  message: "Field \"inputConfig.productInlineSource.products.title\" is a required field, but no value is found."
-}
-```
+The operation is successfully completed, so you can find a `result` field. Otherwise, there would be an `error` field instead.
 
-Next, let's send invalid import request to make the operation fail. 
+1. Check the error message in the `result.error_samples` list. It should state the invalid product object and its field that caused a problem:
 
-In the code sample, find the **```get_import_products_inline_request```**  method, and add there a local variable ```default_catalog``` with some invalid catalog name.
+    ```
+    error_samples {
+      code: 3
+      message: "Field \"inputConfig.productInlineSource.products.title\" is a required field, but no value is found."
+    }
+    ```
 
-Run the code once again and check the error message, it should look like this:
+1. Send an invalid import request to make the operation fail. In the code sample, add to <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/product/import_products_inline_source.py" regex="get_import_products_inline_request">`get_import_products_inline_request`</walkthrough-editor-select-regex> method a local variable, `default_catalog`, with an invalid catalog name.
 
-```
-google.api_core.exceptions.InvalidArgument: 400 Request contains an invalid argument.
-```
+1. Run the code sample and wait till the operation is completed:
+    ```bash
+    python product/import_products_inline_source.py
+    ```
+
+1. Check the result:
+
+    ```terminal
+    google.api_core.exceptions.InvalidArgument: 400 Request contains an invalid argument.
+    ```
 
 ## Congratulations
 
 <walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
 
-You have completed the tutorial! Now you know how to prepare the data for importing and import the set amount of
-products directly inline.
+You have completed the tutorial! We encourage you to test importing products from Cloud Storage by yourself and try different combinations of various filter expressions.
 
-**Thank you for completing this tutorial!**
+<walkthrough-inline-feedback></walkthrough-inline-feedback>
