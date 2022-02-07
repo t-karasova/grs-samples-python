@@ -120,17 +120,16 @@ Otherwise, you can skip it.
 
 Clone the Git repository with all the code samples to learn the Retail features and check them in action.
 
-<!-- TODO(ianan): change the repository link -->
 1. Run the following command in the Terminal:
     ```bash
-    git clone https://github.com/t-karasova/grs-samples-python.git
+    git clone https://github.com/googleapis/python-retail.git
     ```
 
     The code samples for each of the Retail services are stored in different directories.
 
-1. Go to the ```grs-samples-python``` directory. It's our starting point to run more commands.
+1. Go to the ```samples/interactive-tutorials``` directory. It's our starting point to run more commands.
     ```bash
-    cd grs-samples-python
+    cd samples/interactive-tutorials
     ```
 
 ## Import catalog data
@@ -194,7 +193,7 @@ The boosting specification looks like this:
 
     The field **```boost```** defines the strength of the condition boost, which should be in the range of -1 to 1. Negative boost means demotion.
 
-1. Now open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_boost_spec.py" regex="boost.*0">search_with_boost_spec.py</walkthrough-editor-select-regex>.
+1. Now open <walkthrough-editor-select-regex filePath="cloudshell_open/python-retail/samples/interactive-tutorials/search/search_with_boost_spec.py" regex="boost.*0">search_with_boost_spec.py</walkthrough-editor-select-regex>.
 
 
     In the initial request, the boost strength is set to zero: ```boost = 0.0```,
@@ -229,7 +228,7 @@ You can combine up to 10 boost specifications in one search request. In this way
 
 Feel free to test product boosting yourself right now in the Cloud Shell environment.
 
-Replace the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_boost_spec.py" regex="condition = '.*'">condition</walkthrough-editor-select-regex> expression with something like this:
+Replace the <walkthrough-editor-select-regex filePath="cloudshell_open/python-retail/samples/interactive-tutorials/search/search_with_boost_spec.py" regex="condition = '.*'">condition</walkthrough-editor-select-regex> expression with something like this:
 
 ```
 condition = '(categories: ANY("Office"))'
@@ -240,7 +239,7 @@ Or
 condition = '(attributes.material: ANY("Cotton", "Polyester")) AND (brands: ANY("Google"))'
 ```
 
-At the same time, you can test the <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_boost_spec.py" regex="boost = (\D)?\d.*">boost strength</walkthrough-editor-select-regex> by setting any value from -1 to 1.
+At the same time, you can test the <walkthrough-editor-select-regex filePath="cloudshell_open/python-retail/samples/interactive-tutorials/search/search_with_boost_spec.py" regex="boost = (\D)?\d.*">boost strength</walkthrough-editor-select-regex> by setting any value from -1 to 1.
 
 ## Error handling
 
@@ -251,10 +250,10 @@ To check the list of text and numeric fields that support boosting, use the [Ret
 
 ## Error handling results
 
-If you try to boost the search results and set a condition in the field that is not supported for boosting (for example, the **name** field), you will get an error message.
+If you try to boost the search results and set a `boost` field with the value out of `[-1.0 : 1.0]` range, you will get an error message.
 
-1. Change the variable <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_boost_spec.py" regex="condition = '.*'">condition</walkthrough-editor-select-regex> value to the following:
-    ``` condition = '(name: ANY("some_random"))'```
+1. Change the variable <walkthrough-editor-select-regex filePath="cloudshell_open/python-retail/samples/interactive-tutorials/search/search_with_boost_spec.py" regex="condition = '.*'">condition</walkthrough-editor-select-regex> value to the following:
+    ``` boost = 1.1```
 
 1. Run the code again:
     ```bash
@@ -264,7 +263,7 @@ If you try to boost the search results and set a condition in the field that is 
 1. You should see the following error message:
 
     ```terminal
-    google.api_core.exceptions.InvalidArgument: 400 Invalid filter syntax '(name: ANY("some_random"))'. Parsing filter failed with error: Unsupported field "name" on ":" operator.
+    google.api_core.exceptions.InvalidArgument: 400 Boost should be in [-1, 1], but got 1.1
     ```
 
 ## Congratulations
