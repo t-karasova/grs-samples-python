@@ -1,14 +1,20 @@
-# Search with boosting tutorial
+<walkthrough-metadata>
+  <meta name="title" content="Faceting tutorial" />
+  <meta name="description" content="In this tutorial you will learn some examples of product faceting." />
+  <meta name="component_id" content="593554" />
+</walkthrough-metadata>
+
+# Search with faceting tutorial
 
 ## Get started
 
 Facets are product attribute filters (for example, brand or color) that helps
-your users further narrow down their search results. Facet values usually are 
+your users further narrow down their search results. Facet values usually are
 placed on the UI search page alongside search results, allowing a user to select
 and filter search results by facet values.
 
-Facets are based on attributes you have provided for a product, such as color, 
-size, brand, or custom attribute. The Retail can use each product attribute 
+Facets are based on attributes you have provided for a product, such as color,
+size, brand, or custom attribute. The Retail can use each product attribute
 as facet key only if this attribute is set to indexable.
 
 In this tutorial you will learn some examples of getting facets.
@@ -30,6 +36,7 @@ If you don't have a Google Cloud project yet or you're not the owner of an exist
 
 After the project is created, set your PROJECT_ID to a ```project``` variable.
 1. Run the following command in Terminal:
+
     ```bash
     gcloud config set project <YOUR_PROJECT_ID>
     ```
@@ -38,31 +45,51 @@ After the project is created, set your PROJECT_ID to a ```project``` variable.
 
 ### Set up authentication
 
-To run a code sample from the Cloud Shell, you need to authenticate. To do this, use the Application Default Credentials.
+To run a code sample from the Cloud Shell, you need to be authenticated using the service account credentials.
 
-1. Set your user credentials to authenticate your requests to the Retail API
+1. Log in with your user credentials.
 
     ```bash
-    gcloud auth application-default login
+    gcloud auth login
     ```
 
 1. Type `Y` and press **Enter**. Click the link in Terminal. A browser window should appear asking you to log in using your Gmail account.
 
 1. Provide the Google Auth Library with access to your credentials and paste the code from the browser to the Terminal.
 
-1. Run the code sample and check the Retail API in action.
+1. Upload your service account key JSON file and use it to activate the service account:
+
+    ```bash
+    gcloud iam service-accounts keys create ~/key.json --iam-account <YOUR_SERVICE_ACCOUNT_EMAIL>
+    ```
+
+    ```bash
+    gcloud auth activate-service-account --key-file  ~/key.json
+    ```
+
+1. Set key as the GOOGLE_APPLICATION_CREDENTIALS environment variable to be used for requesting the Retail API:
+
+    ```bash
+    export GOOGLE_APPLICATION_CREDENTIALS=~/key.json
+    ```
 
 **Note**: Click the copy button on the side of the code box to paste the command in the Cloud Shell terminal and run it.
 
-### Set the PROJECT_NUMBER environment variable
+### Set the PROJECT_NUMBER and PROJECT_ID environment variables
 
-Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** as an environment variable. It will be used in every request to the Retail API.
+Because you are going to run the code samples in your own Google Cloud project, you should specify the **project_number** and **project_id** as environment variables. It will be used in every request to the Retail API.
 
-1. You can find the ```project_number``` in the Project Info card displayed on **Home/Dashboard**.
+1. Find the project number and project ID in the Project Info card displayed on **Home/Dashboard**.
 
-1. Set the environment variable with the following command:
+1. Set **project_number** with the following command:
+
     ```bash
     export PROJECT_NUMBER=<YOUR_PROJECT_NUMBER>
+    ```
+1. Set **project_id** with the following command:
+
+    ```bash
+    export PROJECT_ID=<YOUR_PROJECT_ID>
     ```
 
 ### Install Google Cloud Retail libraries
@@ -70,12 +97,14 @@ Because you are going to run the code samples in your own Google Cloud project, 
 To run Python code samples for the Retail API tutorial, you need to set up your virtual environment.
 
 1. Run the following commands in a Terminal to create an isolated Python environment:
+
     ```bash
     pip install virtualenv
     virtualenv myenv
     source myenv/bin/activate
     ```
 1. Next, install Google packages:
+
     ```bash
     pip install google
     pip install google-cloud-retail
@@ -91,15 +120,16 @@ Otherwise, you can skip it.
 
 Clone the Git repository with all the code samples to learn the Retail features and check them in action.
 
-<!-- TODO(ianan): change the repository link -->
 1. Run the following command in the Terminal:
+
     ```bash
-    git clone https://github.com/t-karasova/grs-samples-python.git
+    git clone https://github.com/googleapis/python-retail.git
     ```
 
     The code samples for each of the Retail services are stored in different directories.
 
 1. Go to the ```grs-samples-python``` directory. It's our starting point to run more commands.
+
     ```bash
     cd grs-samples-python
     ```
@@ -141,21 +171,22 @@ To import the prepared products to a catalog, run the following command in the T
 python product/import_products_gcs.py
 ```
 
-## Getting textual facets, facet_key = "colorFamilies"
+## Getting textual facets, facet_key = &quot&quotcolorFamilies&quot&quot
 
-To include facets to the search response, you provide a **```FacetSpec```** in 
+To include facets to the search response, you provide a **```FacetSpec```** in
 the search request body, explicitly passing product attributes as facets.
 
-1. In the FacetSpec the only required field is the **```facet_key```**. It 
-   defines the product attribute to be used as facet. You can set here ether 
-   textual o numerical field name. The full list of the facet keys you can find
+1. In the FacetSpec the only required field is the **```facet_key```**. It
+   defines the product attribute to be used as facet. You can set here ether
+   textual or numerical field name. The full list of the facet keys you can find
    in the [Retail documentation.](https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2#facetkey)
-   
+
 1. Now open <walkthrough-editor-select-regex filePath="cloudshell_open/grs-samples-python/search/search_with_facet_spec.py" regex="boost.*0">search_with_boost_spec.py</walkthrough-editor-select-regex>.
 
    In the initial request, the textual facet "colorFamilies" is going to be returned.
-   
+
    So the SearchRequest is looking like this:
+
    ```python
     placement: "projects/945579214386/locations/global/catalogs/default_catalog/placements/default_search"
     query: "Tee"
@@ -168,139 +199,144 @@ the search request body, explicitly passing product attributes as facets.
     }
     ```
 
-## Getting textual facets. Result analyse
+## Getting textual facets: result analyze
 
 1. Run the sample in a terminal with the following command:
+
     ```bash
     python search/search_with_facet_spec.py
     ```
 1. Check the response contains the object **```facets```**:
 
-```python
-facets {
-  key: "colorFamilies"
-  values {
-    value: "Black"
-    count: 16
-  }
-  values {
-    value: "Blue"
-    count: 8
-  }
-  values {
-    value: "Gray"
-    count: 4
-  }
-  values {
-    value: "Green"
-    count: 14
-  }
-  values {
-    value: "Navy"
-    count: 5
-  }
-  values {
-    value: "Red"
-    count: 4
-  }
-  values {
-    value: "White"
-    count: 4
-  }
-}
-```
+    ```python
+    facets {
+      key: "colorFamilies"
+      values {
+        value: "Black"
+        count: 16
+      }
+      values {
+        value: "Blue"
+        count: 8
+      }
+      values {
+        value: "Gray"
+        count: 4
+      }
+      values {
+        value: "Green"
+        count: 14
+      }
+      values {
+        value: "Navy"
+        count: 5
+      }
+      values {
+        value: "Red"
+        count: 4
+      }
+      values {
+        value: "White"
+        count: 4
+      }
+    }
+    ```
 
-## Getting textual facets, facet_key = "brands".
+## Getting textual facets, facet_key = &quot&quotbrands&quot&quot
 
 1. Next, change the value of the field **facet_key** and run the code sample again:
-    
-```facet_key = "brands"```
 
-1. Now you can check the results. The **facets** object now contains barnds:
-```python
-facets {
-  key: "brands"
-  values {
-    value: "#IamRemarkable"
-    count: 3
-  }
-  values {
-    value: "Android"
-    count: 12
-  }
-  values {
-    value: "Google"
-    count: 105
-  }
-  values {
-    value: "Google Cloud"
-    count: 1
-  }
-  values {
-    value: "Stan and Friends"
-    count: 2
-  }
-  values {
-    value: "YouTube"
-    count: 7
-  }
-}
-```
+    ```facet_key = "brands"```
+
+1. Now you can check the results. The **facets** object now contains brands:
+
+    ```python
+    facets {
+      key: "brands"
+      values {
+        value: "#IamRemarkable"
+        count: 3
+      }
+      values {
+        value: "Android"
+        count: 12
+      }
+      values {
+        value: "Google"
+        count: 105
+      }
+      values {
+        value: "Google Cloud"
+        count: 1
+      }
+      values {
+        value: "Stan and Friends"
+        count: 2
+      }
+      values {
+        value: "YouTube"
+        count: 7
+      }
+    }
+    ```
+
 ## Getting numerical facets
 
-To  get the facets for the numerical field, you should specify the intervals of 
+To  get the facets for the numerical field, you should specify the intervals of
 values for each faceting field.
 
-Let's modify the ```SearchRequest``` to get price facet with two price intervals: $(0 - 20.0] and $(21.0 - 50]
+1. Modify the ```SearchRequest``` to get price facet with two price intervals: $(0 - 20.0] and $(21.0 - 50].
+    Define the Interval in the **```get_search_request()```**, add the following code:
+    
+    ```python
+        interval1 = Interval()
+        interval1.minimum = 0.0
+        interval1.maximum = 25.0
+        interval2 = Interval()
+        interval2.minimum = 26.0
+        interval2.maximum = 50.0
+    ```
 
-Define the Interval in the **```get_search_request()```**, add the following code:
-```python
-    interval1 = Interval()
-    interval1.minimum = 0.0
-    interval1.maximum = 25.0
-    interval2 = Interval()
-    interval2.minimum = 26.0
-    interval2.maximum = 50.0
-```
+1. Add the **```intervals```** field to the ```facet_key```:
 
-Add the **```intervals```** field to the ```facet_key```:
+    ```python
+    facet_key.intervals = [interval1, interval2]
+    ```
 
-```python
-facet_key.intervals = [interval1, interval2]
-```
+1. Change the ```facet_key``` value in the ```search()``` function:
 
-Next, change the ```facet_key``` value in the ```search()``` function:
-```python
-facet_key = "price"
-```
+    ```python
+    facet_key = "price"
+    ```
 
 ## Getting numerical facets. Result analyse
 
 1. Run the sample in a terminal with the following command:
+
     ```bash
     python search/search_with_facet_spec.py
     ```
 1. Check the response contains the object **```facets```**:
 
-```python
-facets {
-  key: "price"
-  values {
-    interval {
-      minimum: 0.0
-      maximum: 25.0
+    ```python
+    facets {
+      key: "price"
+      values {
+        interval {
+          minimum: 0.0
+          maximum: 25.0
+        }
+        count: 96
+      }
+      values {
+        interval {
+          minimum: 26.0
+          maximum: 50.0
+        }
+        count: 35
+      }
     }
-    count: 96
-  }
-  values {
-    interval {
-      minimum: 26.0
-      maximum: 50.0
-    }
-    count: 35
-  }
-}
-```
+    ```
 
 ## Congratulations
 
