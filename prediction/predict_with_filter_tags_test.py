@@ -20,7 +20,7 @@ def test_predict_with_filter_tags_pass():
 def test_predict_with_filter_tags_response():
     response = predict()
 
-    assert len(response.results) == 6
+    assert len(response.results) == 20
     item = str(response.results[0])
-    assert re.search(".*(criminal|war).*", item)
-    assert not re.search(r"\"drama\"", item)
+    assert re.search(".*(promotional|premium).*", item)
+    assert not re.search(r"\"season sale\"", item)

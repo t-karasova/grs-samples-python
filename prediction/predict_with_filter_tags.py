@@ -45,7 +45,7 @@ def get_predict_request(_filter: str):
 
 
 def predict():
-    _filter = 'tag=("war" OR "criminal") tag=(-"drama")'
+    _filter = 'tag=("promotional" OR "premium") tag=(-"season sale")'
 
     predict_client_options = ClientOptions(ENDPOINT)
     response = PredictionServiceClient(client_options=predict_client_options).predict(
