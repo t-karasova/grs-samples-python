@@ -1,13 +1,13 @@
 import re
 import subprocess
 
-from predict_with_filter_tags import predict
+from predict_simple import predict
 
 
-def test_predict_with_filter_tags_pass():
+def test_predict_simple_pass():
     output = str(
         subprocess.check_output(
-            "python predict_with_filter_tags.py", shell=True
+            "python predict_simple.py", shell=True
         )
     )
 
@@ -17,10 +17,7 @@ def test_predict_with_filter_tags_pass():
     assert re.match(".*results.*id.*", output)
 
 
-def test_predict_with_filter_tags_response():
+def test_predict_simple_response():
     response = predict()
 
     assert len(response.results) == 20
-    item = str(response.results[0])
-    assert re.search(".*(promotional|premium).*", item)
-    assert not re.search(r"\"season sale\"", item)

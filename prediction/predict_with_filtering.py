@@ -20,9 +20,6 @@ def get_predict_request(_filter: str):
 
     product = Product()
     product.id = "55106"
-    product.title = "Design for Living (1933)"
-    product.type_ = Product.Type.PRIMARY
-    product.categories = ['Comedy|Romance']
 
     product_details = ProductDetail()
     product_details.product = product
@@ -45,7 +42,7 @@ def get_predict_request(_filter: str):
 
 
 def predict():
-    _filter = 'tag=("promotional" OR "premium") tag=(-"season sale")'
+    _filter = 'tag=("premium" AND -"promotional") filterOutOfStockItems'
 
     predict_client_options = ClientOptions(ENDPOINT)
     response = PredictionServiceClient(client_options=predict_client_options).predict(

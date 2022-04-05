@@ -12,7 +12,7 @@ placement_id = os.environ["GOOGLE_CLOUD_PLACEMENT"]
 ENDPOINT = "retail.googleapis.com"
 
 
-def get_predict_request(_filter: str):
+def get_predict_request():
     predict_placement = (
         f'projects/{project_id}/locations/global/catalogs/'
         f'default_catalog/placements/{placement_id}'
@@ -20,9 +20,6 @@ def get_predict_request(_filter: str):
 
     product = Product()
     product.id = "55106"
-    product.title = "Design for Living (1933)"
-    product.type_ = Product.Type.PRIMARY
-    product.categories = ['Comedy|Romance']
 
     product_details = ProductDetail()
     product_details.product = product
@@ -35,7 +32,6 @@ def get_predict_request(_filter: str):
     predict_request = PredictRequest()
     predict_request.placement = predict_placement
     predict_request.user_event = user_event
-    predict_request.filter = _filter
     predict_request.params = {'returnProduct': True}
 
     print("---predict request---")
@@ -45,11 +41,9 @@ def get_predict_request(_filter: str):
 
 
 def predict():
-    _filter = 'filterOutOfStockItems'
-
     predict_client_options = ClientOptions(ENDPOINT)
     response = PredictionServiceClient(client_options=predict_client_options).predict(
-        get_predict_request(_filter)
+        get_predict_request()
     )
 
     print("---predict response---")
