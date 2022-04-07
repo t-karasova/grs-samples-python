@@ -72,14 +72,13 @@ def predict():
     # TRY WITH DIFFERENT STATE HERE
     _params = {'strictFiltering': True}
 
-    response = get_search_service_client().predict(
-        get_predict_request(_filter, _params)
-    )
+    predict_request = get_predict_request(_filter, _params)
+    predict_response = get_search_service_client().predict(predict_request)
 
     print("---predict response---")
-    print(response)
+    print(predict_response)
 
-    return response
+    return predict_response
 
 
 predict()

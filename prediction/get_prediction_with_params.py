@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# [START prediction_for_products]
+# [START prediction_for_products_with_params]
 #
 import os
 
@@ -43,6 +43,9 @@ def get_predict_request(_params: dict):
 
     product = Product()
     product.id = "55106"
+    product.title = "Design for Living (1933)"
+    product.type_ = Product.Type.PRIMARY
+    product.categories = ['Comedy|Romance']
 
     product_details = ProductDetail()
     product_details.product = product
@@ -64,7 +67,7 @@ def get_predict_request(_params: dict):
 
 
 def predict():
-    # TRY TO SET PARAMETERS `returnProduct` OR `returnScore` HERE
+    # TRY TO SET PARAMETERS `priceRerankLevel` OR `diversityLevel` HERE
     _params = {}
 
     predict_request = get_predict_request(_params)
@@ -77,4 +80,4 @@ def predict():
 
 
 predict()
-# [END prediction_for_products]
+# [END prediction_for_products_with_params]
