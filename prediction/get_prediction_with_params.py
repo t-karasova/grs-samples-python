@@ -43,9 +43,6 @@ def get_predict_request(_params: dict):
 
     product = Product()
     product.id = "55106"
-    product.title = "Design for Living (1933)"
-    product.type_ = Product.Type.PRIMARY
-    product.categories = ['Comedy|Romance']
 
     product_details = ProductDetail()
     product_details.product = product
