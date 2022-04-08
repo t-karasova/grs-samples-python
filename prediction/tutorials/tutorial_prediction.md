@@ -21,7 +21,7 @@ The list of event types you can take a look here [UserEvent](https://cloud.googl
 
 2. To request the prediction for the provided user event, run the following command in Terminal:
     ```bash
-    python prediction/predict_simple.py
+    python prediction/get_prediction.py
     ```
 
 3. Note that the results contain a list of matched items returned by the Prediction service.
@@ -39,7 +39,7 @@ In this tutorial, you will get an error message when trying to request the Predi
 
 1. Run the following command in Terminal:
     ```bash
-    python prediction/predict_simple.py
+    python prediction/get_prediction.py
     ```
 
 1. You should see the following error message:

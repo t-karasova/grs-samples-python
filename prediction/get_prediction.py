@@ -16,14 +16,14 @@
 #
 import os
 
+import google.auth
 from google.cloud.retail_v2 import (
     PredictionServiceClient, UserEvent, ProductDetail,
     Product, PredictRequest
 )
 from google.api_core.client_options import ClientOptions
 
-
-project_id = os.environ["GOOGLE_CLOUD_PROJECT"]
+project_id = google.auth.default()[1]
 placement_id = os.environ["GOOGLE_CLOUD_PLACEMENT"]
 ENDPOINT = "retail.googleapis.com"
 

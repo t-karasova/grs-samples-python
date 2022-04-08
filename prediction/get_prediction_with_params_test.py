@@ -18,7 +18,7 @@ import subprocess
 from get_prediction_with_params import predict
 
 
-def test_predict_with_price_rerank_level_param_pass():
+def test_get_prediction_with_params_pass():
     output = str(
         subprocess.check_output(
             "python get_prediction_with_params.py", shell=True
@@ -31,7 +31,7 @@ def test_predict_with_price_rerank_level_param_pass():
     assert re.match(".*results.*id.*", output)
 
 
-def test_predict_with_price_rerank_level_param_response():
+def test_get_prediction_with_params_response():
     response = predict()
 
     assert len(response.results) == 20

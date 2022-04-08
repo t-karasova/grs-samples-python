@@ -35,5 +35,3 @@ def test_get_prediction_with_filtering_response():
     response = predict()
 
     assert len(response.results) == 20
-    # assert not re.search(".*OUT_OF_STOCK.*", str(response.results))
-    # assert re.search(".*premium.*", str(response.results[0]))

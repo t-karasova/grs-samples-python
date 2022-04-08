@@ -29,7 +29,7 @@ An example of such an expression is
 
 2. Run the following command in Terminal:
     ```bash
-    python prediction/predict_with_filtering.py
+    python prediction/get_prediction_with_filtering.py
     ```
 
 3. Note that the results contain only items that satisfy the filtering expression.
@@ -46,7 +46,7 @@ An example of such a flag is
 
 2. Run the following command in Terminal:
     ```bash
-    python prediction/predict_with_filtering.py
+    python prediction/get_prediction_with_filtering.py
     ```
 
 3. Note that the results contain only items that with a `stockState` of `OUT_OF_STOCK`.
@@ -66,7 +66,7 @@ Now you can try filtering by tag's field yourself in the Cloud Shell environment
     ```
 2. Run the following command in Terminal:
     ```bash
-    python prediction/predict_with_filtering.py
+    python prediction/get_prediction_with_filtering.py
     ```
 
 ## Filter by a tags field: boolean operators
@@ -82,7 +82,7 @@ Tag values can also be immediately prepended by a dash (`-`), which is equivalen
 
 2. Run the following command in Terminal:
     ```bash
-    python prediction/predict_with_filtering.py
+    python prediction/get_prediction_with_filtering.py
     ```
 
 3. Check the prediction response. Now it contains only items with tag `season sale`, and the same time without `premium`.
@@ -100,7 +100,7 @@ To filter the prediction results by two types, you can just put them together wi
 
 2. Run the following command in Terminal:
     ```bash
-    python prediction/predict_with_filtering.py
+    python prediction/get_prediction_with_filtering.py
     ```
 
 3. Check the search response. Now it contains only in stock items with the `promotional` tag.
